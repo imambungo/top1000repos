@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte'; // https://stackoverflow.com/a/74165772/9157799
 
-	let repositoriesPromise = []
+	let repositoriesPromise = [] // https://stackoverflow.com/q/61105696/9157799#comment108104142_61105696
 
 	const fetchRepositories = async () => {
 		const response = await fetch('http://localhost:3000/repositories')

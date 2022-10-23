@@ -3,10 +3,14 @@
 
 	let repositoriesPromise = null
 
-	onMount(async () => { //  // https://stackoverflow.com/q/70486828/9157799
+	const fetchRepositories = async () => {
 		const response = await fetch('http://localhost:3000/repositories')
 		const repositories = await response.json()
-		repositoriesPromise = repositories
+		return repositories
+	}
+
+	onMount(async () => { //  // https://stackoverflow.com/q/70486828/9157799
+		repositoriesPromise = await fetchRepositories()
 	})
 </script>
 

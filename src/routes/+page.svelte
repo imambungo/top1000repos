@@ -19,7 +19,21 @@
 
 {#await repositoriesPromise then repositories} <!-- https://svelte.dev/docs#template-syntax-await -->
 	<!-- {JSON.stringify(repositories)} -->
-	{#each repositories as repository}
-		{repository.full_name}
+	{#each repositories as repository, i} <!-- https://svelte.dev/docs#template-syntax-each -->
+		<div>
+			<div> <!-- number -->
+				{i+1}
+			</div>
+			<div> <!-- the rest -->
+				<div> <!-- repo name & stars -->
+					<div>{repository.full_name}</div>
+					<div>{repository.stargazers_count}</div>
+				</div>
+				<p>{repository.description}</p>
+				<div> <!-- topics -->
+					{repository.topics}
+				</div>
+			</div>
+		</div>
 	{/each}
 {/await}

@@ -4,6 +4,9 @@
 	let repositories = [] // https://stackoverflow.com/q/61105696/9157799#comment108104142_61105696
 
 	const fetchRepositories = async () => {
+		const delay = ms => new Promise(res => setTimeout(res, ms));
+		await delay(2000)
+
 		const response = await fetch('http://localhost:3000/repositories')
 		const repositories = await response.json()
 		return repositories
@@ -17,7 +20,18 @@
 <h1>Welcome to SvelteKit</h1>
 <p>Helloooo</p>
 
-{#await repositories then} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/docs#template-syntax-await -->
+<!--
+<div class="max-w-3xl mx-auto">
+	Sort by:
+	<button on:click={sortByStars}>
+		stars
+	</button>
+</div>
+-->
+
+{#await repositories} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/docs#template-syntax-await -->
+	<p>Hang on..</p>
+{:then}
 	{#each repositories as repository, i} <!-- https://svelte.dev/docs#template-syntax-each -->
 		<div class="flex max-w-3xl mx-auto">
 			<div class="w-10 text-right shrink-0 mr-3"> <!-- number | shrink: https://stackoverflow.com/a/45741742/9157799 -->

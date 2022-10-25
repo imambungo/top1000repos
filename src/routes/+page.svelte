@@ -3,7 +3,7 @@
 
 	onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
 		repositoriesP = fetchRepositories() // https://stackoverflow.com/a/66080028/9157799
-		repositoriesP.then(r => repositories = r)
+		repositoriesP.then(r => repositories = r).then(sortByStars)
 	})
 
 	const fetchRepositories = async () => {

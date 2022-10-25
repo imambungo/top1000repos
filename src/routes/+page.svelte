@@ -20,18 +20,22 @@
 {#await repositoriesPromise then repositories} <!-- https://svelte.dev/docs#template-syntax-await -->
 	<!-- {JSON.stringify(repositories)} -->
 	{#each repositories as repository, i} <!-- https://svelte.dev/docs#template-syntax-each -->
-		<div>
-			<div> <!-- number -->
-				{i+1}
+		<div class="flex max-w-3xl mx-auto">
+			<div class="w-10 flex"> <!-- number -->
+				<div>{i+1}</div>
 			</div>
-			<div> <!-- the rest -->
-				<div> <!-- repo name & stars -->
-					<div>{repository.full_name}</div>
+			<div class="grow"> <!-- the rest -->
+				<div class="flex"> <!-- repo name & stars -->
+					<div class="grow">
+						<a href="{repository.html_url}" class="text-blue-600">{repository.full_name}</a>
+					</div>
 					<div>{repository.stargazers_count}</div>
 				</div>
-				<p>{repository.description}</p>
-				<div> <!-- topics -->
-					{repository.topics}
+				<div class="">{repository.description}</div>
+				<div class="flex flex-wrap gap-1"> <!-- topics -->
+					{#each repository.topics as topic}
+						<div class="rounded-full bg-sky-100 px-2 pb-0.5 text-sm text-blue-500">{topic}</div>
+					{/each}
 				</div>
 			</div>
 		</div>

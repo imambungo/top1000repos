@@ -15,7 +15,6 @@
 </script>
 
 <h1>Welcome to SvelteKit</h1>
-<p>Helloooo</p>
 
 <!--
 <div class="max-w-3xl mx-auto">

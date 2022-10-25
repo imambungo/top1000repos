@@ -18,25 +18,26 @@
 <p>Helloooo</p>
 
 {#await repositoriesPromise then repositories} <!-- https://svelte.dev/docs#template-syntax-await -->
-	<!-- {JSON.stringify(repositories)} -->
 	{#each repositories as repository, i} <!-- https://svelte.dev/docs#template-syntax-each -->
 		<div class="flex max-w-3xl mx-auto">
-			<div class="w-10 flex"> <!-- number -->
-				<div>{i+1}</div>
+			<div class="w-10 text-right shrink-0 mr-3"> <!-- number | shrink: https://stackoverflow.com/a/45741742/9157799 -->
+				{i+1}
 			</div>
 			<div class="grow"> <!-- the rest -->
 				<div class="flex"> <!-- repo name & stars -->
-					<div class="grow">
+					<div class="grow"> <!-- if we grow the <a>, the white space after the text will be clickable -->
 						<a href="{repository.html_url}" class="text-blue-600">{repository.full_name}</a>
 					</div>
 					<div>{repository.stargazers_count}</div>
 				</div>
 				<div class="">{repository.description}</div>
-				<div class="flex flex-wrap gap-1"> <!-- topics -->
-					{#each repository.topics as topic}
-						<div class="rounded-full bg-sky-100 px-2 pb-0.5 text-sm text-blue-500">{topic}</div>
-					{/each}
-				</div>
+				{#if repository.topics.length > 0} <!-- mt-1 only if there's a topic -->
+					<div class="flex flex-wrap gap-1 mt-1"> <!-- topics -->
+						{#each repository.topics as topic}
+							<div class="rounded-full bg-sky-100 px-2 pb-0.5 text-sm text-blue-500">{topic}</div>
+						{/each}
+					</div>
+				{/if}
 			</div>
 		</div>
 	{/each}

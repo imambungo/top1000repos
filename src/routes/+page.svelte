@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte'; // https://stackoverflow.com/a/74165772/9157799
 
-	let repositories = [] // https://stackoverflow.com/q/61105696/9157799#comment108104142_61105696
+	//let repositories // https://stackoverflow.com/q/61105696/9157799#comment108104142_61105696
 
 	const fetchRepositories = async () => {
 		const response = await fetch('http://localhost:3000/repositories')
@@ -9,8 +9,12 @@
 		return repositories
 	}
 
+	let repositories = []
+	let repositoriesP
 	onMount(async () => { //  // https://stackoverflow.com/q/70486828/9157799
-		repositories = await fetchRepositories()
+		repositoriesP = fetchRepositories()
+		//repositories = repositoriesP
+		repositoriesP.then(r => repositories = r)
 	})
 </script>
 
@@ -25,9 +29,10 @@
 </div>
 -->
 
-{#await repositories} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/docs#template-syntax-await -->
+{#await repositoriesP} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/docs#template-syntax-await -->
 	<p>Hang on..</p>
 {:then}
+wow
 	{#each repositories as repository, i} <!-- https://svelte.dev/docs#template-syntax-each -->
 		<div class="flex max-w-3xl mx-auto">
 			<div class="w-10 text-right shrink-0 mr-3"> <!-- number | shrink: https://stackoverflow.com/a/45741742/9157799 -->

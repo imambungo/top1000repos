@@ -23,7 +23,13 @@
 				return 1 // b first, then a
 			return 0
 		}
-		repositories = repositories.sort(compareStars)
+		repositories = repositories.sort(compareStars) // https://svelte.dev/tutorial/updating-arrays-and-objects
+	}
+
+	const readableNumber = number => { // https://stackoverflow.com/a/60988355/9157799
+		const formatter = Intl.NumberFormat('en', { notation: 'compact' })
+		let result = formatter.format(number)
+		return result.toLowerCase()
 	}
 </script>
 
@@ -50,7 +56,7 @@
 					<div class="grow"> <!-- if we grow the <a>, the white space after the text will be clickable -->
 						<a href="{repository.html_url}" class="text-blue-600">{repository.full_name}</a>
 					</div>
-					<div>{repository.stargazers_count}</div>
+					<div>{readableNumber(repository.stargazers_count)}</div>
 				</div>
 				<div class="">{repository.description}</div>
 				{#if repository.topics.length > 0} <!-- mt-1 only if there's a topic -->

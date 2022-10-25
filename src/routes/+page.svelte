@@ -14,23 +14,32 @@
 
 	let repositories = [] // https://stackoverflow.com/q/61105696/9157799#comment108104142_61105696
 	let repositoriesP
+
+	const sortByStars = () => {
+		const compareStars = (a, b) => {
+			if (a.stargazers_count > b.stargazers_count)
+				return -1
+			if (a.stargazers_count < b.stargazers_count)
+				return 1
+			return 0
+		}
+		repositories = repositories.sort(compareStars)
+	}
 </script>
 
 <h1>Welcome to SvelteKit</h1>
 
-<!--
 <div class="max-w-3xl mx-auto">
 	Sort by:
 	<button on:click={sortByStars}>
 		stars
 	</button>
 </div>
--->
 
 {#await repositoriesP} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/docs#template-syntax-await -->
 	<p>Hang on..</p>
 {:then}
-wow
+	wow
 	{#each repositories as repository, i} <!-- https://svelte.dev/docs#template-syntax-each -->
 		<div class="flex max-w-3xl mx-auto">
 			<div class="w-10 text-right shrink-0 mr-3"> <!-- number | shrink: https://stackoverflow.com/a/45741742/9157799 -->

@@ -1,8 +1,8 @@
 <script>
 	import { onMount } from 'svelte'; // https://stackoverflow.com/a/74165772/9157799
 
-	onMount(async () => { //  // https://stackoverflow.com/q/70486828/9157799
-		repositoriesP = fetchRepositories()
+	onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
+		repositoriesP = fetchRepositories() // https://stackoverflow.com/a/66080028/9157799
 		repositoriesP.then(r => repositories = r)
 	})
 

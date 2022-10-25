@@ -27,7 +27,10 @@
 	}
 
 	const readableNumber = number => { // https://stackoverflow.com/a/60988355/9157799
-		const formatter = Intl.NumberFormat('en', { notation: 'compact' })
+		const formatter = Intl.NumberFormat('en', {
+			notation: 'compact',
+			maximumFractionDigits: 1 // force 1 fraction digit
+		})
 		let result = formatter.format(number)
 		return result.toLowerCase()
 	}

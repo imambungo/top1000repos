@@ -3,12 +3,22 @@
 
 	onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
 		repositoriesP = fetchRepositories() // https://stackoverflow.com/a/66080028/9157799
-		repositoriesP.then(r => repositories = r).then(sortByStars)
+		repositoriesP.then(r => allRepositories = r).then(sortByStars).then(updateFilteredRepositories)
 	})
 
 	beforeUpdate(() => {
 		updateTotalExcluded() // because there's no button to re-assign totalExcluded (Svelte's reactivity is triggered by assignments)
+		updateFilteredRepositories()
 	})
+
+	const updateFilteredRepositories = () => {
+		const noExcludedTopics = repository => {
+			if (repository.topics.some(topic => excluded_topics.includes(topic))) // if the repo topics is in excluded topics | https://stackoverflow.com/q/16312528/9157799
+				return false
+			return true
+		}
+		filteredRepositories = allRepositories.filter(noExcludedTopics)
+	}
 
 	const fetchRepositories = async () => {
 		const response = await fetch('http://localhost:3000/repositories')
@@ -16,7 +26,8 @@
 		return repositories
 	}
 
-	let repositories = [] // https://stackoverflow.com/q/61105696/9157799#comment108104142_61105696
+	let allRepositories = []
+	let filteredRepositories = [] // https://stackoverflow.com/q/61105696/9157799#comment108104142_61105696
 	let repositoriesP
 
 	const sortByStars = () => {
@@ -27,7 +38,7 @@
 				return 1 // b first, then a
 			return 0
 		}
-		repositories = repositories.sort(compareStars) // https://svelte.dev/tutorial/updating-arrays-and-objects
+		allRepositories = allRepositories.sort(compareStars) // https://svelte.dev/tutorial/updating-arrays-and-objects
 	}
 
 	const readableNumber = number => { // https://stackoverflow.com/a/60988355/9157799
@@ -45,13 +56,13 @@
 		if (!excluded_topics.includes(topic)) // if topic not excluded yet
 			excluded_topics = [...excluded_topics, topic] // https://svelte.dev/tutorial/updating-arrays-and-objects
 		else // if already excluded, remove from excluded_topics
-			excluded_topics = excluded_topics.filter(topic => topic !== event.target.innerText) // https://stackoverflow.com/a/44433050/9157799
+			excluded_topics = excluded_topics.filter(topic => topic !== event.target.innerText) // TODO: AMBIGU TOPIC https://stackoverflow.com/a/44433050/9157799
 	}
 
 	let totalExcluded = 0
 	const updateTotalExcluded = () => {
 		let count = 0
-		repositories.forEach(repository => {
+		allRepositories.forEach(repository => {
 			if (repository.topics.some(topic => excluded_topics.includes(topic))) // if the repo topics is in excluded topics | https://stackoverflow.com/q/16312528/9157799
 				count++
 		})
@@ -80,7 +91,7 @@
 		<p>Hang on..</p>
 	{:then}
 		{1000-totalExcluded} result, {totalExcluded} dimmed.
-		{#each repositories as repository, i} <!-- https://svelte.dev/docs#template-syntax-each -->
+		{#each filteredRepositories as repository, i} <!-- https://svelte.dev/docs#template-syntax-each -->
 			<div class="flex {repository.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'}"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 -->
 				<div class="w-10 text-right shrink-0 mr-3"> <!-- number | shrink: https://stackoverflow.com/a/45741742/9157799 -->
 					{i+1}

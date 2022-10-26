@@ -42,7 +42,7 @@
 </script>
 
 <main class="max-w-3xl mx-auto">
-	<h1>Welcome to SvelteKit</h1>
+	<h1>GitHub Top Repositories</h1>
 
 	<div class="max-w-3xl mx-auto">
 		Sort by:

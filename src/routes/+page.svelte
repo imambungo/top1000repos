@@ -34,6 +34,11 @@
 		let result = formatter.format(number)
 		return result.toLowerCase()
 	}
+
+	let excluded_topics = ["oi"]
+	const excludeTopic = event => {
+		excluded_topics = [...excluded_topics, event.target.innerText] // https://svelte.dev/tutorial/updating-arrays-and-objects | https://stackoverflow.com/a/68455563/9157799
+	}
 </script>
 
 <h1>Welcome to SvelteKit</h1>
@@ -44,6 +49,8 @@
 		stars
 	</button>
 </div>
+
+<p>{excluded_topics.toString()}</p>
 
 {#await repositoriesP} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/docs#template-syntax-await -->
 	<p>Hang on..</p>
@@ -65,7 +72,7 @@
 				{#if repository.topics.length > 0} <!-- mt-1 only if there's a topic -->
 					<div class="flex flex-wrap gap-1 mt-1"> <!-- topics -->
 						{#each repository.topics as topic}
-							<div class="rounded-full bg-sky-100 px-2 pb-0.5 text-sm text-blue-500">{topic}</div>
+							<div on:click={excludeTopic} class="rounded-full bg-sky-100 px-2 pb-0.5 text-sm text-blue-500">{topic}</div>
 						{/each}
 					</div>
 				{/if}

@@ -56,7 +56,7 @@
 	</div>
 
 	<p>Excluded topics:</p>
-	<div class="flex flex-wrap gap-1 mt-1"> <!-- topics -->
+	<div class="flex flex-wrap gap-1 mt-1"> <!-- excluded topics -->
 		{#each excluded_topics as topic}
 			<div on:click={includeTopic} class="cursor-pointer rounded-full bg-sky-100 px-2 pb-0.5 text-sm text-blue-500">{topic}</div>
 		{/each}
@@ -67,13 +67,13 @@
 	{:then}
 		wow
 		{#each repositories as repository, i} <!-- https://svelte.dev/docs#template-syntax-each -->
-			<div class="flex">
+			<div class="flex {repository.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'}"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 -->
 				<div class="w-10 text-right shrink-0 mr-3"> <!-- number | shrink: https://stackoverflow.com/a/45741742/9157799 -->
 					{i+1}
 				</div>
-				<div class="grow"> <!-- the rest -->
+				<div class="grow"> <!-- the rest | grow against number -->
 					<div class="flex"> <!-- repo name & stars -->
-						<div class="grow"> <!-- if we grow the <a>, the white space after the text will be clickable -->
+						<div class="grow"> <!-- grow against stargazers_count | if we grow the <a>, the white space after the text will be clickable -->
 							<a href="{repository.html_url}" class="text-blue-600">{repository.full_name}</a>
 						</div>
 						<div>{readableNumber(repository.stargazers_count)}</div>

@@ -2,20 +2,11 @@
 	import { onMount, beforeUpdate } from 'svelte'; // https://stackoverflow.com/a/74165772/9157799
 
 	onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
-		repositoriesP = fetchRepositories() // https://stackoverflow.com/a/66080028/9157799
-		repositoriesP.then(r => allRepositories = r).then(sortByStars).then(updateFilteredRepositories)
-		//asyncOnMount()
-	})
-
-	/* on my machine, this doesn't work (it causes "loading component" of  {#await} to be not rendered).
-      in online REPL, it works. idk if this is only in dev mode or also in build mode
-	const asyncOnMount = async () => {
 		repositoriesP = await fetchRepositories() // https://stackoverflow.com/a/66080028/9157799
 		allRepositories = repositoriesP
 		sortByStars()
 		updateFilteredRepositories()
-	}
-  */
+	})
 
 	beforeUpdate(() => {
 		updateTotalExcluded() // because there's no button to re-assign totalExcluded (Svelte's reactivity is triggered by assignments)
@@ -39,7 +30,7 @@
 
 	let allRepositories = []
 	let filteredRepositories = [] // https://stackoverflow.com/q/61105696/9157799#comment108104142_61105696
-	let repositoriesP
+	let repositoriesP = new Promise(() => {}) // dummy promise | https://stackoverflow.com/a/70846910/9157799
 
 	const sortByStars = () => {
 		const compareStars = (a, b) => { // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort

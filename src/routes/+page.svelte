@@ -36,12 +36,12 @@
 	}
 
 	let excluded_topics = ["oi"]
-	const excludeTopic = event => {
-		excluded_topics = [...excluded_topics, event.target.innerText] // https://svelte.dev/tutorial/updating-arrays-and-objects | https://stackoverflow.com/a/68455563/9157799
-	}
-
-	const includeTopic = event => {
-		excluded_topics = excluded_topics.filter(topic => topic !== event.target.innerText) // https://stackoverflow.com/a/44433050/9157799
+	const excludeTopicToggle = event => {
+		const topic = event.target.innerText // https://stackoverflow.com/a/68455563/9157799
+		if (!excluded_topics.includes(topic)) // if topic not excluded yet
+			excluded_topics = [...excluded_topics, topic] // https://svelte.dev/tutorial/updating-arrays-and-objects
+		else // if already excluded, remove from excluded_topics
+			excluded_topics = excluded_topics.filter(topic => topic !== event.target.innerText) // https://stackoverflow.com/a/44433050/9157799
 	}
 </script>
 
@@ -58,7 +58,7 @@
 	<p>Excluded topics:</p>
 	<div class="flex flex-wrap gap-1 mt-1"> <!-- excluded topics -->
 		{#each excluded_topics as topic}
-			<div on:click={includeTopic} class="cursor-pointer rounded-full bg-sky-100 px-2 pb-0.5 text-sm text-blue-500">{topic}</div>
+			<div on:click={excludeTopicToggle} class="cursor-pointer rounded-full bg-sky-100 px-2 pb-0.5 text-sm text-blue-500">{topic}</div>
 		{/each}
 	</div>
 
@@ -82,7 +82,7 @@
 					{#if repository.topics.length > 0} <!-- mt-1 only if there's a topic -->
 						<div class="flex flex-wrap gap-1 mt-1"> <!-- topics -->
 							{#each repository.topics as topic}
-							<div on:click={excludeTopic} class="cursor-pointer rounded-full bg-sky-100 px-2 pb-0.5 text-sm text-blue-500 {excluded_topics.includes(topic) && 'line-through'}">{topic}</div>
+							<div on:click={excludeTopicToggle} class="cursor-pointer rounded-full bg-sky-100 px-2 pb-0.5 text-sm text-blue-500 {excluded_topics.includes(topic) && 'line-through'}">{topic}</div>
 							{/each}
 						</div>
 					{/if}

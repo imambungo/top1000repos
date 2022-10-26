@@ -39,6 +39,10 @@
 	const excludeTopic = event => {
 		excluded_topics = [...excluded_topics, event.target.innerText] // https://svelte.dev/tutorial/updating-arrays-and-objects | https://stackoverflow.com/a/68455563/9157799
 	}
+
+	const includeTopic = event => {
+		excluded_topics = excluded_topics.filter(topic => topic !== event.target.innerText) // https://stackoverflow.com/a/44433050/9157799
+	}
 </script>
 
 <main class="max-w-3xl mx-auto">
@@ -51,7 +55,12 @@
 		</button>
 	</div>
 
-	<p>{excluded_topics.toString()}</p>
+	<p>Excluded topics:</p>
+	<div class="flex flex-wrap gap-1 mt-1"> <!-- topics -->
+		{#each excluded_topics as topic}
+			<div on:click={includeTopic} class="cursor-pointer rounded-full bg-sky-100 px-2 pb-0.5 text-sm text-blue-500">{topic}</div>
+		{/each}
+	</div>
 
 	{#await repositoriesP} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/docs#template-syntax-await -->
 		<p>Hang on..</p>

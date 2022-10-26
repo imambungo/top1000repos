@@ -79,7 +79,7 @@
 	{#await repositoriesP} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/docs#template-syntax-await -->
 		<p>Hang on..</p>
 	{:then}
-		{1000-totalExcluded} match, {totalExcluded} dimmed
+		{1000-totalExcluded} result, {totalExcluded} dimmed.
 		{#each repositories as repository, i} <!-- https://svelte.dev/docs#template-syntax-each -->
 			<div class="flex {repository.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'}"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 -->
 				<div class="w-10 text-right shrink-0 mr-3"> <!-- number | shrink: https://stackoverflow.com/a/45741742/9157799 -->

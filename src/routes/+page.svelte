@@ -82,7 +82,7 @@
 					{#if repository.topics.length > 0} <!-- mt-1 only if there's a topic -->
 						<div class="flex flex-wrap gap-1 mt-1"> <!-- topics -->
 							{#each repository.topics as topic}
-								<div on:click={excludeTopic} class="cursor-pointer rounded-full bg-sky-100 px-2 pb-0.5 text-sm text-blue-500">{topic}</div>
+							<div on:click={excludeTopic} class="cursor-pointer rounded-full bg-sky-100 px-2 pb-0.5 text-sm text-blue-500 {excluded_topics.includes(topic) && 'line-through'}">{topic}</div>
 							{/each}
 						</div>
 					{/if}

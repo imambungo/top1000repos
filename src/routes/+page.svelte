@@ -108,7 +108,7 @@
 							{/each}
 						</div>
 					{/if}
-					<div> <!-- last_commit_date & PRs thumbs up -->
+					<div class="flex"> <!-- last_commit_date & PRs thumbs up -->
 						<LastCommitDate last_commit_date={repository.last_commit_date}/>
 						<Top5PRThumbsUp top_5_pr_thumbs_up={repository.top_5_pr_thumbs_up}/>
 					</div>

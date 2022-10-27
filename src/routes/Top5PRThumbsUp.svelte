@@ -14,7 +14,9 @@
 	}
 </script>
 
-Top 5 PRs thumbs up:
-<span class='{color()}'> <!-- use span because it's an inline elemtn, so we don't need to wrap things in a flex div -->
-	{top_5_pr_thumbs_up}
-</span>
+<div>
+	Top 5 PRs thumbs up:
+	<span class='{color()}'> <!-- use span because it's an inline elemtn, so we don't need to wrap things in a flex div -->
+		{top_5_pr_thumbs_up}
+	</span>
+</div>

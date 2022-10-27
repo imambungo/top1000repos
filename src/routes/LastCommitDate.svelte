@@ -52,7 +52,7 @@
 </script>
 
 <div class='whitespace-nowrap'>
-	Last update:
+	Last commit:
 	<span title={last_commit_date} class={color()}> <!-- use span because it's an inline elemtn, so we don't need to wrap things in a flex div -->
 		{format()}
 	</span> <!-- title is tooltip -->

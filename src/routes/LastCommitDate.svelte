@@ -40,4 +40,6 @@
 	}
 </script>
 
-<p title={last_commit_date}>{format()}</p> <!-- title is tooltip -->
+<p title={last_commit_date}>
+	Last update: {format()}
+</p> <!-- title is tooltip -->

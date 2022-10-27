@@ -95,7 +95,9 @@
 						{i+1}
 					</div>
 					<div class='grow flex flex-col gap-1'> <!-- the rest | grow against number -->
-						<a href="{repository.html_url}" class="text-blue-600">{repository.full_name}</a>
+						<div> <!-- the div prevent the whitespace from becoming a clickable link -->
+							<a href="{repository.html_url}" class="text-blue-600">{repository.full_name}</a>
+						</div>
 						<div class="text-sm text-gray-800">{repository.description}</div>
 						{#if repository.topics.length > 0} <!-- topics | if clause to prevent parent's flex gap -->
 							<div class="flex flex-wrap gap-1">

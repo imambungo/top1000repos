@@ -1,4 +1,5 @@
 <script>
+	import StargazersCount from './StargazersCount.svelte'
 	import { onMount, beforeUpdate } from 'svelte'; // https://stackoverflow.com/a/74165772/9157799
 
 	onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
@@ -41,12 +42,6 @@
 			return 0
 		}
 		allRepositories = allRepositories.sort(compareStars) // https://svelte.dev/tutorial/updating-arrays-and-objects
-	}
-
-	const readableNumber = number => { // https://stackoverflow.com/a/60988355/9157799
-		const formatter = Intl.NumberFormat('en', { notation: 'compact' })
-		let result = formatter.format(number)
-		return result.toLowerCase()
 	}
 
 	let excluded_topics = []
@@ -100,10 +95,7 @@
 						<div class="grow"> <!-- repo name | grow against stargazers_count | if we grow the <a>, the white space after the text will be clickable -->
 							<a href="{repository.html_url}" class="text-blue-600">{repository.full_name}</a>
 						</div>
-						<div class="flex"> <!-- stars -->
-							<p class="font-bold mr-0.5">✩</p>
-							{readableNumber(repository.stargazers_count)}
-						</div>
+						<StargazersCount stargazers_count={repository.stargazers_count}/>
 					</div>
 					<div class="">{repository.description}</div>
 					{#if repository.topics.length > 0} <!-- topics | mt-1 only if there's a topic -->

@@ -51,7 +51,7 @@
 	}
 </script>
 
-<div class='basis-2/5 whitespace-nowrap'>
+<div class='basis-3/6 whitespace-nowrap'>
 	Last update:
 	<span title={last_commit_date} class={color()}> <!-- use span because it's an inline elemtn, so we don't need to wrap things in a flex div -->
 		{format()}

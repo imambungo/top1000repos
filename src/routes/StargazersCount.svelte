@@ -8,7 +8,7 @@
 	}
 </script>
 
-<div class="flex basis-1/5"> <!-- stars -->
+<div class="flex basis-1/6"> <!-- stars -->
 	<p class="font-bold mr-0.5">✩</p>
 	{readableNumber(stargazers_count)}
 </div>

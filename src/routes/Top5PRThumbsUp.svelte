@@ -14,7 +14,7 @@
 	}
 </script>
 
-<div class='basis-2/5 whitespace-nowrap'>
+<div class='basis-2/6 whitespace-nowrap'>
 	Top 5 PRs thumbs up:
 	<span class='{color()}'> <!-- use span because it's an inline elemtn, so we don't need to wrap things in a flex div -->
 		{top_5_pr_thumbs_up}

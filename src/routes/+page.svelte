@@ -97,17 +97,17 @@
 				</div>
 				<div class="grow"> <!-- the rest | grow against number -->
 					<div class="flex"> <!-- repo name & stars -->
-						<div class="grow"> <!-- grow against stargazers_count | if we grow the <a>, the white space after the text will be clickable -->
+						<div class="grow"> <!-- repo name | grow against stargazers_count | if we grow the <a>, the white space after the text will be clickable -->
 							<a href="{repository.html_url}" class="text-blue-600">{repository.full_name}</a>
 						</div>
-						<div class="flex">
+						<div class="flex"> <!-- stars -->
 							<p class="font-bold mr-0.5">✩</p>
 							{readableNumber(repository.stargazers_count)}
 						</div>
 					</div>
 					<div class="">{repository.description}</div>
-					{#if repository.topics.length > 0} <!-- mt-1 only if there's a topic -->
-						<div class="flex flex-wrap gap-1 mt-1"> <!-- topics -->
+					{#if repository.topics.length > 0} <!-- topics | mt-1 only if there's a topic -->
+						<div class="flex flex-wrap gap-1 mt-1">
 							{#each repository.topics as topic}
 							<div on:click={excludeTopicToggle} class="cursor-pointer rounded-full bg-sky-100 px-2 pb-0.5 text-sm text-blue-500 {excluded_topics.includes(topic) && 'line-through'}">{topic}</div>
 							{/each}

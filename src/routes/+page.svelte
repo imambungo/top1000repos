@@ -1,5 +1,6 @@
 <script>
 	import StargazersCount from './StargazersCount.svelte'
+	import LastCommitDate from './LastCommitDate.svelte'
 	import { onMount, beforeUpdate } from 'svelte'; // https://stackoverflow.com/a/74165772/9157799
 
 	onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
@@ -106,7 +107,7 @@
 						</div>
 					{/if}
 					<div> <!-- last_commit_date & PRs thumbs up -->
-						{repository.last_commit_date}
+						<LastCommitDate last_commit_date={repository.last_commit_date}/>
 					</div>
 				</div>
 			</div>

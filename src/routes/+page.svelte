@@ -100,7 +100,10 @@
 						<div class="grow"> <!-- grow against stargazers_count | if we grow the <a>, the white space after the text will be clickable -->
 							<a href="{repository.html_url}" class="text-blue-600">{repository.full_name}</a>
 						</div>
-						<div>{readableNumber(repository.stargazers_count)}</div>
+						<div class="flex">
+							<p class="font-bold mr-0.5">✩</p>
+							{readableNumber(repository.stargazers_count)}
+						</div>
 					</div>
 					<div class="">{repository.description}</div>
 					{#if repository.topics.length > 0} <!-- mt-1 only if there's a topic -->

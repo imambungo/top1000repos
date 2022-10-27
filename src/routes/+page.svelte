@@ -108,7 +108,7 @@
 								{/each}
 							</div>
 						{/if}
-						<div class='flex flex-wrap text-xs text-gray-600'> <!-- last_commit_date & PRs thumbs up -->
+						<div class='flex flex-wrap gap-x-4 text-xs text-gray-600'> <!-- last_commit_date & PRs thumbs up -->
 							<StargazersCount stargazers_count={repository.stargazers_count}/>
 							<Top5PRThumbsUp top_5_pr_thumbs_up={repository.top_5_pr_thumbs_up}/>
 							<LastCommitDate last_commit_date={repository.last_commit_date}/>

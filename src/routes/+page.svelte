@@ -94,15 +94,15 @@
 					<div class="w-10 text-right shrink-0 mr-3 text-gray-700"> <!-- number | shrink: https://stackoverflow.com/a/45741742/9157799 -->
 						{i+1}
 					</div>
-					<div class="grow"> <!-- the rest | grow against number -->
+					<div class='grow flex flex-col gap-0.5'> <!-- the rest | grow against number -->
 						<div class="flex"> <!-- repo name & stars -->
 							<div class="grow"> <!-- repo name | grow against stargazers_count | if we grow the <a>, the white space after the text will be clickable -->
 								<a href="{repository.html_url}" class="text-blue-600">{repository.full_name}</a>
 							</div>
 						</div>
 						<div class="text-sm text-gray-800">{repository.description}</div>
-						{#if repository.topics.length > 0} <!-- topics | mt-1 only if there's a topic -->
-							<div class="flex flex-wrap gap-1 mt-1">
+						{#if repository.topics.length > 0} <!-- topics -->
+							<div class="flex flex-wrap gap-1">
 								{#each repository.topics as topic}
 									<div on:click={excludeTopicToggle} class="cursor-pointer rounded-full bg-sky-100 px-2 py-1 text-xs text-blue-500 {excluded_topics.includes(topic) && 'line-through'}">{topic}</div>
 								{/each}

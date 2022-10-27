@@ -38,8 +38,20 @@
 		}
 		return 'today'
 	}
+
+	const color = () => {
+		const days_ago = daysAgo()
+		if (days_ago <= 60) // less than 2 months
+			return 'text-green-600'
+		if (days_ago <= 183) // 2-6 months
+			return 'text-yellow-600'
+		if (days_ago <= 365) // 6-12 months
+			return 'text-orange-600'
+		return 'text-red-600'
+	}
 </script>
 
-<p title={last_commit_date}>
-	Last update: {format()}
-</p> <!-- title is tooltip -->
+Last update:
+<span title={last_commit_date} class={color()}> <!-- use span because it's an inline elemtn, so we don't need to wrap things in a flex div -->
+	{format()}
+</span> <!-- title is tooltip -->

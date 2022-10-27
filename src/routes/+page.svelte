@@ -101,7 +101,7 @@
 							</div>
 						</div>
 						<div class="text-sm text-gray-800">{repository.description}</div>
-						{#if repository.topics.length > 0} <!-- topics -->
+						{#if repository.topics.length > 0} <!-- topics | if clause to prevent parent's flex gap -->
 							<div class="flex flex-wrap gap-1">
 								{#each repository.topics as topic}
 									<div on:click={excludeTopicToggle} class="cursor-pointer rounded-full bg-sky-100 px-2 py-1 text-xs text-blue-500 {excluded_topics.includes(topic) && 'line-through'}">{topic}</div>

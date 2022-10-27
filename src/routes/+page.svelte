@@ -91,7 +91,7 @@
 		<div class='flex flex-col gap-5'>
 			{#each filteredRepositories as repository, i (repository.id)} <!-- the key (repository.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
 				<div class="flex {repository.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'}"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 -->
-					<div class="w-10 text-right shrink-0 mr-3"> <!-- number | shrink: https://stackoverflow.com/a/45741742/9157799 -->
+					<div class="w-10 text-right shrink-0 mr-3 text-gray-700"> <!-- number | shrink: https://stackoverflow.com/a/45741742/9157799 -->
 						{i+1}
 					</div>
 					<div class="grow"> <!-- the rest | grow against number -->
@@ -100,7 +100,7 @@
 								<a href="{repository.html_url}" class="text-blue-600">{repository.full_name}</a>
 							</div>
 						</div>
-						<div class="text-sm">{repository.description}</div>
+						<div class="text-sm text-gray-800">{repository.description}</div>
 						{#if repository.topics.length > 0} <!-- topics | mt-1 only if there's a topic -->
 							<div class="flex flex-wrap gap-1 mt-1">
 								{#each repository.topics as topic}
@@ -108,7 +108,7 @@
 								{/each}
 							</div>
 						{/if}
-						<div class='flex flex-wrap text-xs'> <!-- last_commit_date & PRs thumbs up -->
+						<div class='flex flex-wrap text-xs text-gray-600'> <!-- last_commit_date & PRs thumbs up -->
 							<StargazersCount stargazers_count={repository.stargazers_count}/>
 							<Top5PRThumbsUp top_5_pr_thumbs_up={repository.top_5_pr_thumbs_up}/>
 							<LastCommitDate last_commit_date={repository.last_commit_date}/>

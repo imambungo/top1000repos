@@ -100,15 +100,15 @@
 								<a href="{repository.html_url}" class="text-blue-600">{repository.full_name}</a>
 							</div>
 						</div>
-						<div class="">{repository.description}</div>
+						<div class="text-sm">{repository.description}</div>
 						{#if repository.topics.length > 0} <!-- topics | mt-1 only if there's a topic -->
 							<div class="flex flex-wrap gap-1 mt-1">
 								{#each repository.topics as topic}
-									<div on:click={excludeTopicToggle} class="cursor-pointer rounded-full bg-sky-100 px-2 pb-0.5 text-sm text-blue-500 {excluded_topics.includes(topic) && 'line-through'}">{topic}</div>
+									<div on:click={excludeTopicToggle} class="cursor-pointer rounded-full bg-sky-100 px-2 py-1 text-xs text-blue-500 {excluded_topics.includes(topic) && 'line-through'}">{topic}</div>
 								{/each}
 							</div>
 						{/if}
-						<div class='flex flex-wrap'> <!-- last_commit_date & PRs thumbs up -->
+						<div class='flex flex-wrap text-xs'> <!-- last_commit_date & PRs thumbs up -->
 							<StargazersCount stargazers_count={repository.stargazers_count}/>
 							<Top5PRThumbsUp top_5_pr_thumbs_up={repository.top_5_pr_thumbs_up}/>
 							<LastCommitDate last_commit_date={repository.last_commit_date}/>

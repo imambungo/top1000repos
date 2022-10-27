@@ -113,6 +113,9 @@
 							{/each}
 						</div>
 					{/if}
+					<div> <!-- last_commit_date & PRs thumbs up -->
+						{repository.last_commit_date}
+					</div>
 				</div>
 			</div>
 		{/each}

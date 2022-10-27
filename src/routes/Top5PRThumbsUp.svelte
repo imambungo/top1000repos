@@ -2,15 +2,14 @@
 	export let top_5_pr_thumbs_up
 
 	const color = () => {
-		if (top_5_pr_thumbs_up <= 3)
+		if (top_5_pr_thumbs_up == 0)
 			return 'text-red-600'
 		if (top_5_pr_thumbs_up <= 10)
-			return 'text-orange-600'
-		if (top_5_pr_thumbs_up <= 50)
-			return 'text-yellow-600'
-		if (top_5_pr_thumbs_up <= 100)
-			return 'text-green-600'
-		return 'text-blue-600'
+			return 'text-orange-400'
+		if (top_5_pr_thumbs_up <= 30)
+			return 'text-yellow-500'
+		if (top_5_pr_thumbs_up >= 100)
+			return 'text-green-500'
 	}
 </script>
 

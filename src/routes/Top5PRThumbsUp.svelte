@@ -6,7 +6,7 @@
 			return 'text-red-600'
 		if (top_5_pr_thumbs_up <= 10)
 			return 'text-orange-400'
-		if (top_5_pr_thumbs_up <= 30)
+		if (top_5_pr_thumbs_up <= 20)
 			return 'text-yellow-500'
 		if (top_5_pr_thumbs_up >= 100)
 			return 'text-green-500'

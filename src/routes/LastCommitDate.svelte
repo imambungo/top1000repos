@@ -41,12 +41,12 @@
 
 	const color = () => {
 		const days_ago = daysAgo()
-		if (days_ago <= 60) // less than 2 months
-			return 'text-green-600'
-		if (days_ago <= 183) // 2-6 months
-			return 'text-yellow-600'
-		if (days_ago <= 365) // 6-12 months
-			return 'text-orange-600'
+		if (days_ago <= 90) // 1-3 months
+			return ''
+		if (days_ago > 90 && days_ago <= 183) // 3-6 months
+			return 'text-yellow-500'
+		if (days_ago > 183 && days_ago <= 365) // 6-12 months
+			return 'text-orange-400'
 		return 'text-red-600'
 	}
 </script>

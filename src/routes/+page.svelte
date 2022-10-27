@@ -1,6 +1,8 @@
 <script>
 	import StargazersCount from './StargazersCount.svelte'
 	import LastCommitDate from './LastCommitDate.svelte'
+	import Top5PRThumbsUp from './Top5PRThumbsUp.svelte'
+
 	import { onMount, beforeUpdate } from 'svelte'; // https://stackoverflow.com/a/74165772/9157799
 
 	onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
@@ -108,6 +110,7 @@
 					{/if}
 					<div> <!-- last_commit_date & PRs thumbs up -->
 						<LastCommitDate last_commit_date={repository.last_commit_date}/>
+						<Top5PRThumbsUp top_5_pr_thumbs_up={repository.top_5_pr_thumbs_up}/>
 					</div>
 				</div>
 			</div>

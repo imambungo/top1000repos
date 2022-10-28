@@ -3,21 +3,40 @@
 	import LastCommitDate from './LastCommitDate.svelte'
 	import Top5PRThumbsUp from './Top5PRThumbsUp.svelte'
 
-	import { onMount, beforeUpdate } from 'svelte'; // https://stackoverflow.com/a/74165772/9157799
+	import { onMount } from 'svelte'; // https://stackoverflow.com/a/74165772/9157799
 
 	onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
+		let allRepositoriesLS = localStorage.getItem('allRepositories')
+		if (allRepositoriesLS == null) { // first visit
+			await fetchRepositoriesAndStore()
+		} else {
+			allRepositoriesLS = JSON.parse(allRepositoriesLS)
+			if (allRepositoriesLS[99].last_verified_at < today()) {
+				await fetchRepositoriesAndStore()
+			} else {
+				loadAllReposFromLocalStorage()
+			}
+		}
+
+		sortByStars()
+	})
+
+	const today = () => {
+		return new Date().toISOString().slice(0, 10) // https://stackoverflow.com/a/35922073/9157799
+	}
+
+	const loadAllReposFromLocalStorage = () => { // https://stackoverflow.com/a/2010948/9157799
+		const inString = localStorage.getItem('allRepositories')
+		allRepositories = JSON.parse(inString)
+	}
+
+	const fetchRepositoriesAndStore = async () => {
 		repositoriesP = await fetchRepositories() // https://stackoverflow.com/a/66080028/9157799
 		allRepositories = repositoriesP
-		sortByStars()
-		updateFilteredRepositories()
-	})
+		localStorage.setItem("allRepositories", JSON.stringify(allRepositories)) // https://stackoverflow.com/a/2010948/9157799
+	}
 
-	beforeUpdate(() => {
-		updateTotalExcluded() // because there's no button to re-assign totalExcluded (Svelte's reactivity is triggered by assignments)
-		updateFilteredRepositories()
-	})
-
-	const updateFilteredRepositories = () => {
+	const updateFilteredRepositories = () => { // called by sort functions only
 		const noExcludedTopics = repository => {
 			if (repository.topics.some(topic => excluded_topics.includes(topic))) // if the repo topics is in excluded topics | https://stackoverflow.com/q/16312528/9157799
 				return false
@@ -67,6 +86,7 @@
 			excluded_topics = [...excluded_topics, topic] // https://svelte.dev/tutorial/updating-arrays-and-objects
 		else // if already excluded, remove from excluded_topics
 			excluded_topics = excluded_topics.filter(topic => topic !== event.target.innerText) // TODO: AMBIGU TOPIC https://stackoverflow.com/a/44433050/9157799
+		updateTotalExcluded() // because there's no button to re-assign totalExcluded (Svelte's reactivity is triggered by assignments)
 	}
 
 	let totalExcluded = 0

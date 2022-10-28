@@ -28,15 +28,12 @@
 			if (months > 1) result += 's'
 			if (years >= 1) return result + ' ago'
 		}
-		if (days > 0) {
-			if (months == 0 && days == 1) return 'yesterday'
-			if (months >= 1 && months < 3) result += ', '
-			if (months <  3) {
-				result += `${days} days`
-			}
-			return result + ' ago'
+		if (months == 0 && days < 3) return 'recently'
+		if (months >= 1 && months < 3) result += ', '
+		if (months <  3) {
+			result += `${days} days`
 		}
-		return 'today'
+		return result + ' ago'
 	}
 
 	const color = () => {

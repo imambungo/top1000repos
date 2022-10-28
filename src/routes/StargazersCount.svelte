@@ -1,5 +1,5 @@
 <script>
-	export let stargazers_count = 0
+	export let stargazers_count
 
 	const readableNumber = number => { // https://stackoverflow.com/a/60988355/9157799
 		const formatter = Intl.NumberFormat('en', { notation: 'compact' })

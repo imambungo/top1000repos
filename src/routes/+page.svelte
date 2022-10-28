@@ -2,6 +2,7 @@
 	import StargazersCount from './StargazersCount.svelte'
 	import LastCommitDate from './LastCommitDate.svelte'
 	import Top5PRThumbsUp from './Top5PRThumbsUp.svelte'
+	import Description from './Description.svelte'
 
 	import { onMount } from 'svelte'; // https://stackoverflow.com/a/74165772/9157799
 
@@ -146,7 +147,7 @@
 						<div> <!-- the div prevent the whitespace from becoming a clickable link -->
 							<a href="{repository.html_url}" class="text-blue-600">{repository.full_name}</a>
 						</div>
-						<div class="text-sm text-gray-800">{repository.description}</div>
+						<Description description={repository.description}/>
 						{#if repository.topics.length > 0} <!-- topics | if clause to prevent parent's flex gap -->
 							<div class="flex flex-wrap gap-1">
 								{#each repository.topics as topic}

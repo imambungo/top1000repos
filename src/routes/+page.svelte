@@ -45,12 +45,25 @@
 			return 0
 		}
 		allRepositories = allRepositories.sort(compareStars) // https://svelte.dev/tutorial/updating-arrays-and-objects
+		updateFilteredRepositories()
+	}
+
+	const sortByTop5PRThumbsUp = () => {
+		const compareStars = (a, b) => {
+			if (a.top_5_pr_thumbs_up > b.top_5_pr_thumbs_up)
+				return -1 // a first, then b
+			if (a.top_5_pr_thumbs_up < b.top_5_pr_thumbs_up)
+				return 1 // b first, then a
+			return 0
+		}
+		allRepositories = allRepositories.sort(compareStars) // https://svelte.dev/tutorial/updating-arrays-and-objects
+		updateFilteredRepositories()
 	}
 
 	let excluded_topics = []
 	const excludeTopicToggle = event => {
 		const topic = event.target.innerText // https://stackoverflow.com/a/68455563/9157799
-		if (!excluded_topics.includes(topic)) // if topic not excluded yet
+		if (!excluded_topics.includes(topic)) // if topic not excluded yet, exclude
 			excluded_topics = [...excluded_topics, topic] // https://svelte.dev/tutorial/updating-arrays-and-objects
 		else // if already excluded, remove from excluded_topics
 			excluded_topics = excluded_topics.filter(topic => topic !== event.target.innerText) // TODO: AMBIGU TOPIC https://stackoverflow.com/a/44433050/9157799
@@ -74,6 +87,9 @@
 		Sort by:
 		<button on:click={sortByStars}>
 			stars
+		</button>
+		<button on:click={sortByTop5PRThumbsUp}>
+			Top 5 PR thumbs up
 		</button>
 	</div>
 

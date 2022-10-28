@@ -31,8 +31,7 @@
 	}
 
 	const fetchRepositoriesAndStore = async () => {
-		repositoriesP = await fetchRepositories() // https://stackoverflow.com/a/66080028/9157799
-		allRepositories = repositoriesP
+		allRepositories = await fetchRepositories() // https://stackoverflow.com/a/66080028/9157799
 		localStorage.setItem("allRepositories", JSON.stringify(allRepositories)) // https://stackoverflow.com/a/2010948/9157799
 	}
 
@@ -53,7 +52,6 @@
 
 	let allRepositories = []
 	let filteredRepositories = [] // https://stackoverflow.com/q/61105696/9157799#comment108104142_61105696
-	let repositoriesP = new Promise(() => {}) // dummy promise | https://stackoverflow.com/a/70846910/9157799
 
 	const sortByStars = () => {
 		const compareStars = (a, b) => { // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort

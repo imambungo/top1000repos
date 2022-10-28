@@ -7,8 +7,17 @@
 
 	onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
 		await fetchAllRepositoriesOrLoadFromLocalStorage()
+		loadExcludedTopicsFromSessionStorage()
 		sortByStars()
 	})
+
+	const loadExcludedTopicsFromSessionStorage = () => {
+		const excludedTopics = sessionStorage.getItem('excluded_topics')
+		if (excludedTopics != null) {
+			excluded_topics = JSON.parse(excludedTopics)
+			updateTotalExcluded()
+		}
+	}
 
 	const fetchAllRepositoriesOrLoadFromLocalStorage = async () => {
 		let allRepositoriesLS = localStorage.getItem('allRepositories')
@@ -89,6 +98,7 @@
 			excluded_topics = excluded_topics.filter(topic => topic !== event.target.innerText) // TODO: AMBIGU TOPIC https://stackoverflow.com/a/44433050/9157799
 		updateTotalExcluded() // because there's no button to re-assign totalExcluded (Svelte's reactivity is triggered by assignments)
 		updateFilteredRepositories()
+		sessionStorage.setItem('excluded_topics', JSON.stringify(excluded_topics))
 	}
 
 	let totalExcluded = 0

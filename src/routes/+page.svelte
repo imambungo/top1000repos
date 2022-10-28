@@ -120,9 +120,9 @@
 		{/each}
 	</div>
 
-	{#await repositoriesP} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/docs#template-syntax-await -->
+	{#if filteredRepositories.length == 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/docs#template-syntax-await -->
 		<p>Hang on..</p>
-	{:then}
+	{:else}
 		{1000-totalExcluded} result, {totalExcluded} dimmed.
 		<div class='flex flex-col gap-5'>
 			{#each filteredRepositories as repository, i (repository.id)} <!-- the key (repository.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
@@ -151,5 +151,5 @@
 				</div>
 			{/each}
 		</div>
-	{/await}
+	{/if}
 </main>

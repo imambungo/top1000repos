@@ -87,6 +87,7 @@
 		else // if already excluded, remove from excluded_topics
 			excluded_topics = excluded_topics.filter(topic => topic !== event.target.innerText) // TODO: AMBIGU TOPIC https://stackoverflow.com/a/44433050/9157799
 		updateTotalExcluded() // because there's no button to re-assign totalExcluded (Svelte's reactivity is triggered by assignments)
+		updateFilteredRepositories()
 	}
 
 	let totalExcluded = 0

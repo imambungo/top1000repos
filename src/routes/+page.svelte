@@ -6,20 +6,23 @@
 	import { onMount } from 'svelte'; // https://stackoverflow.com/a/74165772/9157799
 
 	onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
+		await fetchAllRepositoriesOrLoadFromLocalStorage()
+		sortByStars()
+	})
+
+	const fetchAllRepositoriesOrLoadFromLocalStorage = async () => {
 		let allRepositoriesLS = localStorage.getItem('allRepositories')
 		if (allRepositoriesLS == null) { // first visit
-			await fetchRepositoriesAndStore()
+			await fetchRepositoriesAndStoreToLocalStorage()
 		} else {
 			allRepositoriesLS = JSON.parse(allRepositoriesLS)
-			if (allRepositoriesLS[99].last_verified_at < today()) {
-				await fetchRepositoriesAndStore()
+			if (allRepositoriesLS[99].last_verified_at < today()) { // if old data
+				await fetchRepositoriesAndStoreToLocalStorage()
 			} else {
 				loadAllReposFromLocalStorage()
 			}
 		}
-
-		sortByStars()
-	})
+	}
 
 	const today = () => {
 		return new Date().toISOString().slice(0, 10) // https://stackoverflow.com/a/35922073/9157799
@@ -30,7 +33,7 @@
 		allRepositories = JSON.parse(inString)
 	}
 
-	const fetchRepositoriesAndStore = async () => {
+	const fetchRepositoriesAndStoreToLocalStorage = async () => {
 		allRepositories = await fetchRepositories() // https://stackoverflow.com/a/66080028/9157799
 		localStorage.setItem("allRepositories", JSON.stringify(allRepositories)) // https://stackoverflow.com/a/2010948/9157799
 	}

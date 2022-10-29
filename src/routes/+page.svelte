@@ -120,6 +120,16 @@
 		repo_id_blacklist = [...repo_id_blacklist, repo_id]
 		updateFilteredRepositories()
 	}
+
+	const switchTab = tab => {
+		if (tab == 'blacklist') {
+			const blacklistedRepos = all_repos.filter(repo => repo_id_blacklist.includes(repo.id))
+			filtered_repos = blacklistedRepos
+		}
+		if (tab == 'explore') {
+			updateFilteredRepositories()
+		}
+	}
 </script>
 
 <main class="max-w-3xl mx-auto">
@@ -140,6 +150,16 @@
 		{#each excluded_topics as topic}
 			<div on:click={excludeTopicToggle} class="cursor-pointer rounded-full bg-sky-100 px-2 pb-0.5 text-sm text-blue-500">{topic}</div>
 		{/each}
+	</div>
+
+	<div>
+		Tab:
+		<button on:click={() => switchTab('explore')}> <!-- https://stackoverflow.com/q/58262380/9157799 -->
+			explore
+		</button>
+		<button on:click={() => switchTab('blacklist')}>
+			blacklist
+		</button>
 	</div>
 
 	{#if filtered_repos.length == 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/docs#template-syntax-await -->

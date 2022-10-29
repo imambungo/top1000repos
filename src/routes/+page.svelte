@@ -10,7 +10,7 @@
 		all_repos = await fetchAllReposOrGetFromLocalStorage()
 		excluded_topics = getExcludedTopicsFromSessionStorage()
 		all_repos = sortByStars(all_repos)
-		repos = all_repos
+		repos = filter_out_repos_with_excluded_topics(all_repos)
 	})
 
 	const getExcludedTopicsFromSessionStorage = () => {

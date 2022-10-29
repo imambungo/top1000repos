@@ -162,6 +162,16 @@
 		sort_option = sortOption
 		repos = sort_repos_based_on_sort_option(repos)
 	}
+
+	$: explore_tab_repos_count = 1000-repo_id_blacklist.length
+	$: blacklist_tab_repos_count = repo_id_blacklist.length
+	$: excluded_repos_count = get_excluded_repos_count_based_on_tab(tab, excluded_topics) // these args are just to trigger reactivity | https://svelte.dev/docs#component-format-script-3-$-marks-a-statement-as-reactive
+	const get_excluded_repos_count_based_on_tab = () => {
+		if (tab == 'explore')
+			return explore_tab_repos_count - repos.length
+		if (tab == 'blacklist')
+			return blacklist_tab_repos_count - repos.length
+	}
 </script>
 
 <main class="max-w-3xl mx-auto">
@@ -187,17 +197,17 @@
 	<div>
 		Tab:
 		<button on:click={() => switchTab('explore')}> <!-- https://stackoverflow.com/q/58262380/9157799 -->
-			explore
+			explore ({explore_tab_repos_count})
 		</button>
 		<button on:click={() => switchTab('blacklist')}>
-			blacklist
+			blacklist ({blacklist_tab_repos_count})
 		</button>
 	</div>
 
 	{#if repos.length == 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/docs#template-syntax-await -->
 		<p>Hang on..</p>
 	{:else}
-		{repos.length} result, {1000-repos.length} dimmed.
+		Excluded: {excluded_repos_count}
 		<div class='flex flex-col gap-5'>
 			{#each repos as repo, i (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
 				<div class="flex {repo.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'}"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 -->

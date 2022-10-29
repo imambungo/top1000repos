@@ -21,12 +21,12 @@
 	}
 
 	const fetchAllRepositoriesOrLoadFromLocalStorage = async () => {
-		let allRepositoriesLS = localStorage.getItem('allRepositories')
-		if (allRepositoriesLS == null) { // first visit
+		let localRepos = localStorage.getItem('allRepositories')
+		if (localRepos == null) { // first visit
 			await fetchRepositoriesAndStoreToLocalStorage()
 		} else {
-			allRepositoriesLS = JSON.parse(allRepositoriesLS)
-			if (allRepositoriesLS[99].last_verified_at < today()) { // if old data
+			localRepos = JSON.parse(localRepos)
+			if (localRepos[99].last_verified_at < today()) { // if old data
 				await fetchRepositoriesAndStoreToLocalStorage()
 			} else {
 				loadAllReposFromLocalStorage()

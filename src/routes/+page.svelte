@@ -7,7 +7,7 @@
 	import { onMount } from 'svelte'; // https://stackoverflow.com/a/74165772/9157799
 
 	onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
-		await fetchAllReposOrLoadFromLocalStorage()
+		all_repos = await fetchAllReposOrLoadFromLocalStorage()
 		loadExcludedTopicsFromSessionStorage()
 		sortByStars()
 	})
@@ -23,13 +23,13 @@
 	const fetchAllReposOrLoadFromLocalStorage = async () => {
 		let localRepos = localStorage.getItem('all_repos')
 		if (localRepos == null) { // first visit
-			await fetchReposAndStoreToLocalStorage()
+			return await fetchReposAndStoreToLocalStorage()
 		} else {
 			localRepos = JSON.parse(localRepos)
 			if (localRepos[99].last_verified_at < today()) { // if old data
-				await fetchReposAndStoreToLocalStorage()
+				return await fetchReposAndStoreToLocalStorage()
 			} else {
-				loadAllReposFromLocalStorage()
+				return loadAllReposFromLocalStorage()
 			}
 		}
 	}
@@ -39,13 +39,15 @@
 	}
 
 	const loadAllReposFromLocalStorage = () => { // https://stackoverflow.com/a/2010948/9157799
-		const inString = localStorage.getItem('all_repos')
-		all_repos = JSON.parse(inString)
+		let localRepos = localStorage.getItem('all_repos')
+		localRepos = JSON.parse(localRepos)
+		return localRepos
 	}
 
 	const fetchReposAndStoreToLocalStorage = async () => {
-		all_repos = await fetchRepos() // https://stackoverflow.com/a/66080028/9157799
-		localStorage.setItem("all_repos", JSON.stringify(all_repos)) // https://stackoverflow.com/a/2010948/9157799
+		const allRepos = await fetchRepos() // https://stackoverflow.com/a/66080028/9157799
+		localStorage.setItem("all_repos", JSON.stringify(allRepos)) // https://stackoverflow.com/a/2010948/9157799
+		return allRepos
 	}
 
 	const updateFilteredRepositories = () => { // to be called whenever all_repos or excluded_topics changed
@@ -127,7 +129,8 @@
 			repos = blacklistedRepos
 		}
 		if (tab == 'explore') {
-			updateFilteredRepositories()
+			const nonBlacklistedRepos = all_repos.filter(repo => !repo_id_blacklist.includes(repo.id))
+			repos = nonBlacklistedRepos
 		}
 	}
 </script>

@@ -48,13 +48,13 @@
 		localStorage.setItem("all_repos", JSON.stringify(all_repos)) // https://stackoverflow.com/a/2010948/9157799
 	}
 
-	const updateFilteredRepositories = () => { // called by sort functions only
+	const updateFilteredRepositories = () => { // to be called whenever all_repos or excluded_topics changed
 		const noExcludedTopics = repository => {
 			if (repository.topics.some(topic => excluded_topics.includes(topic))) // if the repo topics is in excluded topics | https://stackoverflow.com/q/16312528/9157799
 				return false
 			return true
 		}
-		filteredRepositories = all_repos.filter(noExcludedTopics)
+		filtered_repos = all_repos.filter(noExcludedTopics)
 	}
 
 	const fetchRepos = async () => {
@@ -64,7 +64,7 @@
 	}
 
 	let all_repos = []
-	let filteredRepositories = [] // https://stackoverflow.com/q/61105696/9157799#comment108104142_61105696
+	let filtered_repos = [] // https://stackoverflow.com/q/61105696/9157799#comment108104142_61105696
 
 	const sortByStars = () => {
 		const compareStars = (a, b) => { // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
@@ -133,12 +133,12 @@
 		{/each}
 	</div>
 
-	{#if filteredRepositories.length == 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/docs#template-syntax-await -->
+	{#if filtered_repos.length == 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/docs#template-syntax-await -->
 		<p>Hang on..</p>
 	{:else}
 		{1000-totalExcluded} result, {totalExcluded} dimmed.
 		<div class='flex flex-col gap-5'>
-			{#each filteredRepositories as repository, i (repository.id)} <!-- the key (repository.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
+			{#each filtered_repos as repository, i (repository.id)} <!-- the key (repository.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
 				<div class="flex {repository.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'}"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 -->
 					<div class="w-10 text-right shrink-0 mr-3 text-gray-700"> <!-- number | shrink: https://stackoverflow.com/a/45741742/9157799 -->
 						{i+1}

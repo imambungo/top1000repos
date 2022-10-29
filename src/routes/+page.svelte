@@ -49,12 +49,14 @@
 	}
 
 	const updateFilteredRepositories = () => { // to be called whenever all_repos or excluded_topics changed
-		const noExcludedTopics = repository => {
+		const noExcludedTopicsOrBlacklistedRepo = repository => {
 			if (repository.topics.some(topic => excluded_topics.includes(topic))) // if the repo topics is in excluded topics | https://stackoverflow.com/q/16312528/9157799
+				return false
+			if (repo_id_blacklist.includes(repository.id))
 				return false
 			return true
 		}
-		filtered_repos = all_repos.filter(noExcludedTopics)
+		filtered_repos = all_repos.filter(noExcludedTopicsOrBlacklistedRepo)
 	}
 
 	const fetchRepos = async () => {
@@ -113,7 +115,12 @@
 	}
 
 	let tab = 'explore'
-	let id_blacklist = []
+	let repo_id_blacklist = []
+	const blacklistRepo = repo_id => {
+		repo_id_blacklist = [...repo_id_blacklist, repo_id]
+		updateFilteredRepositories()
+	}
+
 </script>
 
 <main class="max-w-3xl mx-auto">
@@ -155,7 +162,7 @@
 								</div>
 							{/if}
 							<div class='grow flex justify-end'>
-								<button>
+								<button on:click={() => blacklistRepo(repository.id)}> <!-- https://stackoverflow.com/q/58262380/9157799 -->
 									blacklist
 								</button>
 							</div>

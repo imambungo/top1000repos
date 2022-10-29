@@ -49,10 +49,10 @@
 	}
 
 	const updateFilteredRepositories = () => { // to be called whenever all_repos or excluded_topics changed
-		const noExcludedTopicsOrBlacklistedRepo = repository => {
-			if (repository.topics.some(topic => excluded_topics.includes(topic))) // if the repo topics is in excluded topics | https://stackoverflow.com/q/16312528/9157799
+		const noExcludedTopicsOrBlacklistedRepo = repo => {
+			if (repo.topics.some(topic => excluded_topics.includes(topic))) // if the repo topics is in excluded topics | https://stackoverflow.com/q/16312528/9157799
 				return false
-			if (repo_id_blacklist.includes(repository.id))
+			if (repo_id_blacklist.includes(repo.id))
 				return false
 			return true
 		}
@@ -107,8 +107,8 @@
 	let total_excluded = 0
 	const updateTotalExcluded = () => {
 		let count = 0
-		all_repos.forEach(repository => {
-			if (repository.topics.some(topic => excluded_topics.includes(topic))) // if the repo topics is in excluded topics | https://stackoverflow.com/q/16312528/9157799
+		all_repos.forEach(repo => {
+			if (repo.topics.some(topic => excluded_topics.includes(topic))) // if the repo topics is in excluded topics | https://stackoverflow.com/q/16312528/9157799
 				count++
 		})
 		total_excluded = count
@@ -148,37 +148,37 @@
 	{:else}
 		{1000-total_excluded} result, {total_excluded} dimmed.
 		<div class='flex flex-col gap-5'>
-			{#each filtered_repos as repository, i (repository.id)} <!-- the key (repository.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
-				<div class="flex {repository.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'}"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 -->
+			{#each filtered_repos as repo, i (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
+				<div class="flex {repo.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'}"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 -->
 					<div class="w-10 text-right shrink-0 mr-3 text-gray-700"> <!-- number | shrink: https://stackoverflow.com/a/45741742/9157799 -->
 						{i+1}
 					</div>
 					<div class='grow flex flex-col gap-1'> <!-- the rest | grow against number -->
 						<div class='flex flex-wrap gap-2'>
-							<a href="{repository.html_url}" class="text-blue-600">{repository.full_name}</a>
-							{#if repository.archived}
+							<a href="{repo.html_url}" class="text-blue-600">{repo.full_name}</a>
+							{#if repo.archived}
 								<div> <!-- this div prevent "Public archive" from expanding to the full_name height -->
 									<span class='rounded-full border-solid px-2 py-1 text-xs text-yellow-600 border border-yellow-600'>Public archive</span>
 								</div>
 							{/if}
 							<div class='grow flex justify-end'>
-								<button on:click={() => blacklistRepo(repository.id)}> <!-- https://stackoverflow.com/q/58262380/9157799 -->
+								<button on:click={() => blacklistRepo(repo.id)}> <!-- https://stackoverflow.com/q/58262380/9157799 -->
 									blacklist
 								</button>
 							</div>
 						</div>
-						<Description description={repository.description}/>
-						{#if repository.topics.length > 0} <!-- topics | if clause to prevent parent's flex gap -->
+						<Description description={repo.description}/>
+						{#if repo.topics.length > 0} <!-- topics | if clause to prevent parent's flex gap -->
 							<div class="flex flex-wrap gap-1">
-								{#each repository.topics as topic}
+								{#each repo.topics as topic}
 									<div on:click={excludeTopicToggle} class="cursor-pointer rounded-full bg-sky-100 px-2 py-1 text-xs text-blue-500 {excluded_topics.includes(topic) && 'line-through'}">{topic}</div>
 								{/each}
 							</div>
 						{/if}
 						<div class='flex flex-wrap gap-x-4 text-xs text-gray-600'> <!-- last_commit_date & PRs thumbs up -->
-							<StargazersCount stargazers_count={repository.stargazers_count}/>
-							<Top5PRThumbsUp top_5_pr_thumbs_up={repository.top_5_pr_thumbs_up}/>
-							<LastCommitDate last_commit_date={repository.last_commit_date}/>
+							<StargazersCount stargazers_count={repo.stargazers_count}/>
+							<Top5PRThumbsUp top_5_pr_thumbs_up={repo.top_5_pr_thumbs_up}/>
+							<LastCommitDate last_commit_date={repo.last_commit_date}/>
 						</div>
 					</div>
 				</div>

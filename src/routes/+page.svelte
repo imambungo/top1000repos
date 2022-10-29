@@ -97,19 +97,19 @@
 			excluded_topics = [...excluded_topics, topic] // https://svelte.dev/tutorial/updating-arrays-and-objects
 		else // if already excluded, remove from excluded_topics
 			excluded_topics = excluded_topics.filter(topic => topic !== event.target.innerText) // TODO: AMBIGU TOPIC https://stackoverflow.com/a/44433050/9157799
-		updateTotalExcluded() // because there's no button to re-assign totalExcluded (Svelte's reactivity is triggered by assignments)
+		updateTotalExcluded() // because there's no button to re-assign total_excluded (Svelte's reactivity is triggered by assignments)
 		updateFilteredRepositories()
 		sessionStorage.setItem('excluded_topics', JSON.stringify(excluded_topics))
 	}
 
-	let totalExcluded = 0
+	let total_excluded = 0
 	const updateTotalExcluded = () => {
 		let count = 0
 		all_repos.forEach(repository => {
 			if (repository.topics.some(topic => excluded_topics.includes(topic))) // if the repo topics is in excluded topics | https://stackoverflow.com/q/16312528/9157799
 				count++
 		})
-		totalExcluded = count
+		total_excluded = count
 	}
 </script>
 
@@ -136,7 +136,7 @@
 	{#if filtered_repos.length == 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/docs#template-syntax-await -->
 		<p>Hang on..</p>
 	{:else}
-		{1000-totalExcluded} result, {totalExcluded} dimmed.
+		{1000-total_excluded} result, {total_excluded} dimmed.
 		<div class='flex flex-col gap-5'>
 			{#each filtered_repos as repository, i (repository.id)} <!-- the key (repository.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
 				<div class="flex {repository.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'}"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 -->

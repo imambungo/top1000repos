@@ -120,13 +120,12 @@
 		repo_id_blacklist = [...repo_id_blacklist, repo_id]
 		updateFilteredRepositories()
 	}
-
 </script>
 
 <main class="max-w-3xl mx-auto">
 	<h1>GitHub Top 1000 Repositories</h1>
 
-	<div class="max-w-3xl mx-auto"> <!-- TODO: after clicked, the button should be unclickable -->
+	<div> <!-- TODO: after clicked, the button should be unclickable -->
 		Sort by:
 		<button on:click={sortByStars}>
 			stars

@@ -121,27 +121,33 @@
 			excluded_topics = excluded_topics.filter(t => t !== topic) // https://stackoverflow.com/a/44433050/9157799
 		sessionStorage.setItem('excluded_topics', JSON.stringify(excluded_topics))
 		repos = filter_out_repos_with_excluded_topics(all_repos)
+		repos = filter_blacklisted_repos_based_on_current_tab(repos)
+	}
+
+	const filter_blacklisted_repos_based_on_current_tab = repos => {
+		if (tab == 'explore')
+			return filter_out_blacklisted_repos(repos)
+		if (tab == 'blacklist')
+			return filter_only_blacklisted_repos(repos)
 	}
 
 	let repo_id_blacklist = []
 	const blacklistRepo = repo_id => {
 		repo_id_blacklist = [...repo_id_blacklist, repo_id]
-		if (tab == 'explore')
-			repos = filter_out_blacklisted_repos(repos)
-		if (tab == 'blacklist')
-			repos = filter_only_blacklisted_repos(repos)
+		repos = filter_blacklisted_repos_based_on_current_tab(repos)
 	}
 
 	let tab = 'explore'
-	const switchTab = tab => {
-		if (tab == 'blacklist') {
+	const switchTab = chosenTab => {
+		if (chosenTab == 'blacklist') {
 			const nonBlacklistedRepos = filter_only_blacklisted_repos(all_repos)
 			repos = filter_out_repos_with_excluded_topics(nonBlacklistedRepos)
 		}
-		if (tab == 'explore') {
+		if (chosenTab == 'explore') {
 			const blacklistedRepos = filter_out_blacklisted_repos(all_repos)
 			repos = filter_out_repos_with_excluded_topics(blacklistedRepos)
 		}
+		tab = chosenTab
 	}
 </script>
 

@@ -134,7 +134,7 @@
 	let repo_id_blacklist = []
 	const blacklistRepo = repo_id => {
 		repo_id_blacklist = [...repo_id_blacklist, repo_id]
-		repos = filter_blacklisted_repos_based_on_current_tab(repos)
+		repos = filter_out_blacklisted_repos(repos)
 	}
 
 	let tab = 'explore'

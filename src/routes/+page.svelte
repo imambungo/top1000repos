@@ -144,8 +144,11 @@
 						{i+1}
 					</div>
 					<div class='grow flex flex-col gap-1'> <!-- the rest | grow against number -->
-						<div> <!-- the div prevent the whitespace from becoming a clickable link -->
+						<div class='flex flex-wrap gap-2'> <!-- the div prevent the whitespace from becoming a clickable link -->
 							<a href="{repository.html_url}" class="text-blue-600">{repository.full_name}</a>
+							{#if repository.archived}
+								<span class='rounded-full border-solid px-1.5 text-xs text-yellow-600 border border-yellow-600'>Public archive</span>
+							{/if}
 						</div>
 						<Description description={repository.description}/>
 						{#if repository.topics.length > 0} <!-- topics | if clause to prevent parent's flex gap -->

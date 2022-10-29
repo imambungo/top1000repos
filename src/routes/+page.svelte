@@ -16,7 +16,6 @@
 		let excludedTopics = sessionStorage.getItem('excluded_topics')
 		if (excludedTopics != null) {
 			excludedTopics = JSON.parse(excludedTopics)
-			updateTotalExcluded() // TODO
 			return excludedTopics
 		}
 		return []
@@ -103,19 +102,19 @@
 			excluded_topics = [...excluded_topics, topic] // https://svelte.dev/tutorial/updating-arrays-and-objects
 		else // if already excluded, remove from excluded_topics
 			excluded_topics = excluded_topics.filter(t => t !== topic) // https://stackoverflow.com/a/44433050/9157799
-		updateTotalExcluded() // because there's no button to re-assign total_excluded (Svelte's reactivity is triggered by assignments)
 		updateFilteredRepositories()
 		sessionStorage.setItem('excluded_topics', JSON.stringify(excluded_topics))
 	}
 
 	let total_excluded = 0
-	const updateTotalExcluded = () => {
+	$: total_excluded = getNumOfExcludedRepos(excluded_topics) // https://svelte.dev/tutorial/reactive-statements | https://svelte.dev/docs#component-format-script-3-$-marks-a-statement-as-reactive
+	const getNumOfExcludedRepos = excluded_topics => {
 		let count = 0
 		all_repos.forEach(repo => {
 			if (repo.topics.some(topic => excluded_topics.includes(topic))) // if the repo topics is in excluded topics | https://stackoverflow.com/q/16312528/9157799
 				count++
 		})
-		total_excluded = count
+		return count
 	}
 
 	let tab = 'explore'

@@ -9,7 +9,7 @@
 	onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
 		all_repos = await fetchAllReposOrGetFromLocalStorage()
 		excluded_topics = getExcludedTopicsFromSessionStorage()
-		all_repos = sortByStars(all_repos)
+		all_repos = sort_repos_by_stars(all_repos)
 		repos = filter_out_repos_with_excluded_topics(all_repos)
 	})
 
@@ -90,7 +90,7 @@
 	let all_repos = []
 	let repos = [] // https://stackoverflow.com/q/61105696/9157799#comment108104142_61105696
 
-	const sortByStars = repos => {
+	const sort_repos_by_stars = repos => {
 		const compareStars = (a, b) => { // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
 			if (a.stargazers_count > b.stargazers_count)
 				return -1 // a first, then b
@@ -101,15 +101,15 @@
 		return repos.sort(compareStars) // https://svelte.dev/tutorial/updating-arrays-and-objects
 	}
 
-	const sortByTop5PRThumbsUp = repos => {
-		const compareStars = (a, b) => {
+	const sort_repos_by_top_5_PR_thumbs_up = repos => {
+		const compare_top_5_PR_thumbs_up = (a, b) => {
 			if (a.top_5_pr_thumbs_up > b.top_5_pr_thumbs_up)
 				return -1 // a first, then b
 			if (a.top_5_pr_thumbs_up < b.top_5_pr_thumbs_up)
 				return 1 // b first, then a
 			return 0
 		}
-		return repos.sort(compareStars) // https://svelte.dev/tutorial/updating-arrays-and-objects
+		return repos.sort(compare_top_5_PR_thumbs_up) // https://svelte.dev/tutorial/updating-arrays-and-objects
 	}
 
 	let excluded_topics = []
@@ -149,6 +149,15 @@
 		}
 		tab = chosenTab
 	}
+
+	let sort_option = 'stars'
+	const sortBy = sortOption => {
+		if (sortOption == 'stars')
+			repos = sort_repos_by_stars(repos)
+		if (sortOption == 'top 5 pr thumbs up')
+			repos = sort_repos_by_top_5_PR_thumbs_up(repos)
+		sort_option = sortOption
+	}
 </script>
 
 <main class="max-w-3xl mx-auto">
@@ -156,10 +165,10 @@
 
 	<div> <!-- TODO: after clicked, the button should be unclickable -->
 		Sort by:
-		<button on:click={sortByStars}>
+		<button on:click={() => sortBy('stars')}>
 			stars
 		</button>
-		<button on:click={sortByTop5PRThumbsUp}>
+		<button on:click={() => sortBy('top 5 pr thumbs up')}>
 			Top 5 PR thumbs up
 		</button>
 	</div>

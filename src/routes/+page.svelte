@@ -123,7 +123,6 @@
 		repos = filter_out_repos_with_excluded_topics(all_repos)
 	}
 
-	let tab = 'explore'
 	let repo_id_blacklist = []
 	const blacklistRepo = repo_id => {
 		repo_id_blacklist = [...repo_id_blacklist, repo_id]
@@ -133,6 +132,7 @@
 			repos = filter_only_blacklisted_repos(repos)
 	}
 
+	let tab = 'explore'
 	const switchTab = tab => {
 		if (tab == 'blacklist') {
 			const nonBlacklistedRepos = filter_only_blacklisted_repos(all_repos)

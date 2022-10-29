@@ -209,7 +209,7 @@
 		</button>
 	</div>
 
-	{#if repos.length == 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/docs#template-syntax-await -->
+	{#if all_repos.length == 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/docs#template-syntax-await -->
 		<p>Hang on..</p>
 	{:else}
 		Excluded: {excluded_repos_count}

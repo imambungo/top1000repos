@@ -137,6 +137,10 @@
 		repo_id_blacklist = [...repo_id_blacklist, repo_id]
 		repos = filter_out_blacklisted_repos(repos)
 	}
+	const removeFromBlackList = repo_id => {
+		repo_id_blacklist = repo_id_blacklist.filter(id => id != repo_id)
+		repos = filter_only_blacklisted_repos(repos)
+	}
 
 	let tab = 'explore'
 	const switchTab = chosenTab => {
@@ -209,9 +213,15 @@
 								</div>
 							{/if}
 							<div class='grow flex justify-end'>
-								<button on:click={() => blacklistRepo(repo.id)}> <!-- https://stackoverflow.com/q/58262380/9157799 -->
-									blacklist
-								</button>
+								{#if tab == 'explore'}
+									<button on:click={() => blacklistRepo(repo.id)}> <!-- https://stackoverflow.com/q/58262380/9157799 -->
+										blacklist
+									</button>
+								{:else if tab == 'blacklist'}
+									<button on:click={() => removeFromBlackList(repo.id)}> <!-- https://stackoverflow.com/q/58262380/9157799 -->
+										remove blacklist
+									</button>
+								{/if}
 							</div>
 						</div>
 						<Description description={repo.description}/>

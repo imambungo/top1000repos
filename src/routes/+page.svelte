@@ -7,7 +7,7 @@
 	import { onMount } from 'svelte'; // https://stackoverflow.com/a/74165772/9157799
 
 	onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
-		await fetchAllRepositoriesOrLoadFromLocalStorage()
+		await fetchall_reposOrLoadFromLocalStorage()
 		loadExcludedTopicsFromSessionStorage()
 		sortByStars()
 	})
@@ -20,8 +20,8 @@
 		}
 	}
 
-	const fetchAllRepositoriesOrLoadFromLocalStorage = async () => {
-		let localRepos = localStorage.getItem('allRepositories')
+	const fetchall_reposOrLoadFromLocalStorage = async () => {
+		let localRepos = localStorage.getItem('all_repos')
 		if (localRepos == null) { // first visit
 			await fetchReposAndStoreToLocalStorage()
 		} else {
@@ -39,13 +39,13 @@
 	}
 
 	const loadAllReposFromLocalStorage = () => { // https://stackoverflow.com/a/2010948/9157799
-		const inString = localStorage.getItem('allRepositories')
-		allRepositories = JSON.parse(inString)
+		const inString = localStorage.getItem('all_repos')
+		all_repos = JSON.parse(inString)
 	}
 
 	const fetchReposAndStoreToLocalStorage = async () => {
-		allRepositories = await fetchRepos() // https://stackoverflow.com/a/66080028/9157799
-		localStorage.setItem("allRepositories", JSON.stringify(allRepositories)) // https://stackoverflow.com/a/2010948/9157799
+		all_repos = await fetchRepos() // https://stackoverflow.com/a/66080028/9157799
+		localStorage.setItem("all_repos", JSON.stringify(all_repos)) // https://stackoverflow.com/a/2010948/9157799
 	}
 
 	const updateFilteredRepositories = () => { // called by sort functions only
@@ -54,7 +54,7 @@
 				return false
 			return true
 		}
-		filteredRepositories = allRepositories.filter(noExcludedTopics)
+		filteredRepositories = all_repos.filter(noExcludedTopics)
 	}
 
 	const fetchRepos = async () => {
@@ -63,7 +63,7 @@
 		return repositories
 	}
 
-	let allRepositories = []
+	let all_repos = []
 	let filteredRepositories = [] // https://stackoverflow.com/q/61105696/9157799#comment108104142_61105696
 
 	const sortByStars = () => {
@@ -74,7 +74,7 @@
 				return 1 // b first, then a
 			return 0
 		}
-		allRepositories = allRepositories.sort(compareStars) // https://svelte.dev/tutorial/updating-arrays-and-objects
+		all_repos = all_repos.sort(compareStars) // https://svelte.dev/tutorial/updating-arrays-and-objects
 		updateFilteredRepositories()
 	}
 
@@ -86,7 +86,7 @@
 				return 1 // b first, then a
 			return 0
 		}
-		allRepositories = allRepositories.sort(compareStars) // https://svelte.dev/tutorial/updating-arrays-and-objects
+		all_repos = all_repos.sort(compareStars) // https://svelte.dev/tutorial/updating-arrays-and-objects
 		updateFilteredRepositories()
 	}
 
@@ -105,7 +105,7 @@
 	let totalExcluded = 0
 	const updateTotalExcluded = () => {
 		let count = 0
-		allRepositories.forEach(repository => {
+		all_repos.forEach(repository => {
 			if (repository.topics.some(topic => excluded_topics.includes(topic))) // if the repo topics is in excluded topics | https://stackoverflow.com/q/16312528/9157799
 				count++
 		})

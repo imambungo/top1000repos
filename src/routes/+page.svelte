@@ -148,7 +148,7 @@
 							<a href="{repository.html_url}" class="text-blue-600">{repository.full_name}</a>
 							{#if repository.archived}
 								<div> <!-- this div prevent "Public archive" from expanding to the full_name height -->
-									<span class='rounded-full border-solid px-2 py-1 text-xs text-yellow-600 border border-yellow-600'>Public archive</span>
+									<span class='rounded-full border-solid px-2 py-0.5 text-xs text-yellow-600 border border-yellow-600'>Public archive</span>
 								</div>
 							{/if}
 						</div>

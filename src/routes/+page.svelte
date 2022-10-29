@@ -8,16 +8,18 @@
 
 	onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
 		all_repos = await fetchAllReposOrGetFromLocalStorage()
-		loadExcludedTopicsFromSessionStorage()
+		excluded_topics = getExcludedTopicsFromSessionStorage()
 		sortByStars()
 	})
 
-	const loadExcludedTopicsFromSessionStorage = () => {
-		const excludedTopics = sessionStorage.getItem('excluded_topics')
+	const getExcludedTopicsFromSessionStorage = () => {
+		let excludedTopics = sessionStorage.getItem('excluded_topics')
 		if (excludedTopics != null) {
-			excluded_topics = JSON.parse(excludedTopics)
-			updateTotalExcluded()
+			excludedTopics = JSON.parse(excludedTopics)
+			updateTotalExcluded() // TODO
+			return excludedTopics
 		}
+		return []
 	}
 
 	const fetchAllReposOrGetFromLocalStorage = async () => {

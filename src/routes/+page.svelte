@@ -21,6 +21,12 @@
 	}
 
 	const fetchAllReposOrGetFromLocalStorage = async () => {
+		const getAllReposFromLocalStorage = () => { // https://stackoverflow.com/a/2010948/9157799
+			let localRepos = localStorage.getItem('all_repos')
+			localRepos = JSON.parse(localRepos)
+			return localRepos
+		}
+
 		let localRepos = localStorage.getItem('all_repos')
 		if (localRepos == null) { // first visit
 			return await fetchReposAndStoreToLocalStorage()
@@ -36,12 +42,6 @@
 
 	const today = () => {
 		return new Date().toISOString().slice(0, 10) // https://stackoverflow.com/a/35922073/9157799
-	}
-
-	const getAllReposFromLocalStorage = () => { // https://stackoverflow.com/a/2010948/9157799
-		let localRepos = localStorage.getItem('all_repos')
-		localRepos = JSON.parse(localRepos)
-		return localRepos
 	}
 
 	const fetchReposAndStoreToLocalStorage = async () => {

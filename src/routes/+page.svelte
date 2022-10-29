@@ -135,12 +135,12 @@
 
 	const switchTab = tab => {
 		if (tab == 'blacklist') {
-			const blacklistedRepos = filter_out_blacklisted_repos(all_repos)
-			repos = filter_out_repos_with_excluded_topics(blacklistedRepos)
-		}
-		if (tab == 'explore') {
 			const nonBlacklistedRepos = filter_only_blacklisted_repos(all_repos)
 			repos = filter_out_repos_with_excluded_topics(nonBlacklistedRepos)
+		}
+		if (tab == 'explore') {
+			const blacklistedRepos = filter_out_blacklisted_repos(all_repos)
+			repos = filter_out_repos_with_excluded_topics(blacklistedRepos)
 		}
 	}
 </script>

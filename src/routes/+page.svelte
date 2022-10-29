@@ -111,6 +111,9 @@
 		})
 		total_excluded = count
 	}
+
+	let tab = 'explore'
+	let id_blacklist = []
 </script>
 
 <main class="max-w-3xl mx-auto">
@@ -151,6 +154,11 @@
 									<span class='rounded-full border-solid px-2 py-1 text-xs text-yellow-600 border border-yellow-600'>Public archive</span>
 								</div>
 							{/if}
+							<div class='grow flex justify-end'>
+								<button>
+									blacklist
+								</button>
+							</div>
 						</div>
 						<Description description={repository.description}/>
 						{#if repository.topics.length > 0} <!-- topics | if clause to prevent parent's flex gap -->

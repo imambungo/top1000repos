@@ -165,12 +165,17 @@
 
 	$: explore_tab_repos_count = 1000-repo_id_blacklist.length
 	$: blacklist_tab_repos_count = repo_id_blacklist.length
-	$: excluded_repos_count = get_excluded_repos_count_based_on_tab(tab, excluded_topics) // these args are just to trigger reactivity | https://svelte.dev/docs#component-format-script-3-$-marks-a-statement-as-reactive
+
 	const get_excluded_repos_count_based_on_tab = () => {
 		if (tab == 'explore')
 			return explore_tab_repos_count - repos.length
 		if (tab == 'blacklist')
 			return blacklist_tab_repos_count - repos.length
+	}
+	let excluded_repos_count = get_excluded_repos_count_based_on_tab()
+	$: {
+		const dummy = `when referenced values like ${tab} and ${excluded_topics} changed, this code block executes` // https://svelte.dev/docs#component-format-script-3-$-marks-a-statement-as-reactive
+		excluded_repos_count = get_excluded_repos_count_based_on_tab()
 	}
 </script>
 

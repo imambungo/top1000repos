@@ -56,7 +56,7 @@
 				return false
 			return true
 		}
-		filtered_repos = all_repos.filter(noExcludedTopicsOrBlacklistedRepo)
+		repos = all_repos.filter(noExcludedTopicsOrBlacklistedRepo)
 	}
 
 	const fetchRepos = async () => {
@@ -66,7 +66,7 @@
 	}
 
 	let all_repos = []
-	let filtered_repos = [] // https://stackoverflow.com/q/61105696/9157799#comment108104142_61105696
+	let repos = [] // https://stackoverflow.com/q/61105696/9157799#comment108104142_61105696
 
 	const sortByStars = () => {
 		const compareStars = (a, b) => { // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
@@ -124,7 +124,7 @@
 	const switchTab = tab => {
 		if (tab == 'blacklist') {
 			const blacklistedRepos = all_repos.filter(repo => repo_id_blacklist.includes(repo.id))
-			filtered_repos = blacklistedRepos
+			repos = blacklistedRepos
 		}
 		if (tab == 'explore') {
 			updateFilteredRepositories()
@@ -162,12 +162,12 @@
 		</button>
 	</div>
 
-	{#if filtered_repos.length == 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/docs#template-syntax-await -->
+	{#if repos.length == 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/docs#template-syntax-await -->
 		<p>Hang on..</p>
 	{:else}
 		{1000-total_excluded} result, {total_excluded} dimmed.
 		<div class='flex flex-col gap-5'>
-			{#each filtered_repos as repo, i (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
+			{#each repos as repo, i (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
 				<div class="flex {repo.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'}"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 -->
 					<div class="w-10 text-right shrink-0 mr-3 text-gray-700"> <!-- number | shrink: https://stackoverflow.com/a/45741742/9157799 -->
 						{i+1}

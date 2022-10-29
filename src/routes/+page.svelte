@@ -9,7 +9,8 @@
 	onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
 		all_repos = await fetchAllReposOrGetFromLocalStorage()
 		excluded_topics = getExcludedTopicsFromSessionStorage()
-		sortByStars()
+		all_repos = sortByStars(all_repos)
+		repos = all_repos
 	})
 
 	const getExcludedTopicsFromSessionStorage = () => {
@@ -51,15 +52,22 @@
 		}
 	}
 
-	const updateFilteredRepositories = () => { // to be called whenever all_repos or excluded_topics changed
-		const noExcludedTopicsOrBlacklistedRepo = repo => {
+	const filter_out_repos_with_excluded_topics = repos => {
+		const no_excluded_topics = repo => {
 			if (repo.topics.some(topic => excluded_topics.includes(topic))) // if the repo topics is in excluded topics | https://stackoverflow.com/q/16312528/9157799
 				return false
+			return true
+		}
+		return repos.filter(no_excluded_topics)
+	}
+
+	const filter_out_blacklisted_repos = repos => {
+		const no_blacklisted_repo = repo => {
 			if (repo_id_blacklist.includes(repo.id))
 				return false
 			return true
 		}
-		repos = all_repos.filter(noExcludedTopicsOrBlacklistedRepo)
+		return repos.filter(no_blacklisted_repo)
 	}
 
 	const fetchRepos = async () => {
@@ -71,7 +79,7 @@
 	let all_repos = []
 	let repos = [] // https://stackoverflow.com/q/61105696/9157799#comment108104142_61105696
 
-	const sortByStars = () => {
+	const sortByStars = repos => {
 		const compareStars = (a, b) => { // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
 			if (a.stargazers_count > b.stargazers_count)
 				return -1 // a first, then b
@@ -79,11 +87,10 @@
 				return 1 // b first, then a
 			return 0
 		}
-		all_repos = all_repos.sort(compareStars) // https://svelte.dev/tutorial/updating-arrays-and-objects
-		updateFilteredRepositories()
+		return repos.sort(compareStars) // https://svelte.dev/tutorial/updating-arrays-and-objects
 	}
 
-	const sortByTop5PRThumbsUp = () => {
+	const sortByTop5PRThumbsUp = repos => {
 		const compareStars = (a, b) => {
 			if (a.top_5_pr_thumbs_up > b.top_5_pr_thumbs_up)
 				return -1 // a first, then b
@@ -91,8 +98,7 @@
 				return 1 // b first, then a
 			return 0
 		}
-		all_repos = all_repos.sort(compareStars) // https://svelte.dev/tutorial/updating-arrays-and-objects
-		updateFilteredRepositories()
+		return repos.sort(compareStars) // https://svelte.dev/tutorial/updating-arrays-and-objects
 	}
 
 	let excluded_topics = []
@@ -102,8 +108,8 @@
 			excluded_topics = [...excluded_topics, topic] // https://svelte.dev/tutorial/updating-arrays-and-objects
 		else // if already excluded, remove from excluded_topics
 			excluded_topics = excluded_topics.filter(t => t !== topic) // https://stackoverflow.com/a/44433050/9157799
-		updateFilteredRepositories()
 		sessionStorage.setItem('excluded_topics', JSON.stringify(excluded_topics))
+		repos = filter_out_repos_with_excluded_topics(all_repos)
 	}
 
 	let total_excluded = 0
@@ -121,7 +127,6 @@
 	let repo_id_blacklist = []
 	const blacklistRepo = repo_id => {
 		repo_id_blacklist = [...repo_id_blacklist, repo_id]
-		updateFilteredRepositories()
 	}
 
 	const switchTab = tab => {

@@ -44,7 +44,7 @@
 	}
 
 	const fetchReposAndStoreToLocalStorage = async () => {
-		allRepositories = await fetchRepositories() // https://stackoverflow.com/a/66080028/9157799
+		allRepositories = await fetchRepos() // https://stackoverflow.com/a/66080028/9157799
 		localStorage.setItem("allRepositories", JSON.stringify(allRepositories)) // https://stackoverflow.com/a/2010948/9157799
 	}
 
@@ -57,7 +57,7 @@
 		filteredRepositories = allRepositories.filter(noExcludedTopics)
 	}
 
-	const fetchRepositories = async () => {
+	const fetchRepos = async () => {
 		const response = await fetch('http://localhost:3000/repositories')
 		const repositories = await response.json()
 		return repositories

@@ -7,7 +7,7 @@
 	import { onMount } from 'svelte'; // https://stackoverflow.com/a/74165772/9157799
 
 	onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
-		all_repos = await fetchAllReposOrLoadFromLocalStorage()
+		all_repos = await fetchAllReposOrGetFromLocalStorage()
 		loadExcludedTopicsFromSessionStorage()
 		sortByStars()
 	})
@@ -20,7 +20,7 @@
 		}
 	}
 
-	const fetchAllReposOrLoadFromLocalStorage = async () => {
+	const fetchAllReposOrGetFromLocalStorage = async () => {
 		let localRepos = localStorage.getItem('all_repos')
 		if (localRepos == null) { // first visit
 			return await fetchReposAndStoreToLocalStorage()
@@ -29,7 +29,7 @@
 			if (localRepos[99].last_verified_at < today()) { // if old data
 				return await fetchReposAndStoreToLocalStorage()
 			} else {
-				return loadAllReposFromLocalStorage()
+				return getAllReposFromLocalStorage()
 			}
 		}
 	}
@@ -38,7 +38,7 @@
 		return new Date().toISOString().slice(0, 10) // https://stackoverflow.com/a/35922073/9157799
 	}
 
-	const loadAllReposFromLocalStorage = () => { // https://stackoverflow.com/a/2010948/9157799
+	const getAllReposFromLocalStorage = () => { // https://stackoverflow.com/a/2010948/9157799
 		let localRepos = localStorage.getItem('all_repos')
 		localRepos = JSON.parse(localRepos)
 		return localRepos

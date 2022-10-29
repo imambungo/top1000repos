@@ -48,9 +48,9 @@
 	}
 </script>
 
-<div class='whitespace-nowrap'>
+<a href=' https://stackoverflow.com/q/15918588/9157799#comment88211717_15922637' target='_blank' class='whitespace-nowrap'>
 	Last commit:
 	<span title={last_commit_date} class={color()}> <!-- use span because it's an inline elemtn, so we don't need to wrap things in a flex div -->
 		{format()}
 	</span> <!-- title is tooltip -->
-</div>
+</a>

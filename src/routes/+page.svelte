@@ -7,7 +7,7 @@
 	import { onMount } from 'svelte'; // https://stackoverflow.com/a/74165772/9157799
 
 	onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
-		await fetchall_reposOrLoadFromLocalStorage()
+		await fetchAllReposOrLoadFromLocalStorage()
 		loadExcludedTopicsFromSessionStorage()
 		sortByStars()
 	})
@@ -20,7 +20,7 @@
 		}
 	}
 
-	const fetchall_reposOrLoadFromLocalStorage = async () => {
+	const fetchAllReposOrLoadFromLocalStorage = async () => {
 		let localRepos = localStorage.getItem('all_repos')
 		if (localRepos == null) { // first visit
 			await fetchReposAndStoreToLocalStorage()

@@ -9,7 +9,7 @@
 		return parseInt(diffInDays)
 	}
 
-	const format = () => {
+	const agoFormat = () => {
 		const total_days = daysAgo()
 		const years      = parseInt(total_days / 365)
 		const remaining  = total_days % 365
@@ -46,11 +46,18 @@
 			return 'text-orange-400'
 		return 'text-red-600'
 	}
+
+	const tooltip = () => {
+		if (daysAgo() < 3)
+			return 'today or yesterday'
+		else
+			return last_commit_date
+	}
 </script>
 
 <a href=' https://stackoverflow.com/q/15918588/9157799#comment88211717_15922637' target='_blank' class='whitespace-nowrap'>
 	Last commit:
-	<span title={last_commit_date} class={color()}> <!-- use span because it's an inline elemtn, so we don't need to wrap things in a flex div -->
-		{format()}
-	</span> <!-- title is tooltip -->
+	<span title={tooltip()} class={color()}> <!-- use span because it's an inline elemtn, so we don't need to wrap things in a flex div -->
+		{agoFormat()}
+	</span>
 </a>

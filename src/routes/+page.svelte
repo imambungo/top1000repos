@@ -27,6 +27,12 @@
 			return localRepos
 		}
 
+		const fetchReposAndStoreToLocalStorage = async () => {
+			const allRepos = await fetchRepos() // https://stackoverflow.com/a/66080028/9157799
+			localStorage.setItem("all_repos", JSON.stringify(allRepos)) // https://stackoverflow.com/a/2010948/9157799
+			return allRepos
+		}
+
 		let localRepos = localStorage.getItem('all_repos')
 		if (localRepos == null) { // first visit
 			return await fetchReposAndStoreToLocalStorage()
@@ -42,12 +48,6 @@
 
 	const today = () => {
 		return new Date().toISOString().slice(0, 10) // https://stackoverflow.com/a/35922073/9157799
-	}
-
-	const fetchReposAndStoreToLocalStorage = async () => {
-		const allRepos = await fetchRepos() // https://stackoverflow.com/a/66080028/9157799
-		localStorage.setItem("all_repos", JSON.stringify(allRepos)) // https://stackoverflow.com/a/2010948/9157799
-		return allRepos
 	}
 
 	const updateFilteredRepositories = () => { // to be called whenever all_repos or excluded_topics changed

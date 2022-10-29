@@ -62,12 +62,23 @@
 	}
 
 	const filter_out_blacklisted_repos = repos => {
-		const no_blacklisted_repo = repo => {
+		const not_blacklisted_repo = repo => {
 			if (repo_id_blacklist.includes(repo.id))
 				return false
-			return true
+			else
+				return true
 		}
-		return repos.filter(no_blacklisted_repo)
+		return repos.filter(not_blacklisted_repo)
+	}
+
+	const filter_only_blacklisted_repos = repos => {
+		const is_blacklisted_repo = repo => {
+			if (repo_id_blacklist.includes(repo.id))
+				return true
+			else
+				return false
+		}
+		return repos.filter(is_blacklisted_repo)
 	}
 
 	const fetchRepos = async () => {
@@ -116,16 +127,20 @@
 	let repo_id_blacklist = []
 	const blacklistRepo = repo_id => {
 		repo_id_blacklist = [...repo_id_blacklist, repo_id]
+		if (tab == 'explore')
+			repos = filter_out_blacklisted_repos(repos)
+		if (tab == 'blacklist')
+			repos = filter_only_blacklisted_repos(repos)
 	}
 
 	const switchTab = tab => {
 		if (tab == 'blacklist') {
-			const blacklistedRepos = all_repos.filter(repo => repo_id_blacklist.includes(repo.id))
-			repos = blacklistedRepos
+			const blacklistedRepos = filter_out_blacklisted_repos(all_repos)
+			repos = filter_out_repos_with_excluded_topics(blacklistedRepos)
 		}
 		if (tab == 'explore') {
-			const nonBlacklistedRepos = all_repos.filter(repo => !repo_id_blacklist.includes(repo.id))
-			repos = nonBlacklistedRepos
+			const nonBlacklistedRepos = filter_only_blacklisted_repos(all_repos)
+			repos = filter_out_repos_with_excluded_topics(nonBlacklistedRepos)
 		}
 	}
 </script>

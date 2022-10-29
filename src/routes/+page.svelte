@@ -112,17 +112,6 @@
 		repos = filter_out_repos_with_excluded_topics(all_repos)
 	}
 
-	let total_excluded = 0
-	$: total_excluded = getNumOfExcludedRepos(excluded_topics) // https://svelte.dev/tutorial/reactive-statements | https://svelte.dev/docs#component-format-script-3-$-marks-a-statement-as-reactive
-	const getNumOfExcludedRepos = excluded_topics => {
-		let count = 0
-		all_repos.forEach(repo => {
-			if (repo.topics.some(topic => excluded_topics.includes(topic))) // if the repo topics is in excluded topics | https://stackoverflow.com/q/16312528/9157799
-				count++
-		})
-		return count
-	}
-
 	let tab = 'explore'
 	let repo_id_blacklist = []
 	const blacklistRepo = repo_id => {
@@ -174,7 +163,7 @@
 	{#if repos.length == 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/docs#template-syntax-await -->
 		<p>Hang on..</p>
 	{:else}
-		{1000-total_excluded} result, {total_excluded} dimmed.
+		{repos.length} result, {1000-repos.length} dimmed.
 		<div class='flex flex-col gap-5'>
 			{#each repos as repo, i (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
 				<div class="flex {repo.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'}"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 -->

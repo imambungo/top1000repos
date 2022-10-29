@@ -93,10 +93,10 @@
 	let excluded_topics = []
 	const excludeTopicToggle = event => {
 		const topic = event.target.innerText // https://stackoverflow.com/a/68455563/9157799
-		if (!excluded_topics.includes(topic)) // if topic not excluded yet, exclude
+		if (!excluded_topics.includes(topic)) // if topic not excluded yet, add to excluded_topics
 			excluded_topics = [...excluded_topics, topic] // https://svelte.dev/tutorial/updating-arrays-and-objects
 		else // if already excluded, remove from excluded_topics
-			excluded_topics = excluded_topics.filter(topic => topic !== event.target.innerText) // TODO: AMBIGU TOPIC https://stackoverflow.com/a/44433050/9157799
+			excluded_topics = excluded_topics.filter(t => t !== topic) // https://stackoverflow.com/a/44433050/9157799
 		updateTotalExcluded() // because there's no button to re-assign total_excluded (Svelte's reactivity is triggered by assignments)
 		updateFilteredRepositories()
 		sessionStorage.setItem('excluded_topics', JSON.stringify(excluded_topics))

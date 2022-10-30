@@ -54,8 +54,6 @@
 
 	import {
 		filter_out_repos_with_excluded_topics,
-		filter_out_blacklisted_repos,
-		filter_only_blacklisted_repos,
 		filter_blacklisted_repos_based_on_current_tab
 	} from './repos_filter_functions' // bisa pake .js atau tidak
 
@@ -82,32 +80,22 @@
 		else // if already excluded, remove from excluded_topics
 			excluded_topics = excluded_topics.filter(t => t !== topic) // https://stackoverflow.com/a/44433050/9157799
 		sessionStorage.setItem('excluded_topics', JSON.stringify(excluded_topics))
-		repos = filter_out_repos_with_excluded_topics(all_repos, excluded_topics)
-		repos = filter_blacklisted_repos_based_on_current_tab(repos, repo_id_blacklist, current_tab)
-		repos = sort_repos_based_on_sort_option(repos, sort_option)
 	}
 
 	let repo_id_blacklist = []
 	const blacklistRepo = repo_id => {
 		repo_id_blacklist = [...repo_id_blacklist, repo_id]
-		repos = filter_out_blacklisted_repos(repos, repo_id_blacklist)
 	}
 	const removeFromBlackList = repo_id => {
 		repo_id_blacklist = repo_id_blacklist.filter(id => id != repo_id)
-		repos = filter_only_blacklisted_repos(repos, repo_id_blacklist)
 	}
 
 	let current_tab = 'explore'
-	const switchTab = chosenTab => {
-		current_tab = chosenTab
-		repos = filter_blacklisted_repos_based_on_current_tab(all_repos, repo_id_blacklist, current_tab)
-		repos = filter_out_repos_with_excluded_topics(repos, excluded_topics)
-		repos = sort_repos_based_on_sort_option(repos, sort_option)
-	}
-
 	let sort_option = 'stars'
-	const sortBy = sortOption => {
-		sort_option = sortOption
+
+	$: { // a bruteforce hammer solution, but it's fine. what causes the slowness is the rendering
+		repos = filter_out_repos_with_excluded_topics(all_repos, excluded_topics)
+		repos = filter_blacklisted_repos_based_on_current_tab(repos, repo_id_blacklist, current_tab)
 		repos = sort_repos_based_on_sort_option(repos, sort_option)
 	}
 
@@ -132,10 +120,10 @@
 
 	<div> <!-- TODO: after clicked, the button should be unclickable -->
 		Sort by:
-		<button on:click={() => sortBy('stars')}>
+		<button on:click={() => sort_option = 'stars'}>
 			stars
 		</button>
-		<button on:click={() => sortBy('top 5 pr thumbs up')}>
+		<button on:click={() => sort_option = 'top 5 pr thumbs up'}>
 			Top 5 PR thumbs up
 		</button>
 	</div>
@@ -149,10 +137,10 @@
 
 	<div>
 		Tab:
-		<button on:click={() => switchTab('explore')}> <!-- https://stackoverflow.com/q/58262380/9157799 -->
+		<button on:click={() => current_tab = 'explore'}> <!-- https://stackoverflow.com/q/58262380/9157799 -->
 			explore ({explore_tab_repos_count})
 		</button>
-		<button on:click={() => switchTab('blacklist')}>
+		<button on:click={() => current_tab = 'blacklist'}>
 			blacklist ({blacklist_tab_repos_count})
 		</button>
 	</div>

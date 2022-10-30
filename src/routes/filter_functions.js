@@ -16,3 +16,13 @@ export const filter_out_blacklisted_repos = (repos, repo_id_blacklist) => {
    }
    return repos.filter(not_blacklisted_repo)
 }
+
+export const filter_only_blacklisted_repos = (repos, repo_id_blacklist) => {
+   const is_blacklisted_repo = repo => {
+      if (repo_id_blacklist.includes(repo.id))
+         return true
+      else
+         return false
+   }
+   return repos.filter(is_blacklisted_repo)
+}

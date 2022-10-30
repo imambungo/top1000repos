@@ -54,18 +54,9 @@
 
 	import {
 		filter_out_repos_with_excluded_topics,
-		filter_out_blacklisted_repos
+		filter_out_blacklisted_repos,
+		filter_only_blacklisted_repos
 	} from './filter_functions' // bisa pake .js atau tidak
-
-	const filter_only_blacklisted_repos = repos => {
-		const is_blacklisted_repo = repo => {
-			if (repo_id_blacklist.includes(repo.id))
-				return true
-			else
-				return false
-		}
-		return repos.filter(is_blacklisted_repo)
-	}
 
 	const fetchRepos = async () => {
 		const response = await fetch('http://localhost:3000/repositories')
@@ -115,7 +106,7 @@
 		if (tab == 'explore')
 			return filter_out_blacklisted_repos(repos, repo_id_blacklist)
 		if (tab == 'blacklist')
-			return filter_only_blacklisted_repos(repos)
+			return filter_only_blacklisted_repos(repos, repo_id_blacklist)
 	}
 
 	let repo_id_blacklist = []
@@ -125,7 +116,7 @@
 	}
 	const removeFromBlackList = repo_id => {
 		repo_id_blacklist = repo_id_blacklist.filter(id => id != repo_id)
-		repos = filter_only_blacklisted_repos(repos)
+		repos = filter_only_blacklisted_repos(repos, repo_id_blacklist)
 	}
 
 	let tab = 'explore'

@@ -68,19 +68,9 @@
 	let repos = [] // https://stackoverflow.com/q/61105696/9157799#comment108104142_61105696
 
 	import {
-		sort_repos_by_stars
+		sort_repos_by_stars,
+		sort_repos_by_top_5_PR_thumbs_up
 	} from './repos_sort_functions'
-
-	const sort_repos_by_top_5_PR_thumbs_up = repos => {
-		const compare_top_5_PR_thumbs_up = (a, b) => {
-			if (a.top_5_pr_thumbs_up > b.top_5_pr_thumbs_up)
-				return -1 // a first, then b
-			if (a.top_5_pr_thumbs_up < b.top_5_pr_thumbs_up)
-				return 1 // b first, then a
-			return 0
-		}
-		return repos.sort(compare_top_5_PR_thumbs_up) // https://svelte.dev/tutorial/updating-arrays-and-objects
-	}
 
 	let excluded_topics = []
 	const excludeTopicToggle = event => {

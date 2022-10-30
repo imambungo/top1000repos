@@ -9,11 +9,7 @@
 		filter_blacklisted_repos_based_on_current_tab
 	} from './repos_filter_functions' // bisa pake .js atau tidak
 
-	import {
-		sort_repos_by_stars,
-		sort_repos_by_top_5_PR_thumbs_up,
-		sort_repos_based_on_sort_option
-	} from './repos_sort_functions'
+	import { sort_repos_based_on_sort_option } from './repos_sort_functions'
 
 	import { onMount } from 'svelte'; // https://stackoverflow.com/a/74165772/9157799
 

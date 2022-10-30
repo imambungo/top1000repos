@@ -30,6 +30,11 @@
 		}
 
 		const fetchReposAndStoreToLocalStorage = async () => {
+			const fetchRepos = async () => {
+				const response = await fetch('http://localhost:3000/repositories')
+				const repositories = await response.json()
+				return repositories
+			}
 			const allRepos = await fetchRepos() // https://stackoverflow.com/a/66080028/9157799
 			localStorage.setItem("all_repos", JSON.stringify(allRepos)) // https://stackoverflow.com/a/2010948/9157799
 			return allRepos
@@ -55,13 +60,7 @@
 	import {
 		filter_out_repos_with_excluded_topics,
 		filter_blacklisted_repos_based_on_current_tab
-	} from './repos_filter_functions' // bisa pake .js atau tidak
-
-	const fetchRepos = async () => {
-		const response = await fetch('http://localhost:3000/repositories')
-		const repositories = await response.json()
-		return repositories
-	}
+	} from './repos_filter_functions' // bisa pake .js atau tidak	
 
 	let all_repos = []
 	let repos = [] // https://stackoverflow.com/q/61105696/9157799#comment108104142_61105696

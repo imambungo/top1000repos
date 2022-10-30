@@ -26,3 +26,10 @@ export const filter_only_blacklisted_repos = (repos, repo_id_blacklist) => {
    }
    return repos.filter(is_blacklisted_repo)
 }
+
+export const filter_blacklisted_repos_based_on_current_tab = (repos, repo_id_blacklist, current_tab) => {
+   if (current_tab == 'explore')
+      return filter_out_blacklisted_repos(repos, repo_id_blacklist)
+   if (current_tab == 'blacklist')
+      return filter_only_blacklisted_repos(repos, repo_id_blacklist)
+}

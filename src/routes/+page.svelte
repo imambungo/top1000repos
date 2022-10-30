@@ -55,7 +55,8 @@
 	import {
 		filter_out_repos_with_excluded_topics,
 		filter_out_blacklisted_repos,
-		filter_only_blacklisted_repos
+		filter_only_blacklisted_repos,
+		filter_blacklisted_repos_based_on_current_tab
 	} from './repos_filter_functions' // bisa pake .js atau tidak
 
 	const fetchRepos = async () => {
@@ -81,15 +82,8 @@
 			excluded_topics = excluded_topics.filter(t => t !== topic) // https://stackoverflow.com/a/44433050/9157799
 		sessionStorage.setItem('excluded_topics', JSON.stringify(excluded_topics))
 		repos = filter_out_repos_with_excluded_topics(all_repos, excluded_topics)
-		repos = filter_blacklisted_repos_based_on_current_tab(repos)
+		repos = filter_blacklisted_repos_based_on_current_tab(repos, repo_id_blacklist, current_tab)
 		repos = sort_repos_based_on_sort_option(repos)
-	}
-
-	const filter_blacklisted_repos_based_on_current_tab = repos => {
-		if (current_tab == 'explore')
-			return filter_out_blacklisted_repos(repos, repo_id_blacklist)
-		if (current_tab == 'blacklist')
-			return filter_only_blacklisted_repos(repos, repo_id_blacklist)
 	}
 
 	let repo_id_blacklist = []
@@ -105,7 +99,7 @@
 	let current_tab = 'explore'
 	const switchTab = chosenTab => {
 		current_tab = chosenTab
-		repos = filter_blacklisted_repos_based_on_current_tab(all_repos)
+		repos = filter_blacklisted_repos_based_on_current_tab(all_repos, repo_id_blacklist, current_tab)
 		repos = filter_out_repos_with_excluded_topics(repos, excluded_topics)
 		repos = sort_repos_based_on_sort_option(repos)
 	}

@@ -67,16 +67,9 @@
 	let all_repos = []
 	let repos = [] // https://stackoverflow.com/q/61105696/9157799#comment108104142_61105696
 
-	const sort_repos_by_stars = repos => {
-		const compareStars = (a, b) => { // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
-			if (a.stargazers_count > b.stargazers_count)
-				return -1 // a first, then b
-			if (a.stargazers_count < b.stargazers_count)
-				return 1 // b first, then a
-			return 0
-		}
-		return repos.sort(compareStars) // https://svelte.dev/tutorial/updating-arrays-and-objects
-	}
+	import {
+		sort_repos_by_stars
+	} from './repos_sort_functions'
 
 	const sort_repos_by_top_5_PR_thumbs_up = repos => {
 		const compare_top_5_PR_thumbs_up = (a, b) => {

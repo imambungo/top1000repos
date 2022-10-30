@@ -6,7 +6,8 @@
 
 	import {
 		filter_out_repos_with_excluded_topics,
-		filter_blacklisted_repos_based_on_current_tab
+		filter_blacklisted_repos_based_on_current_tab,
+		filter_whitelisted_repos_based_on_current_tab
 	} from './repos_filter_functions' // bisa pake .js atau tidak
 
 	import { sort_repos_based_on_sort_option } from './repos_sort_functions'
@@ -84,17 +85,28 @@
 		repo_id_blacklist = repo_id_blacklist.filter(id => id != repo_id)
 	}
 
+	let repo_id_whitelist = []
+	const whitelistRepo = repo_id => {
+		repo_id_whitelist = [...repo_id_whitelist, repo_id]
+	}
+	const removeFromWhiteList = repo_id => {
+		repo_id_whitelist = repo_id_whitelist.filter(id => id != repo_id)
+	}
+
 	let current_tab = 'explore'
 	let sort_option = 'stars'
 
 	$: { // a bruteforce hammer solution, but it's fine. what causes the slowness is the rendering
-		repos = filter_blacklisted_repos_based_on_current_tab(all_repos, repo_id_blacklist, current_tab)
+		repos = all_repos
+		repos = filter_blacklisted_repos_based_on_current_tab(repos, repo_id_blacklist, current_tab)
+		repos = filter_whitelisted_repos_based_on_current_tab(repos, repo_id_whitelist, current_tab)
 		//repos = filter_out_repos_with_excluded_topics(repos, excluded_topics)
 		repos = sort_repos_based_on_sort_option(repos, sort_option)
 	}
 
-	$: explore_tab_repos_count = 1000-repo_id_blacklist.length
+	$: explore_tab_repos_count = 1000 - repo_id_blacklist.length - repo_id_whitelist.length
 	$: blacklist_tab_repos_count = repo_id_blacklist.length
+	$: whitelist_tab_repos_count = repo_id_whitelist.length
 
 	const get_excluded_repos_count = (repos, excluded_topics) => {
 		let count = 0
@@ -132,6 +144,9 @@
 		<button on:click={() => current_tab = 'explore'}> <!-- https://stackoverflow.com/q/58262380/9157799 -->
 			explore ({explore_tab_repos_count})
 		</button>
+		<button on:click={() => current_tab = 'whitelist'}>
+			whitelist ({whitelist_tab_repos_count})
+		</button>
 		<button on:click={() => current_tab = 'blacklist'}>
 			blacklist ({blacklist_tab_repos_count})
 		</button>
@@ -157,12 +172,19 @@
 							{/if}
 							<div class='grow flex justify-end'>
 								{#if current_tab == 'explore'}
+									<button on:click={() => whitelistRepo(repo.id)}> <!-- https://stackoverflow.com/q/58262380/9157799 -->
+										whitelist
+									</button>
 									<button on:click={() => blacklistRepo(repo.id)}> <!-- https://stackoverflow.com/q/58262380/9157799 -->
 										blacklist
 									</button>
 								{:else if current_tab == 'blacklist'}
 									<button on:click={() => removeFromBlackList(repo.id)}> <!-- https://stackoverflow.com/q/58262380/9157799 -->
 										remove blacklist
+									</button>
+								{:else if current_tab == 'whitelist'}
+									<button on:click={() => removeFromWhiteList(repo.id)}> <!-- https://stackoverflow.com/q/58262380/9157799 -->
+										remove whitelist
 									</button>
 								{/if}
 							</div>

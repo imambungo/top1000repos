@@ -1,6 +1,6 @@
 export const filter_out_repos_with_excluded_topics = (repos, excluded_topics) => {
    const no_excluded_topics = repo => {
-      if (repo.topics.some(topic => excluded_topics.includes(topic))) // if the repo topics is in excluded topics | https://stackoverflow.com/q/16312528/9157799
+      if (repo.topics.some(topic => excluded_topics.includes(topic))) // if one of the repo topic is in excluded_topics | https://stackoverflow.com/q/16312528/9157799
          return false
       return true
    }
@@ -27,7 +27,7 @@ export const filter_blacklisted_repos_based_on_current_tab = (repos, repo_id_bla
       }
       return repos.filter(is_blacklisted_repo)
    }
-   
+
    if (current_tab == 'explore')
       return filter_out_blacklisted_repos(repos, repo_id_blacklist)
    if (current_tab == 'blacklist')

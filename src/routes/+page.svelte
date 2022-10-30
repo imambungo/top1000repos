@@ -4,13 +4,24 @@
 	import Top5PRThumbsUp from './Top5PRThumbsUp.svelte'
 	import Description from './Description.svelte'
 
+	import {
+		filter_out_repos_with_excluded_topics,
+		filter_blacklisted_repos_based_on_current_tab
+	} from './repos_filter_functions' // bisa pake .js atau tidak
+
+	import {
+		sort_repos_by_stars,
+		sort_repos_by_top_5_PR_thumbs_up,
+		sort_repos_based_on_sort_option
+	} from './repos_sort_functions'
+
 	import { onMount } from 'svelte'; // https://stackoverflow.com/a/74165772/9157799
 
 	onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
 		all_repos = await fetchAllReposOrGetFromLocalStorage()
 		excluded_topics = getExcludedTopicsFromSessionStorage()
-		all_repos = sort_repos_by_stars(all_repos)
-		repos = filter_out_repos_with_excluded_topics(all_repos, excluded_topics)
+		repos = sort_repos_by_stars(all_repos)
+		//repos = filter_out_repos_with_excluded_topics(repos, excluded_topics)
 	})
 
 	const getExcludedTopicsFromSessionStorage = () => {
@@ -57,19 +68,8 @@
 		}
 	}
 
-	import {
-		filter_out_repos_with_excluded_topics,
-		filter_blacklisted_repos_based_on_current_tab
-	} from './repos_filter_functions' // bisa pake .js atau tidak	
-
 	let all_repos = []
 	let repos = [] // https://stackoverflow.com/q/61105696/9157799#comment108104142_61105696
-
-	import {
-		sort_repos_by_stars,
-		sort_repos_by_top_5_PR_thumbs_up,
-		sort_repos_based_on_sort_option
-	} from './repos_sort_functions'
 
 	let excluded_topics = []
 	const excludeTopicToggle = event => {
@@ -93,25 +93,23 @@
 	let sort_option = 'stars'
 
 	$: { // a bruteforce hammer solution, but it's fine. what causes the slowness is the rendering
-		repos = filter_out_repos_with_excluded_topics(all_repos, excluded_topics)
-		repos = filter_blacklisted_repos_based_on_current_tab(repos, repo_id_blacklist, current_tab)
+		repos = filter_blacklisted_repos_based_on_current_tab(all_repos, repo_id_blacklist, current_tab)
+		//repos = filter_out_repos_with_excluded_topics(repos, excluded_topics)
 		repos = sort_repos_based_on_sort_option(repos, sort_option)
 	}
 
 	$: explore_tab_repos_count = 1000-repo_id_blacklist.length
 	$: blacklist_tab_repos_count = repo_id_blacklist.length
 
-	const get_excluded_repos_count_based_on_current_tab = () => {
-		if (current_tab == 'explore')
-			return explore_tab_repos_count - repos.length
-		if (current_tab == 'blacklist')
-			return blacklist_tab_repos_count - repos.length
+	const get_excluded_repos_count = (repos, excluded_topics) => {
+		let count = 0
+		repos.forEach(repo => {
+			if (repo.topics.some(topic => excluded_topics.includes(topic))) // if one of the repo topic is in excluded_topics | https://stackoverflow.com/q/16312528/9157799
+				count++
+		})
+		return count
 	}
-	let excluded_repos_count = get_excluded_repos_count_based_on_current_tab()
-	$: {
-		const dummy = `when referenced values like ${current_tab} and ${excluded_topics} changed, this code block executes` // https://svelte.dev/docs#component-format-script-3-$-marks-a-statement-as-reactive
-		excluded_repos_count = get_excluded_repos_count_based_on_current_tab()
-	}
+	$: excluded_repos_count = get_excluded_repos_count(repos, excluded_topics)
 </script>
 
 <main class="max-w-3xl mx-auto">

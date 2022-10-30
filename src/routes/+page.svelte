@@ -56,7 +56,7 @@
 		filter_out_repos_with_excluded_topics,
 		filter_out_blacklisted_repos,
 		filter_only_blacklisted_repos
-	} from './filter_functions' // bisa pake .js atau tidak
+	} from './repos_filter_functions' // bisa pake .js atau tidak
 
 	const fetchRepos = async () => {
 		const response = await fetch('http://localhost:3000/repositories')

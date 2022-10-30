@@ -52,17 +52,10 @@
 		}
 	}
 
-	import { filter_out_repos_with_excluded_topics } from './filter_functions' // bisa pake .js atau tidak
-
-	const filter_out_blacklisted_repos = repos => {
-		const not_blacklisted_repo = repo => {
-			if (repo_id_blacklist.includes(repo.id))
-				return false
-			else
-				return true
-		}
-		return repos.filter(not_blacklisted_repo)
-	}
+	import {
+		filter_out_repos_with_excluded_topics,
+		filter_out_blacklisted_repos
+	} from './filter_functions' // bisa pake .js atau tidak
 
 	const filter_only_blacklisted_repos = repos => {
 		const is_blacklisted_repo = repo => {
@@ -120,7 +113,7 @@
 
 	const filter_blacklisted_repos_based_on_current_tab = repos => {
 		if (tab == 'explore')
-			return filter_out_blacklisted_repos(repos)
+			return filter_out_blacklisted_repos(repos, repo_id_blacklist)
 		if (tab == 'blacklist')
 			return filter_only_blacklisted_repos(repos)
 	}
@@ -128,7 +121,7 @@
 	let repo_id_blacklist = []
 	const blacklistRepo = repo_id => {
 		repo_id_blacklist = [...repo_id_blacklist, repo_id]
-		repos = filter_out_blacklisted_repos(repos)
+		repos = filter_out_blacklisted_repos(repos, repo_id_blacklist)
 	}
 	const removeFromBlackList = repo_id => {
 		repo_id_blacklist = repo_id_blacklist.filter(id => id != repo_id)

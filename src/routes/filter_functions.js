@@ -6,3 +6,13 @@ export const filter_out_repos_with_excluded_topics = (repos, excluded_topics) =>
    }
    return repos.filter(no_excluded_topics)
 }
+
+export const filter_out_blacklisted_repos = (repos, repo_id_blacklist) => {
+   const not_blacklisted_repo = repo => {
+      if (repo_id_blacklist.includes(repo.id))
+         return false
+      else
+         return true
+   }
+   return repos.filter(not_blacklisted_repo)
+}

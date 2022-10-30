@@ -10,7 +10,7 @@
 		all_repos = await fetchAllReposOrGetFromLocalStorage()
 		excluded_topics = getExcludedTopicsFromSessionStorage()
 		all_repos = sort_repos_by_stars(all_repos)
-		repos = filter_out_repos_with_excluded_topics(all_repos)
+		repos = filter_out_repos_with_excluded_topics(all_repos, excluded_topics)
 	})
 
 	const getExcludedTopicsFromSessionStorage = () => {
@@ -52,14 +52,7 @@
 		}
 	}
 
-	const filter_out_repos_with_excluded_topics = repos => {
-		const no_excluded_topics = repo => {
-			if (repo.topics.some(topic => excluded_topics.includes(topic))) // if the repo topics is in excluded topics | https://stackoverflow.com/q/16312528/9157799
-				return false
-			return true
-		}
-		return repos.filter(no_excluded_topics)
-	}
+	import { filter_out_repos_with_excluded_topics } from './filter_functions' // bisa pake .js atau tidak
 
 	const filter_out_blacklisted_repos = repos => {
 		const not_blacklisted_repo = repo => {
@@ -120,7 +113,7 @@
 		else // if already excluded, remove from excluded_topics
 			excluded_topics = excluded_topics.filter(t => t !== topic) // https://stackoverflow.com/a/44433050/9157799
 		sessionStorage.setItem('excluded_topics', JSON.stringify(excluded_topics))
-		repos = filter_out_repos_with_excluded_topics(all_repos)
+		repos = filter_out_repos_with_excluded_topics(all_repos, excluded_topics)
 		repos = filter_blacklisted_repos_based_on_current_tab(repos)
 		repos = sort_repos_based_on_sort_option(repos)
 	}
@@ -146,7 +139,7 @@
 	const switchTab = chosenTab => {
 		tab = chosenTab
 		repos = filter_blacklisted_repos_based_on_current_tab(all_repos)
-		repos = filter_out_repos_with_excluded_topics(repos)
+		repos = filter_out_repos_with_excluded_topics(repos, excluded_topics)
 		repos = sort_repos_based_on_sort_option(repos)
 	}
 

@@ -32,6 +32,8 @@ export const filter_blacklisted_repos_based_on_current_tab = (repos, repo_id_bla
       return filter_out_blacklisted_repos(repos, repo_id_blacklist)
    if (current_tab == 'blacklist')
       return filter_only_blacklisted_repos(repos, repo_id_blacklist)
+   else
+      return repos
 }
 
 export const filter_whitelisted_repos_based_on_current_tab = (repos, repo_id_whitelist, current_tab) => {
@@ -59,4 +61,6 @@ export const filter_whitelisted_repos_based_on_current_tab = (repos, repo_id_whi
       return filter_out_whitelisted_repos(repos, repo_id_whitelist)
    if (current_tab == 'whitelist')
       return filter_only_whitelisted_repos(repos, repo_id_whitelist)
+   else
+      return repos
 }

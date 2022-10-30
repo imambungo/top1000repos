@@ -86,9 +86,9 @@
 	}
 
 	const filter_blacklisted_repos_based_on_current_tab = repos => {
-		if (tab == 'explore')
+		if (current_tab == 'explore')
 			return filter_out_blacklisted_repos(repos, repo_id_blacklist)
-		if (tab == 'blacklist')
+		if (current_tab == 'blacklist')
 			return filter_only_blacklisted_repos(repos, repo_id_blacklist)
 	}
 
@@ -102,9 +102,9 @@
 		repos = filter_only_blacklisted_repos(repos, repo_id_blacklist)
 	}
 
-	let tab = 'explore'
+	let current_tab = 'explore'
 	const switchTab = chosenTab => {
-		tab = chosenTab
+		current_tab = chosenTab
 		repos = filter_blacklisted_repos_based_on_current_tab(all_repos)
 		repos = filter_out_repos_with_excluded_topics(repos, excluded_topics)
 		repos = sort_repos_based_on_sort_option(repos)
@@ -126,16 +126,16 @@
 	$: explore_tab_repos_count = 1000-repo_id_blacklist.length
 	$: blacklist_tab_repos_count = repo_id_blacklist.length
 
-	const get_excluded_repos_count_based_on_tab = () => {
-		if (tab == 'explore')
+	const get_excluded_repos_count_based_on_current_tab = () => {
+		if (current_tab == 'explore')
 			return explore_tab_repos_count - repos.length
-		if (tab == 'blacklist')
+		if (current_tab == 'blacklist')
 			return blacklist_tab_repos_count - repos.length
 	}
-	let excluded_repos_count = get_excluded_repos_count_based_on_tab()
+	let excluded_repos_count = get_excluded_repos_count_based_on_current_tab()
 	$: {
-		const dummy = `when referenced values like ${tab} and ${excluded_topics} changed, this code block executes` // https://svelte.dev/docs#component-format-script-3-$-marks-a-statement-as-reactive
-		excluded_repos_count = get_excluded_repos_count_based_on_tab()
+		const dummy = `when referenced values like ${current_tab} and ${excluded_topics} changed, this code block executes` // https://svelte.dev/docs#component-format-script-3-$-marks-a-statement-as-reactive
+		excluded_repos_count = get_excluded_repos_count_based_on_current_tab()
 	}
 </script>
 
@@ -188,11 +188,11 @@
 								</div>
 							{/if}
 							<div class='grow flex justify-end'>
-								{#if tab == 'explore'}
+								{#if current_tab == 'explore'}
 									<button on:click={() => blacklistRepo(repo.id)}> <!-- https://stackoverflow.com/q/58262380/9157799 -->
 										blacklist
 									</button>
-								{:else if tab == 'blacklist'}
+								{:else if current_tab == 'blacklist'}
 									<button on:click={() => removeFromBlackList(repo.id)}> <!-- https://stackoverflow.com/q/58262380/9157799 -->
 										remove blacklist
 									</button>

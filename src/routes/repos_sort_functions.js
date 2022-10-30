@@ -19,3 +19,10 @@ export const sort_repos_by_top_5_PR_thumbs_up = repos => {
    }
    return repos.sort(compare_top_5_PR_thumbs_up) // https://svelte.dev/tutorial/updating-arrays-and-objects
 }
+
+export const sort_repos_based_on_sort_option = (repos, sort_option) => {
+   if (sort_option == 'stars')
+      return sort_repos_by_stars(repos)
+   if (sort_option == 'top 5 pr thumbs up')
+      return sort_repos_by_top_5_PR_thumbs_up(repos)
+}

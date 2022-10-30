@@ -83,7 +83,7 @@
 		sessionStorage.setItem('excluded_topics', JSON.stringify(excluded_topics))
 		repos = filter_out_repos_with_excluded_topics(all_repos, excluded_topics)
 		repos = filter_blacklisted_repos_based_on_current_tab(repos, repo_id_blacklist, current_tab)
-		repos = sort_repos_based_on_sort_option(repos)
+		repos = sort_repos_based_on_sort_option(repos, sort_option)
 	}
 
 	let repo_id_blacklist = []
@@ -101,20 +101,13 @@
 		current_tab = chosenTab
 		repos = filter_blacklisted_repos_based_on_current_tab(all_repos, repo_id_blacklist, current_tab)
 		repos = filter_out_repos_with_excluded_topics(repos, excluded_topics)
-		repos = sort_repos_based_on_sort_option(repos)
-	}
-
-	const sort_repos_based_on_sort_option = repos => {
-		if (sort_option == 'stars')
-			return sort_repos_by_stars(repos)
-		if (sort_option == 'top 5 pr thumbs up')
-			return sort_repos_by_top_5_PR_thumbs_up(repos)
+		repos = sort_repos_based_on_sort_option(repos, sort_option)
 	}
 
 	let sort_option = 'stars'
 	const sortBy = sortOption => {
 		sort_option = sortOption
-		repos = sort_repos_based_on_sort_option(repos)
+		repos = sort_repos_based_on_sort_option(repos, sort_option)
 	}
 
 	$: explore_tab_repos_count = 1000-repo_id_blacklist.length

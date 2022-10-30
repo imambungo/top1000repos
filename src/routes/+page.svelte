@@ -20,7 +20,6 @@
 	onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
 		all_repos = await fetchAllReposOrGetFromLocalStorage()
 		excluded_topics = getExcludedTopicsFromSessionStorage()
-		repos = sort_repos_by_stars(all_repos)
 		//repos = filter_out_repos_with_excluded_topics(repos, excluded_topics)
 	})
 

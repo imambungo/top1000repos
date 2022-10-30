@@ -70,7 +70,8 @@
 
 	import {
 		sort_repos_by_stars,
-		sort_repos_by_top_5_PR_thumbs_up
+		sort_repos_by_top_5_PR_thumbs_up,
+		sort_repos_based_on_sort_option
 	} from './repos_sort_functions'
 
 	let excluded_topics = []

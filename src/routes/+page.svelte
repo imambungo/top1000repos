@@ -25,27 +25,24 @@
 	const get_repo_id_blacklist_from_local_storage = () => {
 		let repo_id_blacklist = localStorage.getItem('repo_id_blacklist')
 		repo_id_blacklist = JSON.parse(repo_id_blacklist)
-		if (repo_id_blacklist != null) {
+		if (repo_id_blacklist != null)
 			return repo_id_blacklist
-		}
 		return []
 	}
 
 	const get_repo_id_whitelist_from_local_storage = () => {
 		let repo_id_whitelist = localStorage.getItem('repo_id_whitelist')
 		repo_id_whitelist = JSON.parse(repo_id_whitelist)
-		if (repo_id_whitelist != null) {
+		if (repo_id_whitelist != null)
 			return repo_id_whitelist
-		}
 		return []
 	}
 
 	const getExcludedTopicsFromSessionStorage = () => {
 		let excludedTopics = sessionStorage.getItem('excluded_topics')
-		if (excludedTopics != null) {
-			excludedTopics = JSON.parse(excludedTopics)
+		excludedTopics = JSON.parse(excludedTopics)
+		if (excludedTopics != null)
 			return excludedTopics
-		}
 		return []
 	}
 

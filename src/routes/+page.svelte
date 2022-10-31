@@ -17,8 +17,28 @@
 	onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
 		all_repos = await fetchAllReposOrGetFromLocalStorage()
 		excluded_topics = getExcludedTopicsFromSessionStorage()
+		repo_id_blacklist = get_repo_id_blacklist_from_local_storage()
+		repo_id_whitelist = get_repo_id_whitelist_from_local_storage()
 		//repos = filter_out_repos_with_excluded_topics(repos, excluded_topics)
 	})
+
+	const get_repo_id_blacklist_from_local_storage = () => {
+		let repo_id_blacklist = localStorage.getItem('repo_id_blacklist')
+		repo_id_blacklist = JSON.parse(repo_id_blacklist)
+		if (repo_id_blacklist != null) {
+			return repo_id_blacklist
+		}
+		return []
+	}
+
+	const get_repo_id_whitelist_from_local_storage = () => {
+		let repo_id_whitelist = localStorage.getItem('repo_id_whitelist')
+		repo_id_whitelist = JSON.parse(repo_id_whitelist)
+		if (repo_id_whitelist != null) {
+			return repo_id_whitelist
+		}
+		return []
+	}
 
 	const getExcludedTopicsFromSessionStorage = () => {
 		let excludedTopics = sessionStorage.getItem('excluded_topics')
@@ -80,17 +100,21 @@
 	let repo_id_blacklist = []
 	const blacklistRepo = repo_id => {
 		repo_id_blacklist = [...repo_id_blacklist, repo_id]
+		localStorage.setItem('repo_id_blacklist', JSON.stringify(repo_id_blacklist))
 	}
 	const removeFromBlackList = repo_id => {
 		repo_id_blacklist = repo_id_blacklist.filter(id => id != repo_id)
+		localStorage.setItem('repo_id_blacklist', JSON.stringify(repo_id_blacklist))
 	}
 
 	let repo_id_whitelist = []
 	const whitelistRepo = repo_id => {
 		repo_id_whitelist = [...repo_id_whitelist, repo_id]
+		localStorage.setItem('repo_id_whitelist', JSON.stringify(repo_id_whitelist))
 	}
 	const removeFromWhiteList = repo_id => {
 		repo_id_whitelist = repo_id_whitelist.filter(id => id != repo_id)
+		localStorage.setItem('repo_id_whitelist', JSON.stringify(repo_id_whitelist))
 	}
 
 	let current_tab = 'explore'

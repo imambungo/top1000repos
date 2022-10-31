@@ -118,11 +118,11 @@
 	let sort_option = 'stars'
 
 	$: { // a bruteforce hammer solution, but it's fine. what causes the slowness is the rendering
-		repos = all_repos
+		repos = sort_repos_based_on_sort_option(all_repos, sort_option)
+		repos = repos.map((repo, index) => ({...repo, rank: index+1}))
 		repos = filter_blacklisted_repos_based_on_current_tab(repos, repo_id_blacklist, current_tab)
 		repos = filter_whitelisted_repos_based_on_current_tab(repos, repo_id_whitelist, current_tab)
 		//repos = filter_out_repos_with_excluded_topics(repos, excluded_topics)
-		repos = sort_repos_based_on_sort_option(repos, sort_option)
 	}
 
 	$: explore_tab_repos_count = 1000 - repo_id_blacklist.length - repo_id_whitelist.length
@@ -178,10 +178,10 @@
 	{:else}
 		Excluded: {excluded_repos_count}
 		<div class='flex flex-col gap-5'>
-			{#each repos as repo, i (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
+			{#each repos as repo (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
 				<div class="flex {repo.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'}"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 -->
 					<div class="w-10 text-right shrink-0 mr-3 text-gray-700"> <!-- number | shrink: https://stackoverflow.com/a/45741742/9157799 -->
-						{i+1}
+						{repo.rank}
 					</div>
 					<div class='grow flex flex-col gap-1'> <!-- the rest | grow against number -->
 						<div class='flex flex-wrap gap-2'>

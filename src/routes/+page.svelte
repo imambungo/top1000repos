@@ -221,7 +221,7 @@
 						{/if}
 						<div class='flex flex-wrap gap-x-4 text-xs text-gray-600'> <!-- last_commit_date & PRs thumbs up -->
 							<StargazersCount stargazers_count={repo.stargazers_count}/>
-							<Top5PRThumbsUp top_5_pr_thumbs_up={repo.top_5_pr_thumbs_up}/>
+							<Top5PRThumbsUp top_5_pr_thumbs_up={repo.top_5_pr_thumbs_up} html_url={repo.html_url}/>
 							<LastCommitDate last_commit_date={repo.last_commit_date}/>
 						</div>
 					</div>

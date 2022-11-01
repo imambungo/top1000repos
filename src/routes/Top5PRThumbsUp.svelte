@@ -23,8 +23,8 @@
 </script>
 
 <div class='whitespace-nowrap'>
-	Top 5 PRs thumbs up:
-	<a href={top_5_pr_url} target='_blank' class='{color()} {top_5_pr_thumbs_up == null && "font-black"}'> <!-- font-black means the boldest possible in tailwindcss | use span because it's an inline elemtn, so we don't need to wrap things in a flex div -->
+	<span title='total 👍 of the top 5 closed (possibly merged) PRs of the last 12 months'>Top 5 PRs thumbs up</span>:
+	<a href={top_5_pr_url} target='_blank' class='{color()} {top_5_pr_thumbs_up == null && "font-black"}'> <!-- font-black means the boldest possible in tailwindcss -->
 		{top_5_pr_thumbs_up ? top_5_pr_thumbs_up : 0} <!-- if null (no closed PR in the last 1 year), set to 0 -->
 	</a>
 </div>

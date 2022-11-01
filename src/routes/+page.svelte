@@ -179,8 +179,10 @@
 		<div class='flex flex-col gap-5'>
 			{#each repos as repo (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
 				<div class="flex {repo.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'}"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 -->
-					<div class="w-10 text-right shrink-0 mr-3 text-gray-700"> <!-- number | shrink: https://stackoverflow.com/a/45741742/9157799 -->
-						{repo.rank}
+					<div class="w-10  shrink-0 mr-3 text-gray-700 flex justify-end"> <!-- number | shrink: https://stackoverflow.com/a/45741742/9157799 -->
+						<p title='rank based on the number of stars'>
+							{repo.rank}
+						</p>
 					</div>
 					<div class='grow flex flex-col gap-1'> <!-- the rest | grow against number -->
 						<div class='flex flex-wrap gap-2'>

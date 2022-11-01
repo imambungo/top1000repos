@@ -3,6 +3,7 @@
 	import LastCommitDate from './LastCommitDate.svelte'
 	import Top5PRThumbsUp from './Top5PRThumbsUp.svelte'
 	import Description from './Description.svelte'
+	import Rank from './Rank.svelte'
 
 	import {
 		filter_blacklisted_repos_based_on_current_tab,
@@ -179,11 +180,7 @@
 		<div class='flex flex-col gap-5'>
 			{#each repos as repo (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
 				<div class="flex {repo.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'}"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 -->
-					<div class="w-10  shrink-0 mr-3 text-gray-700 flex justify-end"> <!-- number | shrink: https://stackoverflow.com/a/45741742/9157799 -->
-						<p title='rank based on the number of stars'>
-							{repo.rank}
-						</p>
-					</div>
+					<Rank rank={repo.rank}/>
 					<div class='grow flex flex-col gap-1'> <!-- the rest | grow against number -->
 						<div class='flex flex-wrap gap-2'>
 							<a href="{repo.html_url}" class="text-blue-600">{repo.full_name}</a>

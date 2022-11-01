@@ -56,7 +56,8 @@
 
 		const fetchReposAndStoreToLocalStorage = async () => {
 			const fetchRepos = async () => {
-				const response = await fetch('http://localhost:3000/repositories')
+				const url = 'http://localhost:3000'
+				const response = await fetch(`${url}/repositories`)
 				const repositories = await response.json()
 				return repositories
 			}

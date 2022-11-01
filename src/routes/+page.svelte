@@ -16,6 +16,8 @@
 
 	onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
 		all_repos = await fetchAllReposOrGetFromLocalStorage()
+		all_repos = sort_repos_based_on_sort_option(all_repos, sort_option)
+		all_repos = all_repos.map((repo, index) => ({...repo, rank: index+1}))
 		excluded_topics = getExcludedTopicsFromSessionStorage()
 		repo_id_blacklist = get_repo_id_blacklist_from_local_storage()
 		repo_id_whitelist = get_repo_id_whitelist_from_local_storage()
@@ -119,7 +121,6 @@
 
 	$: { // a bruteforce hammer solution, but it's fine. what causes the slowness is the rendering
 		repos = sort_repos_based_on_sort_option(all_repos, sort_option)
-		repos = repos.map((repo, index) => ({...repo, rank: index+1}))
 		repos = filter_blacklisted_repos_based_on_current_tab(repos, repo_id_blacklist, current_tab)
 		repos = filter_whitelisted_repos_based_on_current_tab(repos, repo_id_whitelist, current_tab)
 		//repos = filter_out_repos_with_excluded_topics(repos, excluded_topics)

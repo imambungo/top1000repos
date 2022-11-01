@@ -5,7 +5,6 @@
 	import Description from './Description.svelte'
 
 	import {
-		filter_out_repos_with_excluded_topics,
 		filter_blacklisted_repos_based_on_current_tab,
 		filter_whitelisted_repos_based_on_current_tab
 	} from './repos_filter_functions' // bisa pake .js atau tidak
@@ -21,7 +20,6 @@
 		excluded_topics = getExcludedTopicsFromSessionStorage()
 		repo_id_blacklist = get_repo_id_blacklist_from_local_storage()
 		repo_id_whitelist = get_repo_id_whitelist_from_local_storage()
-		//repos = filter_out_repos_with_excluded_topics(repos, excluded_topics)
 	})
 
 	const get_repo_id_blacklist_from_local_storage = () => {
@@ -124,7 +122,6 @@
 		repos = filter_blacklisted_repos_based_on_current_tab(repos, repo_id_blacklist, current_tab)
 		repos = filter_whitelisted_repos_based_on_current_tab(repos, repo_id_whitelist, current_tab)
 		repos = sort_repos_based_on_sort_option(repos, sort_option)
-		//repos = filter_out_repos_with_excluded_topics(repos, excluded_topics)
 	}
 
 	$: explore_tab_repos_count = 1000 - repo_id_blacklist.length - repo_id_whitelist.length

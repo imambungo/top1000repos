@@ -154,6 +154,9 @@
 		<button on:click={() => sort_option = 'top 5 pr thumbs up'}>
 			Top 5 PR thumbs up
 		</button>
+		<button on:click={() => sort_option = 'number of closed pr'}>
+			Number of closed PR
+		</button>
 	</div>
 
 	<p>Excluded topics:</p>

@@ -119,7 +119,7 @@
 	}
 
 	let current_tab = 'explore'
-	let sort_option = 'stars'
+	let sort_option = 'stargazers_count'
 
 	$: { // a bruteforce hammer solution, but it's fine. what causes the slowness is the rendering
 		repos = all_repos
@@ -148,14 +148,17 @@
 
 	<div> <!-- TODO: after clicked, the button should be unclickable -->
 		Sort by:
-		<button on:click={() => sort_option = 'stars'}>
+		<button on:click={() => sort_option = 'stargazers_count'}>
 			stars
 		</button>
-		<button on:click={() => sort_option = 'top 5 pr thumbs up'}>
+		<button on:click={() => sort_option = 'top_5_pr_thumbs_up'}>
 			Top 5 PR thumbs up
 		</button>
-		<button on:click={() => sort_option = 'number of closed pr'}>
+		<button on:click={() => sort_option = 'num_of_closed_pr_since_1_year'}>
 			Number of closed PR
+		</button>
+		<button on:click={() => sort_option = 'num_of_closed_issue_since_1_year'}>
+			Number of closed issues
 		</button>
 	</div>
 

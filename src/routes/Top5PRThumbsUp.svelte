@@ -13,13 +13,9 @@
 			return 'text-green-500'
 	}
 
-	const aYearAgo = () => {
-		const date = new Date()
-		date.setDate(date.getDate() - 365) // https://stackoverflow.com/a/13838662/9157799
-		return date.toISOString().slice(0, 10) // https://stackoverflow.com/a/35922073/9157799
-	}
+	import a_year_ago from '$lib/date.js' // https://kit.svelte.dev/docs/project-structure#project-files
 
-	const top_5_pr_url = `${html_url}/pulls?q=is%3Apr+sort%3Areactions-%2B1-desc+is%3Aclosed+closed%3A%3E${aYearAgo()}`
+	const top_5_pr_url = `${html_url}/pulls?q=is%3Apr+sort%3Areactions-%2B1-desc+is%3Aclosed+closed%3A%3E${a_year_ago()}`
 </script>
 
 <div class='whitespace-nowrap'>

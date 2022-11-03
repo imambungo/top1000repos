@@ -16,47 +16,22 @@
 
 	import { onMount } from 'svelte'; // https://stackoverflow.com/a/74165772/9157799
 
+	import {
+		local_storage as ls,
+		session_storage as ss
+	} from '$lib/local_storage.js'
+
 	onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
 		all_repos = await fetchAllReposOrGetFromLocalStorage()
 		all_repos = sort_repos_based_on_sort_option(all_repos, sort_option)
 		all_repos = all_repos.map((repo, index) => ({...repo, rank: index+1}))
-		excluded_topics = getExcludedTopicsFromSessionStorage()
-		repo_id_blacklist = get_repo_id_blacklist_from_local_storage()
-		repo_id_whitelist = get_repo_id_whitelist_from_local_storage()
+		excluded_topics = ss.getItem('excluded_topics') || []
+		repo_id_blacklist = ls.getItem('repo_id_blacklist') || []
+		repo_id_whitelist = ls.getItem('repo_id_whitelist') || []
 	})
-
-	const get_repo_id_blacklist_from_local_storage = () => {
-		let repo_id_blacklist = localStorage.getItem('repo_id_blacklist')
-		repo_id_blacklist = JSON.parse(repo_id_blacklist)
-		if (repo_id_blacklist != null)
-			return repo_id_blacklist
-		return []
-	}
-
-	const get_repo_id_whitelist_from_local_storage = () => {
-		let repo_id_whitelist = localStorage.getItem('repo_id_whitelist')
-		repo_id_whitelist = JSON.parse(repo_id_whitelist)
-		if (repo_id_whitelist != null)
-			return repo_id_whitelist
-		return []
-	}
-
-	const getExcludedTopicsFromSessionStorage = () => {
-		let excludedTopics = sessionStorage.getItem('excluded_topics')
-		excludedTopics = JSON.parse(excludedTopics)
-		if (excludedTopics != null)
-			return excludedTopics
-		return []
-	}
 
 	import { today } from '$lib/date.js'
 	const fetchAllReposOrGetFromLocalStorage = async () => {
-		const getAllReposFromLocalStorage = () => { // https://stackoverflow.com/a/2010948/9157799
-			let localRepos = localStorage.getItem('all_repos')
-			localRepos = JSON.parse(localRepos)
-			return localRepos
-		}
-
 		const fetchReposAndStoreToLocalStorage = async () => {
 			const fetchRepos = async () => {
 				const url = 'http://localhost:3000'
@@ -65,19 +40,18 @@
 				return repositories
 			}
 			const allRepos = await fetchRepos() // https://stackoverflow.com/a/66080028/9157799
-			localStorage.setItem("all_repos", JSON.stringify(allRepos)) // https://stackoverflow.com/a/2010948/9157799
+			ls.setItem("all_repos", allRepos) // https://stackoverflow.com/a/2010948/9157799
 			return allRepos
 		}
 
-		let localRepos = localStorage.getItem('all_repos')
+		const localRepos = ls.getItem('all_repos')
 		if (localRepos == null) { // first visit
 			return await fetchReposAndStoreToLocalStorage()
 		} else {
-			localRepos = JSON.parse(localRepos)
 			if (localRepos[99].last_verified_at < today()) { // if old data
 				return await fetchReposAndStoreToLocalStorage()
 			} else {
-				return getAllReposFromLocalStorage()
+				return localRepos
 			}
 		}
 	}
@@ -92,27 +66,27 @@
 			excluded_topics = [...excluded_topics, topic] // https://svelte.dev/tutorial/updating-arrays-and-objects
 		else // if already excluded, remove from excluded_topics
 			excluded_topics = excluded_topics.filter(t => t !== topic) // https://stackoverflow.com/a/44433050/9157799
-		sessionStorage.setItem('excluded_topics', JSON.stringify(excluded_topics))
+		ss.setItem('excluded_topics', JSON.stringify(excluded_topics))
 	}
 
 	let repo_id_blacklist = []
 	const blacklistRepo = repo_id => {
 		repo_id_blacklist = [...repo_id_blacklist, repo_id]
-		localStorage.setItem('repo_id_blacklist', JSON.stringify(repo_id_blacklist))
+		ls.setItem('repo_id_blacklist', repo_id_blacklist)
 	}
 	const removeFromBlackList = repo_id => {
 		repo_id_blacklist = repo_id_blacklist.filter(id => id != repo_id)
-		localStorage.setItem('repo_id_blacklist', JSON.stringify(repo_id_blacklist))
+		ls.setItem('repo_id_blacklist', repo_id_blacklist)
 	}
 
 	let repo_id_whitelist = []
 	const whitelistRepo = repo_id => {
 		repo_id_whitelist = [...repo_id_whitelist, repo_id]
-		localStorage.setItem('repo_id_whitelist', JSON.stringify(repo_id_whitelist))
+		ls.setItem('repo_id_whitelist', repo_id_whitelist)
 	}
 	const removeFromWhiteList = repo_id => {
 		repo_id_whitelist = repo_id_whitelist.filter(id => id != repo_id)
-		localStorage.setItem('repo_id_whitelist', JSON.stringify(repo_id_whitelist))
+		ls.setItem('repo_id_whitelist', repo_id_whitelist)
 	}
 
 	let current_tab = 'explore'

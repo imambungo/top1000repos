@@ -13,7 +13,7 @@
 			return 'text-green-500'
 	}
 
-	import a_year_ago from '$lib/date.js' // https://kit.svelte.dev/docs/project-structure#project-files
+	import { a_year_ago } from '$lib/date.js' // https://kit.svelte.dev/docs/project-structure#project-files
 
 	const top_5_pr_url = `${html_url}/pulls?q=is%3Apr+sort%3Areactions-%2B1-desc+is%3Aclosed+closed%3A%3E${a_year_ago()}`
 

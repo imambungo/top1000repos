@@ -30,12 +30,12 @@
 		repo_id_whitelist = ls.getItem('repo_id_whitelist') || []
 	})
 
+	import { PUBLIC_BACKEND_URL } from '$env/static/public'; // https://kit.svelte.dev/docs/modules#$env-static-public
 	import { today } from '$lib/date.js'
 	const fetchAllReposOrGetFromLocalStorage = async () => {
 		const fetchReposAndStoreToLocalStorage = async () => {
 			const fetchRepos = async () => {
-				const url = 'http://localhost:3000'
-				const response = await fetch(`${url}/repositories`)
+				const response = await fetch(`${PUBLIC_BACKEND_URL}/repositories`)
 				const repositories = await response.json()
 				return repositories
 			}

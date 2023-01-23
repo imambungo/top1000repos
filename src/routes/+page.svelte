@@ -1,7 +1,7 @@
 <script>
 	import StargazersCount from './StargazersCount.svelte'
 	import LastCommitDate from './LastCommitDate.svelte'
-	import Top5PRThumbsUp from './Top5PRThumbsUp.svelte'
+	import Top5ClosedPRThumbsUp from './Top5ClosedPRThumbsUp.svelte'
 	import Description from './Description.svelte'
 	import Rank from './Rank.svelte'
 	import NumOfClosedPR from './NumOfClosedPR.svelte'
@@ -122,8 +122,8 @@
 		<button on:click={() => sort_option = 'stargazers_count'}>
 			stars
 		</button>
-		<button on:click={() => sort_option = 'top_5_pr_thumbs_up'}>
-			Top 5 PR thumbs up
+		<button on:click={() => sort_option = 'total_thumbs_up_of_top_5_closed_pr_since_1_year'}>
+			Top 5 closed PR thumbs up
 		</button>
 		<button on:click={() => sort_option = 'num_of_closed_pr_since_1_year'}>
 			Number of closed PR
@@ -198,7 +198,7 @@
 						{/if}
 						<div class='flex flex-wrap gap-x-4 text-xs text-gray-600'> <!-- last_commit_date & PRs thumbs up -->
 							<StargazersCount stargazers_count={repo.stargazers_count}/>
-							<Top5PRThumbsUp top_5_pr_thumbs_up={repo.top_5_pr_thumbs_up} html_url={repo.html_url}/>
+							<Top5ClosedPRThumbsUp total_thumbs_up_of_top_5_closed_pr_since_1_year={repo.total_thumbs_up_of_top_5_closed_pr_since_1_year} html_url={repo.html_url}/>
 							<NumOfClosedPR num_of_closed_pr_since_1_year={repo.num_of_closed_pr_since_1_year} html_url={repo.html_url}/>
 							<NumOfClosedIssues num_of_closed_issue_since_1_year={repo.num_of_closed_issue_since_1_year} html_url={repo.html_url}/>
 							<LastCommitDate last_commit_date={repo.last_commit_date}/>

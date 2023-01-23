@@ -160,10 +160,10 @@
 		<div class='flex flex-col gap-5'>
 			{#each repos as repo (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
 				<div class="flex {repo.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'}"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 -->
-					<Rank rank={repo.rank}/>
+					<Rank rank={repo.rank}/> <!-- NUMBER -->
 					<div class='grow flex flex-col gap-1'> <!-- the rest | grow against number -->
 						<div class='flex flex-wrap gap-2'>
-							<a href="{repo.html_url}" class="text-blue-600">{repo.full_name}</a>
+							<a href="{repo.html_url}" class="text-blue-600">{repo.full_name}</a> <!-- REPO FULL NAME -->
 							{#if repo.archived}
 								<div> <!-- this div prevent "Public archive" from expanding to the full_name height -->
 									<span class='rounded-full border-solid px-2 py-1 text-xs text-yellow-600 border border-yellow-600'>Public archive</span>
@@ -188,7 +188,7 @@
 								{/if}
 							</div>
 						</div>
-						<Description description={repo.description}/>
+						<Description description={repo.description}/> <!-- REPO DESCRIPTION -->
 						{#if repo.topics.length > 0} <!-- topics | if clause to prevent parent's flex gap -->
 							<div class="flex flex-wrap gap-1">
 								{#each repo.topics as topic}

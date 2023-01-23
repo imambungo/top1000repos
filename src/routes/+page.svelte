@@ -23,7 +23,7 @@
 	} from '$lib/local_storage.js'
 
 	onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
-		all_repos = await fetchAllReposOrGetFromLocalStorage()
+		all_repos = await fetchRepos()
 		all_repos = sort_repos_based_on_sort_option(all_repos, sort_option)
 		all_repos = all_repos.map((repo, index) => ({...repo, rank: index+1}))
 		excluded_topics = ss.getItem('excluded_topics') || []
@@ -32,29 +32,11 @@
 	})
 
 	import { PUBLIC_BACKEND_URL } from '$env/static/public'; // https://kit.svelte.dev/docs/modules#$env-static-public
-	import { today } from '$lib/date.js'
-	const fetchAllReposOrGetFromLocalStorage = async () => {
-		const fetchReposAndStoreToLocalStorage = async () => {
-			const fetchRepos = async () => {
-				const response = await fetch(`${PUBLIC_BACKEND_URL}/repositories`)
-				const repositories = await response.json()
-				return repositories
-			}
-			const allRepos = await fetchRepos() // https://stackoverflow.com/a/66080028/9157799
-			ls.setItem("all_repos", allRepos) // https://stackoverflow.com/a/2010948/9157799
-			return allRepos
-		}
 
-		const localRepos = ls.getItem('all_repos')
-		if (localRepos == null) { // first visit
-			return await fetchReposAndStoreToLocalStorage()
-		} else {
-			if (localRepos[99].last_verified_at < today()) { // if old data
-				return await fetchReposAndStoreToLocalStorage()
-			} else {
-				return localRepos
-			}
-		}
+	const fetchRepos = async () => {
+		const response = await fetch(`${PUBLIC_BACKEND_URL}/repositories`)
+		const repositories = await response.json()
+		return repositories
 	}
 
 	let all_repos = []

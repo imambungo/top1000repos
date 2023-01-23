@@ -2,6 +2,7 @@
 	import StargazersCount from './StargazersCount.svelte'
 	import LastCommitDate from './LastCommitDate.svelte'
 	import Top5ClosedPRThumbsUp from './Top5ClosedPRThumbsUp.svelte'
+	import Top5OpenIssueThumbsUp from './Top5OpenIssueThumbsUp.svelte'
 	import Description from './Description.svelte'
 	import Rank from './Rank.svelte'
 	import NumOfClosedPR from './NumOfClosedPR.svelte'
@@ -199,8 +200,7 @@
 						<div class='flex flex-wrap gap-x-4 text-xs text-gray-600'> <!-- last_commit_date & PRs thumbs up -->
 							<StargazersCount stargazers_count={repo.stargazers_count}/>
 							<Top5ClosedPRThumbsUp total_thumbs_up_of_top_5_closed_pr_since_1_year={repo.total_thumbs_up_of_top_5_closed_pr_since_1_year} html_url={repo.html_url}/>
-							<NumOfClosedPR num_of_closed_pr_since_1_year={repo.num_of_closed_pr_since_1_year} html_url={repo.html_url}/>
-							<NumOfClosedIssues num_of_closed_issue_since_1_year={repo.num_of_closed_issue_since_1_year} html_url={repo.html_url}/>
+							<Top5OpenIssueThumbsUp total_thumbs_up_of_top_5_open_issue_of_all_time={repo.total_thumbs_up_of_top_5_open_issue_of_all_time} html_url={repo.html_url}/>
 							<LastCommitDate last_commit_date={repo.last_commit_date}/>
 						</div>
 					</div>

@@ -3,7 +3,7 @@
 	export let html_url
 
 	const color = () => {
-		if (total_thumbs_up_of_top_5_closed_pr_since_1_year == 0 || total_thumbs_up_of_top_5_closed_pr_since_1_year == null)
+		if (total_thumbs_up_of_top_5_closed_pr_since_1_year == 0)
 			return 'text-red-600'
 		if (total_thumbs_up_of_top_5_closed_pr_since_1_year <= 10)
 			return 'text-orange-400'
@@ -19,8 +19,8 @@
 </script>
 
 <div class='whitespace-nowrap'>
-	<span title='total 👍 of the top 5 closed (possibly merged) PRs of the last 12 months'>Top 5 closed PRs thumbs up</span>:
-	<a href={top_5_pr_url} target='_blank' class='{color()} {total_thumbs_up_of_top_5_closed_pr_since_1_year == null && "font-black"}'> <!-- font-black means the boldest possible in tailwindcss -->
-		{total_thumbs_up_of_top_5_closed_pr_since_1_year ? total_thumbs_up_of_top_5_closed_pr_since_1_year : 0} <!-- if null (no closed PR in the last 1 year), set to 0 -->
+	<span title='total 👍 of the top 5 closed (possibly merged) PRs of the last 12 months'>Top 5 closed PRs (1 year) thumbs up</span>:
+	<a href={top_5_pr_url} target='_blank' class='{color()}'>
+		{total_thumbs_up_of_top_5_closed_pr_since_1_year ? total_thumbs_up_of_top_5_closed_pr_since_1_year : 'need update'} <!-- if null, "need update" -->
 	</a>
 </div>

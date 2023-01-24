@@ -19,6 +19,6 @@
 <div class='whitespace-nowrap'>
 	<span title='total 👍 of the top 5 open issues (of all time)'>Top 5 open issues thumbs up</span>:
 	<a href={top_5_open_issue_url} target='_blank' class='{color()}'>
-		{total_thumbs_up_of_top_5_open_issue_of_all_time ? total_thumbs_up_of_top_5_open_issue_of_all_time : 'need update'} <!-- if null, "need update" -->
+		{total_thumbs_up_of_top_5_open_issue_of_all_time}
 	</a>
 </div>

@@ -109,11 +109,8 @@
 		<button on:click={() => sort_option = 'total_thumbs_up_of_top_5_closed_pr_since_1_year'}>
 			Top 5 closed PR thumbs up
 		</button>
-		<button on:click={() => sort_option = 'num_of_closed_pr_since_1_year'}>
-			Number of closed PR
-		</button>
-		<button on:click={() => sort_option = 'num_of_closed_issue_since_1_year'}>
-			Number of closed issues
+		<button on:click={() => sort_option = 'total_thumbs_up_of_top_5_closed_issues_since_1_year'}>
+			Top 5 closed issues thumbs up
 		</button>
 	</div>
 

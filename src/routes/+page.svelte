@@ -83,9 +83,17 @@
 		repos = sort_repos_based_on_sort_option(repos, sort_option)
 	}
 
-	$: explore_tab_repos_count = 1000 - repo_id_blacklist.length - repo_id_whitelist.length
-	$: blacklist_tab_repos_count = repo_id_blacklist.length
-	$: whitelist_tab_repos_count = repo_id_whitelist.length
+	const get_how_many_repos_in_id_list = (all_repos, repo_id_list) => {
+		let count = 0
+		all_repos.forEach(repo => {
+			if (repo_id_list.includes(repo.id))
+				count++
+		})
+		return count
+	}
+	$: blacklist_tab_repos_count = get_how_many_repos_in_id_list(all_repos, repo_id_blacklist) // don't just use repo_id_blacklist.length because when a blacklisted repo is no longer in top 1000, it still get counted
+	$: whitelist_tab_repos_count = get_how_many_repos_in_id_list(all_repos, repo_id_whitelist) // don't just use repo_id_whitelist.length because when a whitelisted repo is no longer in top 1000, it still get counted
+	$: explore_tab_repos_count = 1000 - blacklist_tab_repos_count - whitelist_tab_repos_count
 
 	const get_excluded_repos_count = (repos, excluded_topics) => {
 		let count = 0

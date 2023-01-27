@@ -50,7 +50,7 @@
 			excluded_topics = [...excluded_topics, topic] // https://svelte.dev/tutorial/updating-arrays-and-objects
 		else // if already excluded, remove from excluded_topics
 			excluded_topics = excluded_topics.filter(t => t !== topic) // https://stackoverflow.com/a/44433050/9157799
-		ss.setItem('excluded_topics', JSON.stringify(excluded_topics))
+		ss.setItem('excluded_topics', excluded_topics)
 	}
 
 	let repo_id_blacklist = []

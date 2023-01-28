@@ -5,7 +5,7 @@
 	import Top5ClosedIssuesThumbsUp from './Top5ClosedIssuesThumbsUp.svelte'
 	import Top5OpenIssueThumbsUp from './Top5OpenIssueThumbsUp.svelte'
 	import Description from './Description.svelte'
-	import Rank from './Rank.svelte'
+	import Number from './Number.svelte'
 	import NumOfClosedPR from './NumOfClosedPR.svelte'
 	import NumOfClosedIssues from './NumOfClosedIssues.svelte'
 
@@ -75,6 +75,7 @@
 
 	let current_tab = 'explore'
 	let sort_option = 'stargazers_count'
+	let numbering = 'rank'
 
 	$: { // a bruteforce hammer solution, but it's fine. what causes the slowness is the rendering
 		repos = all_repos
@@ -142,14 +143,24 @@
 		</button>
 	</div>
 
+	<div>
+		Numbering:
+		<button on:click={() => numbering = 'rank'}>
+			rank
+		</button>
+		<button on:click={() => numbering = 'order'}>
+			order
+		</button>
+	</div>
+
 	{#if all_repos.length == 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/docs#template-syntax-await -->
 		<p>Hang on..</p>
 	{:else}
 		Excluded: {excluded_repos_count}
 		<div class='flex flex-col gap-5'>
-			{#each repos as repo (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
+			{#each repos as repo, index (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
 				<div class="flex {repo.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'}"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 -->
-					<Rank rank={repo.rank}/> <!-- NUMBER -->
+					<Number numbering={numbering} rank={repo.rank} order={index+1}/> <!-- NUMBER -->
 					<div class='grow flex flex-col gap-1'> <!-- the rest | grow against number -->
 						<div class='flex flex-wrap gap-2'>
 							<a href="{repo.html_url}" class="text-blue-600">{repo.full_name}</a> <!-- REPO FULL NAME -->

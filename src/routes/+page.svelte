@@ -110,26 +110,6 @@
 <main class="max-w-3xl mx-auto">
 	<h1>GitHub Top 1000 Repositories</h1>
 
-	<div> <!-- TODO: after clicked, the button should be unclickable -->
-		Sort by:
-		<button on:click={() => sort_option = 'stargazers_count'}>
-			stars
-		</button>
-		<button on:click={() => sort_option = 'total_thumbs_up_of_top_5_closed_pr_since_1_year'}>
-			Top 5 closed PR thumbs up
-		</button>
-		<button on:click={() => sort_option = 'total_thumbs_up_of_top_5_closed_issues_since_1_year'}>
-			Top 5 closed issues thumbs up
-		</button>
-	</div>
-
-	<p>Excluded topics:</p>
-	<div class="flex flex-wrap gap-1 mt-1"> <!-- excluded topics -->
-		{#each excluded_topics as topic}
-			<div on:click={excludeTopicToggle} class="cursor-pointer rounded-full bg-sky-100 px-2 pb-0.5 text-sm text-blue-500">{topic}</div>
-		{/each}
-	</div>
-
 	<div>
 		Tab:
 		<button on:click={() => current_tab = 'explore'}> <!-- https://stackoverflow.com/q/58262380/9157799 -->
@@ -143,6 +123,19 @@
 		</button>
 	</div>
 
+	<div> <!-- TODO: after clicked, the button should be unclickable -->
+		Sort by:
+		<button on:click={() => sort_option = 'stargazers_count'}>
+			stars
+		</button>
+		<button on:click={() => sort_option = 'total_thumbs_up_of_top_5_closed_pr_since_1_year'}>
+			Top 5 closed PR thumbs up
+		</button>
+		<button on:click={() => sort_option = 'total_thumbs_up_of_top_5_closed_issues_since_1_year'}>
+			Top 5 closed issues thumbs up
+		</button>
+	</div>
+
 	<div>
 		Numbering:
 		<button on:click={() => numbering = 'rank'}>
@@ -151,6 +144,13 @@
 		<button on:click={() => numbering = 'order'}>
 			order
 		</button>
+	</div>
+
+	<p>Excluded topics:</p>
+	<div class="flex flex-wrap gap-1 mt-1"> <!-- excluded topics -->
+		{#each excluded_topics as topic}
+			<div on:click={excludeTopicToggle} class="cursor-pointer rounded-full bg-sky-100 px-2 pb-0.5 text-sm text-blue-500">{topic}</div>
+		{/each}
 	</div>
 
 	{#if all_repos.length == 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/docs#template-syntax-await -->

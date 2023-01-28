@@ -110,7 +110,7 @@
 <div class="max-w-3xl mx-auto lg:max-w-5xl">
 	<h1>GitHub Top 1000 Repositories</h1>
 	<div class="lg:flex">
-		<div class="text-sm lg:w-1/4"> <!-- options -->
+		<div class="text-sm lg:w-1/4 sticky top-0 lg:self-start"> <!-- OPTIONS | self-start: https://stackoverflow.com/a/66416972/9157799 -->
 			<div>
 				Tab:
 				<button on:click={() => current_tab = 'explore'}> <!-- https://stackoverflow.com/q/58262380/9157799 -->

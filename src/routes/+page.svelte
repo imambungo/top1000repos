@@ -11,7 +11,7 @@
 
 	import {
 		filter_blacklisted_repos_based_on_current_tab,
-		filter_whitelisted_repos_based_on_current_tab
+		//filter_whitelisted_repos_based_on_current_tab
 	} from './repos_filter_functions' // bisa pake .js atau tidak
 
 	import { sort_repos_based_on_sort_option } from './repos_sort_functions'
@@ -29,7 +29,7 @@
 		all_repos = all_repos.map((repo, index) => ({...repo, rank: index+1}))
 		excluded_topics = ss.getItem('excluded_topics') || []
 		repo_id_blacklist = ls.getItem('repo_id_blacklist') || []
-		repo_id_whitelist = ls.getItem('repo_id_whitelist') || []
+		//repo_id_whitelist = ls.getItem('repo_id_whitelist') || []
 	})
 
 	import { PUBLIC_BACKEND_URL } from '$env/static/public'; // https://kit.svelte.dev/docs/modules#$env-static-public
@@ -63,15 +63,15 @@
 		ls.setItem('repo_id_blacklist', repo_id_blacklist)
 	}
 
-	let repo_id_whitelist = []
-	const whitelistRepo = repo_id => {
-		repo_id_whitelist = [...repo_id_whitelist, repo_id]
-		ls.setItem('repo_id_whitelist', repo_id_whitelist)
-	}
-	const removeFromWhiteList = repo_id => {
-		repo_id_whitelist = repo_id_whitelist.filter(id => id != repo_id)
-		ls.setItem('repo_id_whitelist', repo_id_whitelist)
-	}
+	// let repo_id_whitelist = []
+	// const whitelistRepo = repo_id => {
+	// 	repo_id_whitelist = [...repo_id_whitelist, repo_id]
+	// 	ls.setItem('repo_id_whitelist', repo_id_whitelist)
+	// }
+	// const removeFromWhiteList = repo_id => {
+	// 	repo_id_whitelist = repo_id_whitelist.filter(id => id != repo_id)
+	// 	ls.setItem('repo_id_whitelist', repo_id_whitelist)
+	// }
 
 	let current_tab = 'explore'
 	let sort_option = 'stargazers_count'
@@ -80,7 +80,7 @@
 	$: { // a bruteforce hammer solution, but it's fine. what causes the slowness is the rendering
 		repos = all_repos
 		repos = filter_blacklisted_repos_based_on_current_tab(repos, repo_id_blacklist, current_tab)
-		repos = filter_whitelisted_repos_based_on_current_tab(repos, repo_id_whitelist, current_tab)
+		// repos = filter_whitelisted_repos_based_on_current_tab(repos, repo_id_whitelist, current_tab)
 		repos = sort_repos_based_on_sort_option(repos, sort_option)
 	}
 
@@ -93,8 +93,9 @@
 		return count
 	}
 	$: blacklist_tab_repos_count = get_how_many_repos_in_id_list(all_repos, repo_id_blacklist) // don't just use repo_id_blacklist.length because when a blacklisted repo is no longer in top 1000, it still get counted
-	$: whitelist_tab_repos_count = get_how_many_repos_in_id_list(all_repos, repo_id_whitelist) // don't just use repo_id_whitelist.length because when a whitelisted repo is no longer in top 1000, it still get counted
-	$: explore_tab_repos_count = 1000 - blacklist_tab_repos_count - whitelist_tab_repos_count
+	// $: whitelist_tab_repos_count = get_how_many_repos_in_id_list(all_repos, repo_id_whitelist) // don't just use repo_id_whitelist.length because when a whitelisted repo is no longer in top 1000, it still get counted
+	// $: explore_tab_repos_count = 1000 - blacklist_tab_repos_count - whitelist_tab_repos_count
+	$: explore_tab_repos_count = 1000 - blacklist_tab_repos_count
 
 	const get_excluded_repos_count = (repos, excluded_topics) => {
 		let count = 0
@@ -116,9 +117,9 @@
 				<button on:click={() => current_tab = 'explore'}> <!-- https://stackoverflow.com/q/58262380/9157799 -->
 					explore ({explore_tab_repos_count})
 				</button>
-				<button on:click={() => current_tab = 'whitelist'}>
+				<!-- <button on:click={() => current_tab = 'whitelist'}>
 					whitelist ({whitelist_tab_repos_count})
-				</button>
+				</button> -->
 				<button on:click={() => current_tab = 'blacklist'}>
 					blacklist ({blacklist_tab_repos_count})
 				</button>
@@ -174,9 +175,9 @@
 								{/if}
 								<div class='grow flex justify-end'>
 									{#if current_tab == 'explore'}
-										<button on:click={() => whitelistRepo(repo.id)}> <!-- https://stackoverflow.com/q/58262380/9157799 -->
+										<!-- <button on:click={() => whitelistRepo(repo.id)}>
 											whitelist
-										</button>
+										</button> -->
 										<button on:click={() => blacklistRepo(repo.id)}> <!-- https://stackoverflow.com/q/58262380/9157799 -->
 											blacklist
 										</button>
@@ -184,10 +185,10 @@
 										<button on:click={() => removeFromBlackList(repo.id)}> <!-- https://stackoverflow.com/q/58262380/9157799 -->
 											remove blacklist
 										</button>
-									{:else if current_tab == 'whitelist'}
-										<button on:click={() => removeFromWhiteList(repo.id)}> <!-- https://stackoverflow.com/q/58262380/9157799 -->
+									<!-- {:else if current_tab == 'whitelist'}
+										<button on:click={() => removeFromWhiteList(repo.id)}>
 											remove whitelist
-										</button>
+										</button> -->
 									{/if}
 								</div>
 							</div>

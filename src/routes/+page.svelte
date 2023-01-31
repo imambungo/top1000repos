@@ -24,6 +24,7 @@
 	} from '$lib/local_storage.js'
 
 	onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
+		emoji_image_urls = await fetchEmojiImageUrls()
 		all_repos = await fetchRepos()
 		all_repos = sort_repos_based_on_sort_option(all_repos, sort_option)
 		all_repos = all_repos.map((repo, index) => ({...repo, rank: index+1}))
@@ -38,6 +39,13 @@
 		const response = await fetch(`${PUBLIC_BACKEND_URL}/repositories`)
 		const repositories = await response.json()
 		return repositories
+	}
+
+	let emoji_image_urls = new Promise( () => {} ) // https://stackoverflow.com/a/70846910/9157799 | https://stackoverflow.com/a/74165772/9157799
+	const fetchEmojiImageUrls = async () => {
+		const response = await fetch('https://api.github.com/emojis')
+		const emoji_image_urls = await response.json()
+		return emoji_image_urls
 	}
 
 	let all_repos = []
@@ -158,7 +166,7 @@
 			Excluded: {excluded_repos_count}
 		</div>
 
-		{#if all_repos.length == 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/docs#template-syntax-await -->
+		{#if all_repos.length == 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/tutorial/onmount -->
 			<p>Hang on..</p>
 		{:else}
 			<main class='flex flex-col gap-5 lg:w-3/4'>
@@ -192,7 +200,7 @@
 									{/if}
 								</div>
 							</div>
-							<Description description={repo.description}/> <!-- REPO DESCRIPTION -->
+							<Description promise={emoji_image_urls} description={repo.description}/> <!-- REPO DESCRIPTION -->
 							{#if repo.topics.length > 0} <!-- topics | if clause to prevent parent's flex gap -->
 								<div class="flex flex-wrap gap-1">
 									{#each repo.topics as topic}

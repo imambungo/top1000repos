@@ -3,7 +3,6 @@
 	export let description
 
 	const replace_emoji_codes_with_actual_emojis = (description, emoji_image_urls) => {
-		console.log(emoji_image_urls)
 		Object.keys(emoji_image_urls).forEach(literal => {
 			description = description.replaceAll(`:${literal}:`, `${emoji_image_urls[literal]}`)
 		})

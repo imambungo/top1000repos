@@ -133,7 +133,7 @@
 				</button>
 			</div>
 
-			<div> <!-- TODO: after clicked, the button should be unclickable -->
+			<!-- <div>
 				Sort by:
 				<button on:click={() => sort_option = 'stargazers_count'}>
 					stars
@@ -144,7 +144,7 @@
 				<button on:click={() => sort_option = 'total_thumbs_up_of_top_5_closed_issues_since_1_year'}>
 					Top 5 closed issues thumbs up
 				</button>
-			</div>
+			</div> -->
 
 			<div>
 				Numbering:

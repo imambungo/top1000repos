@@ -116,7 +116,7 @@
 	$: excluded_repos_count = get_excluded_repos_count(repos, excluded_topics)
 </script>
 
-<div class="max-w-3xl mx-auto lg:max-w-5xl">
+<div class="min-w-fit lg:min-w-0 lg:max-w-5xl lg:mx-auto"> <!-- https://stackoverflow.com/a/75308868/9157799 -->
 	<h1>GitHub Top 1000 Repositories</h1>
 	<div class="lg:flex">
 		<div class="text-sm lg:w-1/4 sticky top-0 lg:top-8 lg:self-start"> <!-- OPTIONS | self-start: https://stackoverflow.com/a/66416972/9157799 -->

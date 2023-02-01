@@ -157,9 +157,9 @@
 			</div>
 
 			<p>Excluded topics:</p>
-			<div class="flex flex-wrap gap-1 mt-1"> <!-- excluded topics -->
+			<div class="flex flex-wrap gap-1"> <!-- excluded topics -->
 				{#each excluded_topics as topic}
-					<div on:click={excludeTopicToggle} class="cursor-pointer rounded-full bg-sky-100 px-2 pb-0.5 text-sm text-blue-500">{topic}</div>
+					<div on:click={excludeTopicToggle} class="cursor-pointer rounded-full bg-sky-100 px-2 py-1 text-xs text-blue-500">{topic}</div>
 				{/each}
 			</div>
 

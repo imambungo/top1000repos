@@ -12,12 +12,12 @@
 	// 	return description
 	// }
 	const is_emoji = (normal_text_or_emoji_markup, emoji_image_urls) => {
-		Object.keys(emoji_image_urls).forEach(literal => { // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
-			if (normal_text_or_emoji_markup == `:${literal}:`)
-				console.log(`TRUE ${normal_text_or_emoji_markup}`)
-				return true
-		});
-		console.log(`FALSE ${normal_text_or_emoji_markup}`)
+		//return emoji_image_urls[normal_text_or_emoji_markup]
+
+		if (emoji_image_urls[normal_text_or_emoji_markup.replaceAll(':', '')]) {
+			console.log(`TRUE ${normal_text_or_emoji_markup}`)
+			return true
+		}
 		return false
 	}
 </script>

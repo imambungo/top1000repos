@@ -5,17 +5,10 @@
 
 	import Emoji from './Emoji.svelte'
 
-	// const replace_emoji_codes_with_actual_emojis = (description, emoji_image_urls) => {
-	// 	Object.keys(emoji_image_urls).forEach(literal => {
-	// 		description = description.replaceAll(`:${literal}:`, `<img class="h-4 inline-block align-text-bottom" alt="${literal}" src="${emoji_image_urls[literal]}">`)
-	// 	})
-	// 	return description
-	// }
 	const is_emoji = (normal_text_or_emoji_markup, emoji_image_urls) => {
 		//return emoji_image_urls[normal_text_or_emoji_markup]
 
 		if (emoji_image_urls[normal_text_or_emoji_markup.replaceAll(':', '')]) {
-			console.log(`TRUE ${normal_text_or_emoji_markup}`)
 			return true
 		}
 		return false

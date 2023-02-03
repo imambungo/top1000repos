@@ -6,12 +6,7 @@
 	import Emoji from './Emoji.svelte'
 
 	const is_emoji = (normal_text_or_emoji_markup, emoji_image_urls) => {
-		//return emoji_image_urls[normal_text_or_emoji_markup]
-
-		if (emoji_image_urls[normal_text_or_emoji_markup.replaceAll(':', '')]) {
-			return true
-		}
-		return false
+		return emoji_image_urls[ normal_text_or_emoji_markup.replaceAll(':', '') ]
 	}
 </script>
 
@@ -25,7 +20,6 @@
 					{normal_text_or_emoji_markup}
 				{/if}
 			{/each}
-			<!-- {@html description ? replace_emoji_codes_with_actual_emojis(description, emoji_image_urls) : ''} https://stackoverflow.com/q/57580013/9157799 | if null, empty string -->
 		</div>
 	{/if}
 {/await}

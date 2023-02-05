@@ -116,7 +116,7 @@
 	$: excluded_repos_count = get_excluded_repos_count(repos, excluded_topics)
 </script>
 
-<div class="min-w-fit lg:min-w-0 lg:max-w-5xl lg:mx-auto"> <!-- https://stackoverflow.com/a/75308868/9157799 -->
+<div class="lg:max-w-5xl lg:mx-auto">
 	<h1>GitHub Top 1000 Repositories</h1>
 	<div class="lg:flex">
 		<div class="text-sm lg:w-1/4 sticky top-0 lg:top-8 lg:self-start"> <!-- OPTIONS | self-start: https://stackoverflow.com/a/66416972/9157799 -->
@@ -173,7 +173,7 @@
 				{#each repos as repo, index (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
 					<div class="flex {repo.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'}"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 -->
 						<Number numbering={numbering} rank={repo.rank} order={index+1}/> <!-- NUMBER -->
-						<div class='grow flex flex-col gap-1'> <!-- the rest | grow against number -->
+						<div class='grow flex flex-col gap-1 min-w-0'> <!-- the rest | grow against number | https://stackoverflow.com/a/75308868/9157799 -->
 							<div class='flex flex-wrap gap-2'>
 								<a href="{repo.html_url}" class="text-blue-600">{repo.full_name}</a> <!-- REPO FULL NAME -->
 								{#if repo.archived}

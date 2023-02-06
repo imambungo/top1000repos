@@ -116,10 +116,10 @@
 	$: excluded_repos_count = get_excluded_repos_count(repos, excluded_topics)
 </script>
 
-<div class="lg:max-w-5xl lg:mx-auto">
+<div class="ml-3 mr-3 sm:mr-4 md:mr-5 lg:max-w-5xl lg:mx-auto">
 	<h1>GitHub Top 1000 Repositories</h1>
-	<div class="lg:flex">
-		<div class="text-sm lg:w-1/4 sticky top-0 lg:top-8 lg:self-start"> <!-- OPTIONS | self-start: https://stackoverflow.com/a/66416972/9157799 -->
+	<div class="md:flex">
+		<div class="text-sm md:w-1/4 sticky top-0 md:top-8 md:self-start"> <!-- OPTIONS | self-start: https://stackoverflow.com/a/66416972/9157799 -->
 			<div>
 				Tab:
 				<button on:click={() => current_tab = 'explore'}> <!-- https://stackoverflow.com/q/58262380/9157799 -->
@@ -169,7 +169,7 @@
 		{#if all_repos.length == 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/tutorial/onmount -->
 			<p>Hang on..</p>
 		{:else}
-			<main class='flex flex-col gap-5 lg:w-3/4'>
+			<main class='flex flex-col gap-5 md:w-3/4'>
 				{#each repos as repo, index (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
 					<div class="flex {repo.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'}"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 -->
 						<Number numbering={numbering} rank={repo.rank} order={index+1}/> <!-- NUMBER -->

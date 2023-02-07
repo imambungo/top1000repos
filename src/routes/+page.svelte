@@ -187,7 +187,7 @@
 										<!-- <button on:click={() => whitelistRepo(repo.id)}>
 											whitelist
 										</button> -->
-										<button on:click={() => blacklistRepo(repo.id)} class="bg-gray-100 hover:bg-gray-200 border text-gray-700 text-xs py-1 px-2.5 rounded-md"> <!-- https://stackoverflow.com/q/58262380/9157799 -->
+										<button on:click={() => blacklistRepo(repo.id)} class="bg-gray-100 hover:bg-gray-200 border text-gray-700 text-xs py-1 px-3 rounded-md"> <!-- https://stackoverflow.com/q/58262380/9157799 -->
 											Blacklist
 										</button>
 									{:else if current_tab == 'blacklist'}

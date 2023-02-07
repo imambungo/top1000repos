@@ -175,12 +175,10 @@
 						<Number numbering={numbering} rank={repo.rank} order={index+1}/> <!-- NUMBER -->
 						<div class='grow flex flex-col gap-1 min-w-0'> <!-- the rest | grow against number | https://stackoverflow.com/a/75308868/9157799 -->
 							<div class='flex gap-2'>
-								<div class='flex flex-wrap gap-x-2'>
+								<div class='break-words min-w-0'>
 									<a href="{repo.html_url}" class="text-blue-600">{repo.full_name}</a> <!-- REPO FULL NAME / TITLE -->
 									{#if repo.archived}
-										<!-- <div> --> <!-- this div prevent "Public archive" from expanding to the full_name height -->
-											<span class='rounded-full border-solid px-2 py-1 text-xs text-yellow-600 border border-yellow-600'>Public archive</span>
-										<!-- </div> -->
+										<span class='rounded-full border-solid px-2 py-1 text-xs text-yellow-600 border border-yellow-600 whitespace-nowrap'>Public archive</span>
 									{/if}
 								</div>
 								<div class='grow flex justify-end'>

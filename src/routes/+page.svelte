@@ -182,13 +182,13 @@
 										<span class='rounded-full border-solid px-2 py-1 text-xs text-yellow-600 border border-yellow-600 whitespace-nowrap'>Public archive</span>
 									{/if}
 								</div>
-								<div class='grow flex justify-end'>
+								<div class='grow flex justify-end items-center'>
 									{#if current_tab == 'explore'}
 										<!-- <button on:click={() => whitelistRepo(repo.id)}>
 											whitelist
 										</button> -->
-										<button on:click={() => blacklistRepo(repo.id)}> <!-- https://stackoverflow.com/q/58262380/9157799 -->
-											blacklist
+										<button on:click={() => blacklistRepo(repo.id)} class="bg-gray-100 hover:bg-gray-200 border text-gray-800 text-xs py-1 px-2 rounded-md"> <!-- https://stackoverflow.com/q/58262380/9157799 -->
+											Blacklist
 										</button>
 									{:else if current_tab == 'blacklist'}
 										<button on:click={() => removeFromBlackList(repo.id)}> <!-- https://stackoverflow.com/q/58262380/9157799 -->

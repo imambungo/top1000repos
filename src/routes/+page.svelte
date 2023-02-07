@@ -178,7 +178,7 @@
 								<div class='min-w-0 whitespace-pre-wrap'> <!-- https://tailwindcss.com/docs/whitespace#pre-wrap -->
 									<a href="{repo.html_url}" class="text-blue-600 break-words">{repo.full_name}</a> <!-- REPO FULL NAME / TITLE -->
 									{#if repo.archived}
-										<span> </span> <!-- utilizing whitespace-pre-wrap above. it preserve spaces if they're not in the edges which is nice -->
+										<span> </span> <!-- utilizing whitespace-pre-wrap above. it preserve spaces only if they're not in the edges which is nice -->
 										<span class='rounded-full border-solid px-2 py-1 text-xs text-yellow-600 border border-yellow-600 whitespace-nowrap'>Public archive</span>
 									{/if}
 								</div>

@@ -173,10 +173,10 @@
 				<div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200"> <!-- https://flowbite.com/docs/components/tabs/#tabs-with-underline -->
 					<ul class="flex flex-wrap -mb-px">
 						 <li class="mr-2">
-							  <a href="#" on:click={() => current_tab = 'explore'}   class="inline-block p-4 border-b-2 rounded-t-lg border-transparent  hover:text-gray-600 hover:border-gray-300">Explore ({explore_tab_repos_count})</a>
+							  <a href="#" on:click={() => current_tab = 'explore'}   class="inline-block p-4 border-b-2 border-transparent  hover:text-gray-600 hover:border-gray-300">Explore ({explore_tab_repos_count})</a>
 						 </li>
 						 <li class="mr-2">
-							  <a href="#" on:click={() => current_tab = 'blacklist'} class="inline-block p-4 border-b-2 rounded-t-lg text-blue-600 border-blue-600" aria-current="page">Blacklist ({blacklist_tab_repos_count})</a>
+							  <a href="#" on:click={() => current_tab = 'blacklist'} class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Blacklist ({blacklist_tab_repos_count})</a>
 						 </li>
 					</ul>
 			  </div>

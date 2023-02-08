@@ -191,8 +191,8 @@
 											Blacklist
 										</button>
 									{:else if current_tab == 'blacklist'}
-										<button on:click={() => removeFromBlackList(repo.id)}> <!-- https://stackoverflow.com/q/58262380/9157799 -->
-											remove blacklist
+										<button on:click={() => removeFromBlackList(repo.id)} class="bg-gray-100 hover:bg-gray-200 border text-gray-700 text-xs py-1 px-3 rounded-md"> <!-- https://stackoverflow.com/q/58262380/9157799 -->
+											Remove
 										</button>
 									<!-- {:else if current_tab == 'whitelist'}
 										<button on:click={() => removeFromWhiteList(repo.id)}>

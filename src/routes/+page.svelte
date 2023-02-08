@@ -170,6 +170,16 @@
 			<p>Hang on..</p>
 		{:else}
 			<main class='flex flex-col gap-5 md:w-3/4'>
+				<div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200"> <!-- https://flowbite.com/docs/components/tabs/#tabs-with-underline -->
+					<ul class="flex flex-wrap -mb-px">
+						 <li class="mr-2">
+							  <a href="#" on:click={() => current_tab = 'explore'}   class="inline-block p-4 border-b-2 rounded-t-lg border-transparent  hover:text-gray-600 hover:border-gray-300">Explore ({explore_tab_repos_count})</a>
+						 </li>
+						 <li class="mr-2">
+							  <a href="#" on:click={() => current_tab = 'blacklist'} class="inline-block p-4 border-b-2 rounded-t-lg text-blue-600 border-blue-600" aria-current="page">Blacklist ({blacklist_tab_repos_count})</a>
+						 </li>
+					</ul>
+			  </div>
 				{#each repos as repo, index (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
 					<div class="flex {repo.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'}"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 -->
 						<Number numbering={numbering} rank={repo.rank} order={index+1}/> <!-- NUMBER -->

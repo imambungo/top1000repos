@@ -120,19 +120,6 @@
 	<h1>GitHub Top 1000 Repositories</h1>
 	<div class="md:flex">
 		<div class="text-sm md:w-1/4 sticky top-0 md:top-8 md:self-start"> <!-- OPTIONS | self-start: https://stackoverflow.com/a/66416972/9157799 -->
-			<div>
-				Tab:
-				<button on:click={() => current_tab = 'explore'}> <!-- https://stackoverflow.com/q/58262380/9157799 -->
-					explore ({explore_tab_repos_count})
-				</button>
-				<!-- <button on:click={() => current_tab = 'whitelist'}>
-					whitelist ({whitelist_tab_repos_count})
-				</button> -->
-				<button on:click={() => current_tab = 'blacklist'}>
-					blacklist ({blacklist_tab_repos_count})
-				</button>
-			</div>
-
 			<!-- <div>
 				Sort by:
 				<button on:click={() => sort_option = 'stargazers_count'}>

@@ -81,6 +81,7 @@
 	// 	ls.setItem('repo_id_whitelist', repo_id_whitelist)
 	// }
 
+	let option_is_open = false // for mobile view
 	let current_tab = 'explore'
 	let sort_option = 'stargazers_count'
 	let numbering = 'rank'
@@ -117,9 +118,37 @@
 </script>
 
 <div class="pl-3 pr-3 sm:pr-4 md:pr-5 lg:max-w-5xl lg:mx-auto">
-	<h1>GitHub Top 1000 Repositories</h1>
+	<div class='sticky top-0 md:hidden'> <!-- sticky need defined position e.g. top-0 -->
+		<header class='flex justify-between'>
+			<h1>GitHub Top 1000 Repositories</h1>
+			<button on:click={() => option_is_open = !option_is_open}>Options</button>
+		</header>
+		{#if option_is_open}
+			<div> <!-- OPTIONS -->
+				<div>
+					Numbering:
+					<button on:click={() => numbering = 'rank'}>
+						rank
+					</button>
+					<button on:click={() => numbering = 'order'}>
+						order
+					</button>
+				</div>
+
+				<p>Excluded topics:</p>
+				<div class="flex flex-wrap gap-1"> <!-- excluded topics -->
+					{#each excluded_topics as topic}
+						<div on:click={excludeTopicToggle} class="cursor-pointer rounded-full bg-sky-100 px-2 py-1 text-xs text-blue-500">{topic}</div>
+					{/each}
+				</div>
+
+				Excluded: {excluded_repos_count}
+			</div>
+		{/if}
+	</div>
+	<h1 class='hidden md:block'>GitHub Top 1000 Repositories</h1>
 	<div class="md:flex">
-		<div class="text-sm md:w-1/4 sticky top-0 md:top-8 md:self-start"> <!-- OPTIONS | self-start: https://stackoverflow.com/a/66416972/9157799 -->
+		<div class="text-sm md:w-1/4 sticky top-0 md:top-8 md:self-start hidden md:block"> <!-- OPTIONS | self-start: https://stackoverflow.com/a/66416972/9157799 -->
 			<!-- <div>
 				Sort by:
 				<button on:click={() => sort_option = 'stargazers_count'}>

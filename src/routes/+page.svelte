@@ -118,13 +118,13 @@
 </script>
 
 <div class="pl-3 pr-3 sm:pr-4 md:pr-5 lg:max-w-5xl lg:mx-auto">
-	<div class='sticky top-0 md:hidden'> <!-- sticky need defined position e.g. top-0 -->
+	<div class='sticky top-0 md:hidden'> <!-- header and options for mobile view | sticky need defined position e.g. top-0 -->
 		<header class='flex justify-between'>
 			<h1>GitHub Top 1000 Repositories</h1>
 			<button on:click={() => option_is_open = !option_is_open}>Options</button>
 		</header>
 		{#if option_is_open}
-			<div> <!-- OPTIONS -->
+			<div class='text-sm'> <!-- OPTIONS (for mobile view) -->
 				<div>
 					Numbering:
 					<button on:click={() => numbering = 'rank'}>
@@ -146,9 +146,9 @@
 			</div>
 		{/if}
 	</div>
-	<h1 class='hidden md:block'>GitHub Top 1000 Repositories</h1>
+	<h1 class='hidden md:block'>GitHub Top 1000 Repositories</h1> <!-- header for md screen size -->
 	<div class="md:flex">
-		<div class="text-sm md:w-1/4 sticky top-0 md:top-8 md:self-start hidden md:block"> <!-- OPTIONS | self-start: https://stackoverflow.com/a/66416972/9157799 -->
+		<div class="text-sm w-1/4 sticky top-8 self-start hidden md:block"> <!-- OPTIONS (for md screen size) | self-start: https://stackoverflow.com/a/66416972/9157799 -->
 			<!-- <div>
 				Sort by:
 				<button on:click={() => sort_option = 'stargazers_count'}>

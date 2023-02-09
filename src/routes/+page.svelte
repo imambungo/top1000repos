@@ -117,14 +117,14 @@
 	$: excluded_repos_count = get_excluded_repos_count(repos, excluded_topics)
 </script>
 
-<div class="pl-3 pr-3 sm:pr-4 md:pr-5 lg:max-w-5xl lg:mx-auto">
+<div>
 	<div class='sticky top-0 md:hidden'> <!-- header and options for mobile view | sticky need defined position e.g. top-0 -->
 		<header class='flex justify-between'>
 			<h1>GitHub Top 1000 Repositories</h1>
 			<button on:click={() => option_is_open = !option_is_open}>Options</button>
 		</header>
 		{#if option_is_open}
-			<div class='text-sm'> <!-- OPTIONS (for mobile view) -->
+			<div class='text-sm bg-gray-200'> <!-- OPTIONS (for mobile view) -->
 				<div>
 					Numbering:
 					<button on:click={() => numbering = 'rank'}>
@@ -147,7 +147,7 @@
 		{/if}
 	</div>
 	<h1 class='hidden md:block'>GitHub Top 1000 Repositories</h1> <!-- header for md screen size -->
-	<div class="md:flex">
+	<main class="px-3 sm:px-4 md:px-5 md:flex md:gap-2 lg:max-w-5xl lg:mx-auto">
 		<div class="text-sm w-1/4 sticky top-8 self-start hidden md:block"> <!-- OPTIONS (for md screen size) | self-start: https://stackoverflow.com/a/66416972/9157799 -->
 			<!-- <div>
 				Sort by:
@@ -185,8 +185,8 @@
 		{#if all_repos.length == 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/tutorial/onmount -->
 			<p>Hang on..</p>
 		{:else}
-			<main class='flex flex-col gap-5 md:w-3/4'>
-				<div class="text-sm font-medium text-center border-b border-gray-200"> <!-- https://flowbite.com/docs/components/tabs/#tabs-with-underline -->
+			<div class='flex flex-col gap-5 md:w-3/4'>
+				<div class="text-sm font-medium text-center border-b border-gray-200"> <!-- TAB BUTTON | https://flowbite.com/docs/components/tabs/#tabs-with-underline -->
 					<ul class="flex flex-wrap -mb-px">
 						<li class="mr-2">
 							{#if current_tab == 'explore'}
@@ -205,7 +205,7 @@
 					</ul>
 				</div>
 				{#each repos as repo, index (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
-					<div class="flex {repo.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'}"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 -->
+					<div class="flex {repo.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'} -ml-3"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 | use negative margin left because the space before the number is too big -->
 						<Number numbering={numbering} rank={repo.rank} order={index+1}/> <!-- NUMBER -->
 						<div class='grow flex flex-col gap-1 min-w-0'> <!-- the rest | grow against number | https://stackoverflow.com/a/75308868/9157799 -->
 							<div class='flex gap-2'>
@@ -253,7 +253,7 @@
 						</div>
 					</div>
 				{/each}
-			</main>
+			</div>
 		{/if}
-	</div>
+	</main>
 </div>

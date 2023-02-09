@@ -118,7 +118,7 @@
 </script>
 
 <div>
-	<div class='sticky top-0 md:hidden'> <!-- header and options for mobile view | sticky need defined position e.g. top-0 -->
+	<div class='sticky top-0 z-10 md:hidden'> <!-- header and options for mobile view | sticky need defined position e.g. top-0 -->
 		<header class='flex justify-between'>
 			<h1>GitHub Top 1000 Repositories</h1>
 			<button on:click={() => option_is_open = !option_is_open}>Options</button>

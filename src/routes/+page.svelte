@@ -152,38 +152,40 @@
 		<h1 class='text-lg px-4 lg:px-5 lg:max-w-5xl lg:mx-auto'>GitHub Top 1000 Repositories</h1> <!-- header for md screen size -->
 	</header>
 	<main class="px-3 sm:px-4 lg:px-5 md:flex md:gap-2 lg:max-w-5xl lg:mx-auto">
-		<div class="text-sm w-1/4 sticky top-8 self-start hidden md:block"> <!-- OPTIONS (for md screen size) | self-start: https://stackoverflow.com/a/66416972/9157799 -->
-			<!-- <div>
-				Sort by:
-				<button on:click={() => sort_option = 'stargazers_count'}>
-					stars
-				</button>
-				<button on:click={() => sort_option = 'total_thumbs_up_of_top_5_closed_pr_since_1_year'}>
-					Top 5 closed PR thumbs up
-				</button>
-				<button on:click={() => sort_option = 'total_thumbs_up_of_top_5_closed_issues_since_1_year'}>
-					Top 5 closed issues thumbs up
-				</button>
-			</div> -->
+		<div class='pt-4 w-1/4 selft-start hidden md:block'> <!-- OPTIONS (for md screen size) | self-start: https://stackoverflow.com/a/66416972/9157799 -->
+			<div class="text-sm sticky top-5">
+				<!-- <div>
+					Sort by:
+					<button on:click={() => sort_option = 'stargazers_count'}>
+						stars
+					</button>
+					<button on:click={() => sort_option = 'total_thumbs_up_of_top_5_closed_pr_since_1_year'}>
+						Top 5 closed PR thumbs up
+					</button>
+					<button on:click={() => sort_option = 'total_thumbs_up_of_top_5_closed_issues_since_1_year'}>
+						Top 5 closed issues thumbs up
+					</button>
+				</div> -->
 
-			<div>
-				Numbering:
-				<button on:click={() => numbering = 'rank'}>
-					rank
-				</button>
-				<button on:click={() => numbering = 'order'}>
-					order
-				</button>
+				<div>
+					Numbering:
+					<button on:click={() => numbering = 'rank'}>
+						rank
+					</button>
+					<button on:click={() => numbering = 'order'}>
+						order
+					</button>
+				</div>
+
+				<p>Excluded topics:</p>
+				<div class="flex flex-wrap gap-1"> <!-- excluded topics -->
+					{#each excluded_topics as topic}
+						<div on:click={excludeTopicToggle} class="cursor-pointer rounded-full bg-sky-100 px-2 py-1 text-xs text-blue-500">{topic}</div>
+					{/each}
+				</div>
+
+				Excluded: {excluded_repos_count}
 			</div>
-
-			<p>Excluded topics:</p>
-			<div class="flex flex-wrap gap-1"> <!-- excluded topics -->
-				{#each excluded_topics as topic}
-					<div on:click={excludeTopicToggle} class="cursor-pointer rounded-full bg-sky-100 px-2 py-1 text-xs text-blue-500">{topic}</div>
-				{/each}
-			</div>
-
-			Excluded: {excluded_repos_count}
 		</div>
 
 		{#if all_repos.length == 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/tutorial/onmount -->

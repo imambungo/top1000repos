@@ -148,7 +148,9 @@
 			</div>
 		{/if}
 	</div>
-	<h1 class='hidden md:block'>GitHub Top 1000 Repositories</h1> <!-- header for md screen size -->
+	<header class='hidden md:block bg-gray-800 text-white py-2'>
+		<h1 class='text-lg px-4 lg:px-5 lg:max-w-5xl lg:mx-auto'>GitHub Top 1000 Repositories</h1> <!-- header for md screen size -->
+	</header>
 	<main class="px-3 sm:px-4 lg:px-5 md:flex md:gap-2 lg:max-w-5xl lg:mx-auto">
 		<div class="text-sm w-1/4 sticky top-8 self-start hidden md:block"> <!-- OPTIONS (for md screen size) | self-start: https://stackoverflow.com/a/66416972/9157799 -->
 			<!-- <div>

@@ -126,7 +126,7 @@
 			</button>
 		</header>
 		{#if option_is_open}
-			<div class='text-sm bg-gray-200 py-2 px-4'> <!-- OPTIONS (for mobile view) -->
+			<div class='text-sm bg-gray-50 py-2 px-4'> <!-- OPTIONS (for mobile view) -->
 				<div>
 					Numbering:
 					<div class='bg-gray-300 rounded-full p-0.5 w-fit font-semibold text-xs text-white'>

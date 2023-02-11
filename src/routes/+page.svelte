@@ -169,12 +169,14 @@
 
 				<div>
 					Numbering:
-					<button on:click={() => numbering = 'rank'}>
-						rank
-					</button>
-					<button on:click={() => numbering = 'order'}>
-						order
-					</button>
+					<div class='bg-gray-300 rounded-full p-0.5 w-fit font-semibold text-xs text-white'>
+						<button class='px-4 py-1 tracking-tight {numbering == 'rank' ? 'rounded-full bg-gray-50 text-gray-400' : ''}' on:click={() => numbering = 'rank'}> <!-- NOTE: uppercase is not inherited: https://stackoverflow.com/a/2771209/9157799 -->
+							Rank
+						</button>
+						<button class='px-4 py-1 tracking-tight {numbering == 'order' ? 'rounded-full bg-gray-50 text-gray-400' : ''}' on:click={() => numbering = 'order'}>
+							Order
+						</button>
+					</div>
 				</div>
 
 				<p>Excluded topics:</p>

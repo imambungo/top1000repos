@@ -130,27 +130,35 @@
 			</button>
 		</header>
 		{#if option_is_open}
-			<div class='text-sm bg-gray-50 py-2 px-4 rounded drop-shadow'> <!-- OPTIONS (for mobile view) -->
-				<div>
-					Numbering:
+			<div class='text-sm bg-gray-50 py-2 px-4 flex flex-col gap-3 rounded drop-shadow'> <!-- OPTIONS (for mobile view) -->
+				<div class='flex flex-col gap-0.5'>
+					<p class='text-gray-500 text-xs font-medium'>Numbering</p>
 					<div class='bg-gray-300 rounded-full p-0.5 w-fit font-semibold text-xs text-white'>
-						<button class='px-4 py-1 tracking-tight {numbering == 'rank' ? 'rounded-full bg-gray-50 text-gray-400 hover:cursor-default' : ''}' on:click={() => numbering = 'rank'}> <!-- NOTE: uppercase is not inherited: https://stackoverflow.com/a/2771209/9157799 -->
+						<button class='px-4 py-1 tracking-tight {numbering == 'rank' ? 'rounded-full bg-gray-50 text-gray-500 hover:cursor-default' : ''}' on:click={() => numbering = 'rank'}> <!-- NOTE: uppercase is not inherited: https://stackoverflow.com/a/2771209/9157799 -->
 							Rank
 						</button>
-						<button class='px-4 py-1 tracking-tight {numbering == 'order' ? 'rounded-full bg-gray-50 text-gray-400 hover:cursor-default' : ''}' on:click={() => numbering = 'order'}>
+						<button class='px-4 py-1 tracking-tight {numbering == 'order' ? 'rounded-full bg-gray-50 text-gray-500 hover:cursor-default' : ''}' on:click={() => numbering = 'order'}>
 							Order
 						</button>
 					</div>
 				</div>
 
-				<p>Excluded topics:</p>
-				<div class="flex flex-wrap gap-1"> <!-- excluded topics -->
-					{#each excluded_topics as topic}
-						<div on:click={excludeTopicToggle} class="cursor-pointer rounded-full bg-sky-100 px-2 py-1 text-xs text-blue-500">{topic}</div>
-					{/each}
+				<div class='flex flex-col gap-0.5'>
+					<p class='text-gray-500 text-xs font-medium'>Excluded topics</p>
+					<div>
+						<div class="flex flex-wrap gap-1"> <!-- excluded topics -->
+							{#each excluded_topics as topic}
+								<div on:click={excludeTopicToggle} class="cursor-pointer rounded-full bg-sky-100 px-2 py-1 text-xs text-blue-500">{topic}</div>
+							{/each}
+						</div>
+						{#if excluded_repos_count == 1}
+							<p class='text-gray-500 text-xs font-medium'>Dimmed {excluded_repos_count} repo</p>
+						{/if}
+						{#if excluded_repos_count > 1}
+							<p class='text-gray-500 text-xs'>Dimmed {excluded_repos_count} repos</p>
+						{/if}
+					</div>
 				</div>
-
-				Excluded: {excluded_repos_count}
 			</div>
 		{/if}
 	</div>

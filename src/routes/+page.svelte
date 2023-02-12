@@ -164,7 +164,7 @@
 	</header>
 	<main class="px-3 sm:px-4 lg:px-5 md:flex md:gap-2 lg:max-w-5xl lg:mx-auto">
 		<div class='pt-4 w-1/4 selft-start hidden md:block'> <!-- OPTIONS (for md screen size) | self-start: https://stackoverflow.com/a/66416972/9157799 -->
-			<div class="text-sm sticky top-5">
+			<div class="text-sm sticky top-5 flex flex-col gap-4">
 				<!-- <div>
 					Sort by:
 					<button on:click={() => sort_option = 'stargazers_count'}>
@@ -178,26 +178,31 @@
 					</button>
 				</div> -->
 
-				<div>
-					Numbering:
+				<div class='flex flex-col gap-1'>
+					<p class='text-gray-600 text-xs font-medium'>Numbering</p>
 					<div class='bg-gray-300 rounded-full p-0.5 w-fit font-semibold text-xs text-white'>
-						<button class='px-4 py-1 tracking-tight {numbering == 'rank' ? 'rounded-full bg-gray-50 text-gray-400 hover:cursor-default' : ''}' on:click={() => numbering = 'rank'}> <!-- NOTE: uppercase is not inherited: https://stackoverflow.com/a/2771209/9157799 -->
+						<button class='px-4 py-1 tracking-tight {numbering == 'rank' ? 'rounded-full bg-gray-50 text-gray-500 hover:cursor-default' : ''}' on:click={() => numbering = 'rank'}> <!-- NOTE: uppercase is not inherited: https://stackoverflow.com/a/2771209/9157799 -->
 							Rank
 						</button>
-						<button class='px-4 py-1 tracking-tight {numbering == 'order' ? 'rounded-full bg-gray-50 text-gray-400 hover:cursor-default' : ''}' on:click={() => numbering = 'order'}>
+						<button class='px-4 py-1 tracking-tight {numbering == 'order' ? 'rounded-full bg-gray-50 text-gray-500 hover:cursor-default' : ''}' on:click={() => numbering = 'order'}>
 							Order
 						</button>
 					</div>
 				</div>
 
-				<p>Excluded topics:</p>
-				<div class="flex flex-wrap gap-1"> <!-- excluded topics -->
-					{#each excluded_topics as topic}
-						<div on:click={excludeTopicToggle} class="cursor-pointer rounded-full bg-sky-100 px-2 py-1 text-xs text-blue-500">{topic}</div>
-					{/each}
+				<div class='flex flex-col gap-1'>
+					<p class='text-gray-600 text-xs font-medium'>Excluded topics</p>
+					<div>
+						<div class="flex flex-wrap gap-1"> <!-- excluded topics -->
+							{#each excluded_topics as topic}
+								<div on:click={excludeTopicToggle} class="cursor-pointer rounded-full bg-sky-100 px-2 py-1 text-xs text-blue-500">{topic}</div>
+							{/each}
+						</div>
+						{#if excluded_repos_count > 0}
+							<p class='ml-0.5 mt-0.5 text-gray-500 text-xs tracking-tight'>{excluded_repos_count} {excluded_repos_count == 1 ? 'repo' : 'repos'} dimmed</p>
+						{/if}
+					</div>
 				</div>
-
-				Excluded: {excluded_repos_count}
 			</div>
 		</div>
 

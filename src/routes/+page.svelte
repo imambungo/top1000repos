@@ -130,7 +130,7 @@
 			</button>
 		</header>
 		{#if option_is_open}
-			<div class='text-sm bg-gray-50 py-3 px-4 flex flex-col gap-4 rounded drop-shadow overflow-y-auto max-h-[70vh]'> <!-- OPTIONS (for mobile view) -->
+			<div class='text-sm bg-gray-50 py-3 px-4 flex flex-col gap-4 rounded-b drop-shadow overflow-y-auto max-h-[70vh]'> <!-- OPTIONS (for mobile view) -->
 				<div class='flex flex-col gap-1'>
 					<p class='text-gray-600 text-xs font-medium'>Numbering</p>
 					<div class='bg-gray-300 rounded-full p-0.5 w-fit font-semibold text-xs text-white'>
@@ -164,7 +164,7 @@
 	</header>
 	<main class="px-3 sm:px-4 lg:px-5 md:flex md:gap-2 lg:max-w-5xl lg:mx-auto">
 		<div class='w-1/4 selft-start hidden md:block'> <!-- OPTIONS (for md screen size) | self-start: https://stackoverflow.com/a/66416972/9157799 -->
-			<div class="text-sm sticky top-0 py-4 flex flex-col gap-4 overflow-y-auto h-screen">
+			<div class="text-sm sticky top-0 py-4 flex flex-col gap-4 overflow-y-auto max-h-screen">
 				<!-- <div>
 					Sort by:
 					<button on:click={() => sort_option = 'stargazers_count'}>

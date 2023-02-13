@@ -163,8 +163,8 @@
 		<h1 class='text-lg px-4 lg:px-5 lg:max-w-5xl lg:mx-auto'>GitHub Top 1000 Repositories</h1> <!-- header for md screen size -->
 	</header>
 	<main class="px-3 sm:px-4 lg:px-5 md:flex md:gap-2 lg:max-w-5xl lg:mx-auto">
-		<div class='pt-4 w-1/4 selft-start hidden md:block'> <!-- OPTIONS (for md screen size) | self-start: https://stackoverflow.com/a/66416972/9157799 -->
-			<div class="text-sm sticky top-5 flex flex-col gap-4 overflow-y-auto h-96">
+		<div class='w-1/4 selft-start hidden md:block'> <!-- OPTIONS (for md screen size) | self-start: https://stackoverflow.com/a/66416972/9157799 -->
+			<div class="text-sm sticky top-0 py-4 flex flex-col gap-4 overflow-y-auto h-screen">
 				<!-- <div>
 					Sort by:
 					<button on:click={() => sort_option = 'stargazers_count'}>

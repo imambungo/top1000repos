@@ -227,7 +227,7 @@
 					</li>
 				</ul>
 			</nav>
-			<div class='flex flex-col gap-5 py-3'>
+			<div class='flex flex-col gap-5 py-5'>
 				{#if all_repos.length == 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/tutorial/onmount -->
 					<p>Hang on..</p>
 				{:else}

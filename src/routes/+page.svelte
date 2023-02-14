@@ -182,19 +182,6 @@
 	<main class="px-3 sm:px-4 lg:px-5 md:flex md:gap-2 lg:max-w-5xl lg:mx-auto">
 		<div class='w-1/4 hidden md:block'> <!-- OPTIONS (for md screen size) -->
 			<div class="text-sm sticky top-0 py-4 flex flex-col gap-4 overflow-y-auto max-h-screen">
-				<!-- <div>
-					Sort by:
-					<button on:click={() => sort_option = 'stargazers_count'}>
-						stars
-					</button>
-					<button on:click={() => sort_option = 'total_thumbs_up_of_top_5_closed_pr_since_1_year'}>
-						Top 5 closed PR thumbs up
-					</button>
-					<button on:click={() => sort_option = 'total_thumbs_up_of_top_5_closed_issues_since_1_year'}>
-						Top 5 closed issues thumbs up
-					</button>
-				</div> -->
-
 				<div class='flex flex-col gap-1'>
 					<p class='text-gray-600 text-xs font-medium'>Numbering</p>
 					<div class='bg-gray-300 rounded-full p-0.5 w-fit font-semibold text-xs text-white'>
@@ -206,7 +193,6 @@
 						</button>
 					</div>
 				</div>
-
 				<div class='flex flex-col gap-1'>
 					<p class='text-gray-600 text-xs font-medium'>Excluded topics</p>
 					<div>

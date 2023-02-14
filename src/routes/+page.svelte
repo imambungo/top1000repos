@@ -118,17 +118,37 @@
 </script>
 
 <div>
-	<div class='sticky top-0 z-10 md:hidden'> <!-- header and options for mobile view | sticky need defined position e.g. top-0 -->
-		<header class='flex justify-between bg-gray-800 text-white py-2 px-4'>
-			<h1 class='text-lg'>GitHub Top 1000 Repositories</h1>
-			<button class='h-7 w-7 relative' on:click={() => option_is_open = !option_is_open}> <!-- https://stackoverflow.com/a/38327984/9157799 -->
-				{#if !option_is_open}
-					<svg class='h-6 fill-current absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><style>.cls-1{fill:#fff;opacity:0;}.cls-2{fill:#231f20;}</style></defs><title>options-2</title><g id="Layer_2" data-name="Layer 2"><g id="options-2"><g id="options-2-2" data-name="options-2"><rect class="cls-1" width="24" height="24" transform="translate(24 0) rotate(90)"/><path class="previously-cls-2" d="M19,9a3,3,0,0,0-2.82,2H3a1,1,0,0,0,0,2H16.18A3,3,0,1,0,19,9Z"/><path class="previously-cls-2" d="M3,7H4.18A3,3,0,0,0,9.82,7H21a1,1,0,0,0,0-2H9.82A3,3,0,0,0,4.18,5H3A1,1,0,0,0,3,7Z"/><path class="previously-cls-2" d="M21,17H13.82a3,3,0,0,0-5.64,0H3a1,1,0,0,0,0,2H8.18a3,3,0,0,0,5.64,0H21a1,1,0,0,0,0-2Z"/></g></g></g></svg> <!-- https://icon-icons.com/icon/options/111009 | NOTE: Changed all 3 "cls-2" to "previously-cls-2" to be able to use fill-current : https://youtu.be/ZT5vwF6Ooig?t=107 -->
-				{:else}
-					<svg class='h-8 fill-current absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><style>.cls-1{fill:#fff;opacity:0;}.cls-2{fill:#231f20;}</style></defs><title>close</title><g id="Layer_2" data-name="Layer 2"><g id="close"><g id="close-2" data-name="close"><rect class="cls-1" width="24" height="24" transform="translate(24 24) rotate(180)"/><path class="previously-cls-2" d="M13.41,12l4.3-4.29a1,1,0,1,0-1.42-1.42L12,10.59,7.71,6.29A1,1,0,0,0,6.29,7.71L10.59,12l-4.3,4.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L12,13.41l4.29,4.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42Z"/></g></g></g></svg> <!-- https://icon-icons.com/icon/close/111152 | NOTE: Changed the "cls-2" to "previously-cls-2" to be able to use fill-current : https://youtu.be/ZT5vwF6Ooig?t=107 -->
-				{/if}
-			</button>
-		</header>
+	<header class='bg-gray-800 text-white py-2'>
+		<h1 class='text-lg px-4 lg:px-5 lg:max-w-5xl lg:mx-auto'>GitHub Top 1000 Repositories</h1>
+	</header>
+	<div class='sticky top-0 z-10 md:hidden'> <!-- navbar and options for mobile view | sticky need defined position e.g. top-0 -->
+		<nav class="text-sm font-medium text-center border-b border-gray-200 sticky top-0 z-10 bg-white"> <!-- TAB BUTTON for mobile screen | https://flowbite.com/docs/components/tabs/#tabs-with-underline -->
+			<ul class="flex flex-wrap -mb-px">
+				<li class="mr-2">
+					{#if current_tab == 'explore'}
+						<a href="#" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Explore ({explore_tab_repos_count})</a>
+					{:else}
+						<a href="#" class="inline-block p-4 border-b-2 text-gray-500 border-transparent hover:text-gray-600 hover:border-gray-300" on:click={() => current_tab = 'explore'}>Explore ({explore_tab_repos_count})</a>
+					{/if}
+				</li>
+				<li class="mr-2">
+					{#if current_tab == 'blacklist'}
+						<a href="#" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Blacklist ({blacklist_tab_repos_count})</a>
+					{:else}
+						<a href="#" class="inline-block p-4 border-b-2 text-gray-500 border-transparent hover:text-gray-600 hover:border-gray-300" on:click={() => current_tab = 'blacklist'}>Blacklist ({blacklist_tab_repos_count})</a>
+					{/if}
+				</li>
+				<div class='md:hidden grow flex justify-end items-center px-4'>
+					<button class='h-7 w-7 relative text-gray-600' on:click={() => option_is_open = !option_is_open}> <!-- https://stackoverflow.com/a/38327984/9157799 -->
+						{#if !option_is_open}
+							<svg class='h-6 fill-current absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><style>.cls-1{fill:#fff;opacity:0;}.cls-2{fill:#231f20;}</style></defs><title>options-2</title><g id="Layer_2" data-name="Layer 2"><g id="options-2"><g id="options-2-2" data-name="options-2"><rect class="cls-1" width="24" height="24" transform="translate(24 0) rotate(90)"/><path class="previously-cls-2" d="M19,9a3,3,0,0,0-2.82,2H3a1,1,0,0,0,0,2H16.18A3,3,0,1,0,19,9Z"/><path class="previously-cls-2" d="M3,7H4.18A3,3,0,0,0,9.82,7H21a1,1,0,0,0,0-2H9.82A3,3,0,0,0,4.18,5H3A1,1,0,0,0,3,7Z"/><path class="previously-cls-2" d="M21,17H13.82a3,3,0,0,0-5.64,0H3a1,1,0,0,0,0,2H8.18a3,3,0,0,0,5.64,0H21a1,1,0,0,0,0-2Z"/></g></g></g></svg> <!-- https://icon-icons.com/icon/options/111009 | NOTE: Changed all 3 "cls-2" to "previously-cls-2" to be able to use fill-current : https://youtu.be/ZT5vwF6Ooig?t=107 -->
+						{:else}
+							<svg class='h-8 fill-current absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><style>.cls-1{fill:#fff;opacity:0;}.cls-2{fill:#231f20;}</style></defs><title>close</title><g id="Layer_2" data-name="Layer 2"><g id="close"><g id="close-2" data-name="close"><rect class="cls-1" width="24" height="24" transform="translate(24 24) rotate(180)"/><path class="previously-cls-2" d="M13.41,12l4.3-4.29a1,1,0,1,0-1.42-1.42L12,10.59,7.71,6.29A1,1,0,0,0,6.29,7.71L10.59,12l-4.3,4.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L12,13.41l4.29,4.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42Z"/></g></g></g></svg> <!-- https://icon-icons.com/icon/close/111152 | NOTE: Changed the "cls-2" to "previously-cls-2" to be able to use fill-current : https://youtu.be/ZT5vwF6Ooig?t=107 -->
+						{/if}
+					</button>
+				</div>
+			</ul>
+		</nav>
 		{#if option_is_open}
 			<div class='text-sm bg-gray-50 py-3 px-4 flex flex-col gap-4 rounded-b drop-shadow overflow-y-auto max-h-[70vh]'> <!-- OPTIONS (for mobile view) -->
 				<div class='flex flex-col gap-1'>
@@ -159,11 +179,8 @@
 			</div>
 		{/if}
 	</div>
-	<header class='hidden md:block bg-gray-800 text-white py-2'>
-		<h1 class='text-lg px-4 lg:px-5 lg:max-w-5xl lg:mx-auto'>GitHub Top 1000 Repositories</h1> <!-- header for md screen size -->
-	</header>
 	<main class="px-3 sm:px-4 lg:px-5 md:flex md:gap-2 lg:max-w-5xl lg:mx-auto">
-		<div class='w-1/4 selft-start hidden md:block'> <!-- OPTIONS (for md screen size) | self-start: https://stackoverflow.com/a/66416972/9157799 -->
+		<div class='w-1/4 hidden md:block'> <!-- OPTIONS (for md screen size) -->
 			<div class="text-sm sticky top-0 py-4 flex flex-col gap-4 overflow-y-auto max-h-screen">
 				<!-- <div>
 					Sort by:
@@ -210,7 +227,7 @@
 			<p>Hang on..</p>
 		{:else}
 			<div class='flex flex-col gap-5 md:w-3/4'>
-				<div class="text-sm font-medium text-center border-b border-gray-200 sticky top-0 z-10 bg-white"> <!-- TAB BUTTON | https://flowbite.com/docs/components/tabs/#tabs-with-underline -->
+				<nav class="hidden md:block text-sm font-medium text-center border-b border-gray-200 sticky top-0 z-10 bg-white"> <!-- TAB BUTTON for md screen | https://flowbite.com/docs/components/tabs/#tabs-with-underline -->
 					<ul class="flex flex-wrap -mb-px">
 						<li class="mr-2">
 							{#if current_tab == 'explore'}
@@ -226,18 +243,8 @@
 								<a href="#" class="inline-block p-4 border-b-2 text-gray-500 border-transparent hover:text-gray-600 hover:border-gray-300" on:click={() => current_tab = 'blacklist'}>Blacklist ({blacklist_tab_repos_count})</a>
 							{/if}
 						</li>
-						<div class='md:hidden grow flex justify-end items-center px-4'>
-							<button class='h-7 w-7 relative text-gray-600' on:click={() => option_is_open = !option_is_open}> <!-- https://stackoverflow.com/a/38327984/9157799 -->
-								{#if !option_is_open}
-									<svg class='h-6 fill-current absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><style>.cls-1{fill:#fff;opacity:0;}.cls-2{fill:#231f20;}</style></defs><title>options-2</title><g id="Layer_2" data-name="Layer 2"><g id="options-2"><g id="options-2-2" data-name="options-2"><rect class="cls-1" width="24" height="24" transform="translate(24 0) rotate(90)"/><path class="previously-cls-2" d="M19,9a3,3,0,0,0-2.82,2H3a1,1,0,0,0,0,2H16.18A3,3,0,1,0,19,9Z"/><path class="previously-cls-2" d="M3,7H4.18A3,3,0,0,0,9.82,7H21a1,1,0,0,0,0-2H9.82A3,3,0,0,0,4.18,5H3A1,1,0,0,0,3,7Z"/><path class="previously-cls-2" d="M21,17H13.82a3,3,0,0,0-5.64,0H3a1,1,0,0,0,0,2H8.18a3,3,0,0,0,5.64,0H21a1,1,0,0,0,0-2Z"/></g></g></g></svg> <!-- https://icon-icons.com/icon/options/111009 | NOTE: Changed all 3 "cls-2" to "previously-cls-2" to be able to use fill-current : https://youtu.be/ZT5vwF6Ooig?t=107 -->
-								{:else}
-									<svg class='h-8 fill-current absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><style>.cls-1{fill:#fff;opacity:0;}.cls-2{fill:#231f20;}</style></defs><title>close</title><g id="Layer_2" data-name="Layer 2"><g id="close"><g id="close-2" data-name="close"><rect class="cls-1" width="24" height="24" transform="translate(24 24) rotate(180)"/><path class="previously-cls-2" d="M13.41,12l4.3-4.29a1,1,0,1,0-1.42-1.42L12,10.59,7.71,6.29A1,1,0,0,0,6.29,7.71L10.59,12l-4.3,4.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L12,13.41l4.29,4.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42Z"/></g></g></g></svg> <!-- https://icon-icons.com/icon/close/111152 | NOTE: Changed the "cls-2" to "previously-cls-2" to be able to use fill-current : https://youtu.be/ZT5vwF6Ooig?t=107 -->
-								{/if}
-							</button>
-						</div>
 					</ul>
-
-				</div>
+				</nav>
 				{#each repos as repo, index (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
 					<div class="flex {repo.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'} -ml-3"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 | use negative margin left because the space before the number is too big -->
 						<Number numbering={numbering} rank={repo.rank} order={index+1}/> <!-- NUMBER -->

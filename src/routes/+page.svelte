@@ -227,10 +227,10 @@
 					</li>
 				</ul>
 			</nav>
-			{#if all_repos.length == 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/tutorial/onmount -->
-				<p>Hang on..</p>
-			{:else}
-				<div class='flex flex-col gap-5'>
+			<div class='flex flex-col gap-5 py-3'>
+				{#if all_repos.length == 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/tutorial/onmount -->
+					<p>Hang on..</p>
+				{:else}
 					{#each repos as repo, index (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
 						<div class="flex {repo.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'} -ml-3"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 | use negative margin left because the space before the number is too big -->
 							<Number numbering={numbering} rank={repo.rank} order={index+1}/> <!-- NUMBER -->
@@ -280,8 +280,8 @@
 							</div>
 						</div>
 					{/each}
-				</div>
-			{/if}
+				{/if}
+			</div>
 		</div>
 	</main>
 </div>

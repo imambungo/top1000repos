@@ -118,8 +118,11 @@
 </script>
 
 <div>
-	<header class='bg-gray-800 text-white py-2'>
-		<h1 class='text-lg px-4 lg:px-5 lg:max-w-5xl lg:mx-auto'>GitHub Top 1000 Repositories</h1>
+	<header class=''>
+		<div class='p-8 lg:max-w-5xl lg:mx-auto text-center'>
+			<h1 class='text-lg'>Top 1000 Repos</h1>
+			<p>An unofficial web app to explore Github's top 1000 repositories</p>
+		</div>
 	</header>
 	<div class='sticky top-0 z-10 md:hidden'> <!-- navbar and options for mobile view | sticky need defined position e.g. top-0 -->
 		<nav class="text-sm font-medium text-center border-b border-gray-200 sticky top-0 z-10 bg-white flex flex-wrap pr-4 sm:pr-5 pl-2 sm:pl-3"> <!-- TAB BUTTON for mobile screen | https://flowbite.com/docs/components/tabs/#tabs-with-underline -->

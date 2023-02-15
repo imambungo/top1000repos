@@ -153,7 +153,7 @@
 		</nav>
 		{#if option_is_open}
 			<div class='text-sm bg-gray-50 py-3 px-4 flex flex-col gap-4 rounded-b drop-shadow overflow-y-auto max-h-[70vh]'> <!-- OPTIONS (for mobile view) -->
-				<NumberingOption numbering={numbering} on:change={(event) => numbering = event.detail.numbering}/> <!-- https://svelte.dev/tutorial/component-events -->
+				<NumberingOption numbering={numbering} handleChange={newNumbering => numbering = newNumbering}/>
 				<div class='flex flex-col gap-1'>
 					<p class='text-gray-600 text-xs font-medium'>Excluded topics</p>
 					<div>
@@ -173,7 +173,7 @@
 	<main class="px-3 sm:px-4 lg:px-5 md:flex md:gap-2 lg:max-w-5xl lg:mx-auto">
 		<div class='w-1/4 hidden md:block'> <!-- OPTIONS (for md screen size) -->
 			<div class="text-sm sticky top-0 py-4 flex flex-col gap-4 overflow-y-auto max-h-screen">
-				<NumberingOption numbering={numbering} on:change={(event) => numbering = event.detail.numbering}/> <!-- https://svelte.dev/tutorial/component-events -->
+				<NumberingOption numbering={numbering} handleChange={newNumbering => numbering = newNumbering}/>
 				<div class='flex flex-col gap-1'>
 					<p class='text-gray-600 text-xs font-medium'>Excluded topics</p>
 					<div>

@@ -12,8 +12,12 @@
             <div on:click={excludeTopicToggle} class="cursor-pointer rounded-full bg-sky-100 px-2 py-1 text-xs text-blue-500">{topic}</div>
          {/each}
       </div>
-      {#if excluded_repos_count > 0}
-         <p class='ml-0.5 mt-0.5 text-gray-500 text-xs tracking-tight'>{excluded_repos_count} {excluded_repos_count == 1 ? 'repo' : 'repos'} dimmed</p>
-      {/if}
+      <p class='ml-0.5 mt-0.5 text-gray-500 text-xs tracking-tight'>
+         {#if excluded_repos_count > 0}
+            {excluded_repos_count} {excluded_repos_count == 1 ? 'repo' : 'repos'} dimmed.
+         {:else}
+            None. Select a repo topic to exclude it.
+         {/if}
+      </p>
    </div>
 </div>

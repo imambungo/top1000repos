@@ -1,5 +1,6 @@
 <script>
 	import NumberingOption from './NumberingOption.svelte';
+	import ExcludedTopicsOption from './ExcludedTopicsOption.svelte';
 	import StargazersCount from './StargazersCount.svelte'
 	import LastCommitDate from './LastCommitDate.svelte'
 	import Top5ClosedPRThumbsUp from './Top5ClosedPRThumbsUp.svelte'
@@ -154,19 +155,7 @@
 		{#if option_is_open}
 			<div class='text-sm bg-gray-50 py-3 px-4 flex flex-col gap-4 rounded-b drop-shadow overflow-y-auto max-h-[70vh]'> <!-- OPTIONS (for mobile view) -->
 				<NumberingOption numbering={numbering} handleChange={newNumbering => numbering = newNumbering}/>
-				<div class='flex flex-col gap-1'>
-					<p class='text-gray-600 text-xs font-medium'>Excluded topics</p>
-					<div>
-						<div class="flex flex-wrap gap-1"> <!-- excluded topics -->
-							{#each excluded_topics as topic}
-								<div on:click={excludeTopicToggle} class="cursor-pointer rounded-full bg-sky-100 px-2 py-1 text-xs text-blue-500">{topic}</div>
-							{/each}
-						</div>
-						{#if excluded_repos_count > 0}
-							<p class='ml-0.5 mt-0.5 text-gray-500 text-xs tracking-tight'>{excluded_repos_count} {excluded_repos_count == 1 ? 'repo' : 'repos'} dimmed</p>
-						{/if}
-					</div>
-				</div>
+				<ExcludedTopicsOption excluded_topics={excluded_topics} excluded_repos_count={excluded_repos_count} excludeTopicToggle={excludeTopicToggle}/>
 			</div>
 		{/if}
 	</div>
@@ -174,19 +163,7 @@
 		<div class='w-1/4 hidden md:block'> <!-- OPTIONS (for md screen size) -->
 			<div class="text-sm sticky top-0 py-4 flex flex-col gap-4 overflow-y-auto max-h-screen">
 				<NumberingOption numbering={numbering} handleChange={newNumbering => numbering = newNumbering}/>
-				<div class='flex flex-col gap-1'>
-					<p class='text-gray-600 text-xs font-medium'>Excluded topics</p>
-					<div>
-						<div class="flex flex-wrap gap-1"> <!-- excluded topics -->
-							{#each excluded_topics as topic}
-								<div on:click={excludeTopicToggle} class="cursor-pointer rounded-full bg-sky-100 px-2 py-1 text-xs text-blue-500">{topic}</div>
-							{/each}
-						</div>
-						{#if excluded_repos_count > 0}
-							<p class='ml-0.5 mt-0.5 text-gray-500 text-xs tracking-tight'>{excluded_repos_count} {excluded_repos_count == 1 ? 'repo' : 'repos'} dimmed</p>
-						{/if}
-					</div>
-				</div>
+				<ExcludedTopicsOption excluded_topics={excluded_topics} excluded_repos_count={excluded_repos_count} excludeTopicToggle={excludeTopicToggle}/>
 			</div>
 		</div>
 		<div class='md:w-3/4'>

@@ -119,7 +119,7 @@
 	$: excluded_repos_count = get_excluded_repos_count(repos, excluded_topics)
 </script>
 
-<div>
+<div class='pl-[calc(100vw-100%)]'> <!-- https://stackoverflow.com/a/30293718/9157799 for case when there's few item in blacklist (no scrollbar) -->
 	<header class='px-4 py-8 lg:max-w-5xl lg:mx-auto text-center flex flex-col gap-2'>
 		<h1 class='text-3xl font-semibold text-slate-800'>Top 1000 Repos</h1>
 		<p class='text-lg text-slate-700'>An unofficial web app to explore Github's top 1000 repositories</p>

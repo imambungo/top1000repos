@@ -15,7 +15,7 @@
 
 	import { a_year_ago } from '$lib/date.js' // https://kit.svelte.dev/docs/project-structure#project-files
 
-	const top_5_pr_url = `${html_url}/issues?q=is%3Aissue+sort%3Areactions-%2B1-desc+is%3Aclosed+closed%3A%3E${a_year_ago()}`
+	const top_5_closed_issues_url = `${html_url}/issues?q=is%3Aissue+sort%3Areactions-%2B1-desc+is%3Aclosed+closed%3A%3E${a_year_ago()}`
 
 	const boldIfZero = () => {
 		if (num_of_closed_issue_since_1_year == 0)
@@ -25,7 +25,7 @@
 
 <div class='whitespace-nowrap'>
 	<span title='*since the last 12 months'>Number of closed issues*</span>:
-	<a href={top_5_pr_url} target='_blank' class='{color()} {boldIfZero()}'>
+	<a href={top_5_closed_issues_url} target='_blank' class='{color()} {boldIfZero()}'>
 		{num_of_closed_issue_since_1_year}
 	</a>
 </div>

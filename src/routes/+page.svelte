@@ -93,6 +93,7 @@
 		repos = filter_blacklisted_repos_based_on_current_tab(repos, repo_id_blacklist, current_tab)
 		// repos = filter_whitelisted_repos_based_on_current_tab(repos, repo_id_whitelist, current_tab)
 		repos = sort_repos_based_on_sort_option(repos, sort_option)
+		//repos = repos.splice(0, 99)  // for debugging performance problem
 	}
 
 	const get_how_many_repos_in_id_list = (all_repos, repo_id_list) => {

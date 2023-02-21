@@ -179,7 +179,7 @@
    </div>
    <main class="px-3 sm:px-4 lg:px-5 md:flex md:gap-2 lg:max-w-5xl lg:mx-auto">
       <div class='w-1/4 hidden md:block'> <!-- OPTIONS (for desktop / md screen size) -->
-         <div class="text-sm sticky top-0 py-4 flex flex-col gap-4 overflow-y-auto" style="max-height: {md_screen_sticky_options_max_height}px;" bind:this={md_screen_sticky_options}> <!-- Tailwind doesn’t include any sort of client-side runtime, so class names need to be statically extractable at build-time, and can’t depend on any sort of arbitrary dynamic values that change on the client. Use inline styles for these situations.: https://v2.tailwindcss.com/docs/just-in-time-mode | https://svelte.dev/tutorial/bind-this -->
+         <div class="text-sm sticky top-0 py-4 flex flex-col gap-4 overflow-y-auto" style="max-height: {md_screen_sticky_options_max_height}px;" bind:this={md_screen_sticky_options}> <!-- Tailwind doesn’t include any sort of client-side runtime, so class names need to be statically extractable at build-time, and can’t depend on any sort of arbitrary dynamic values that change on the client. Use inline styles for these situations.: https://v2.tailwindcss.com/docs/just-in-time-mode | Don't use CSS calc(), it doesn't work in Svelte | https://svelte.dev/tutorial/bind-this -->
             <NumberingOption numbering={numbering} handleChange={newNumbering => numbering = newNumbering}/>
             <ExcludedTopicsOption excluded_topics={excluded_topics} excluded_repos_count={excluded_repos_count} excludeTopicToggle={excludeTopicToggle}/>
          </div>

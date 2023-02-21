@@ -166,7 +166,7 @@
       {/if}
    </div>
    <main class="px-3 sm:px-4 lg:px-5 md:flex md:gap-2 lg:max-w-5xl lg:mx-auto">
-      <div class='w-1/4 hidden md:block'> <!-- OPTIONS (for md screen size) -->
+      <div class='w-1/4 hidden md:block'> <!-- OPTIONS (for desktop / md screen size) -->
          <div class="text-sm sticky top-0 py-4 flex flex-col gap-4 overflow-y-auto max-h-screen">
             <NumberingOption numbering={numbering} handleChange={newNumbering => numbering = newNumbering}/>
             <ExcludedTopicsOption excluded_topics={excluded_topics} excluded_repos_count={excluded_repos_count} excludeTopicToggle={excludeTopicToggle}/>

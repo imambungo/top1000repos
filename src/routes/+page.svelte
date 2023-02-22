@@ -77,10 +77,19 @@
    let sort_option = 'stargazers_count'
    let numbering = 'rank'
 
+   let explore_repos = []
+   let blacklist_repos = []
+
    $: { // a bruteforce hammer solution, but it's fine. what causes the slowness is the rendering
       repos = all_repos
-      repos = filter_blacklisted_repos_based_on_current_tab(repos, repo_id_blacklist, current_tab)
-      repos = sort_repos_based_on_sort_option(repos, sort_option)
+      explore_repos = filter_blacklisted_repos_based_on_current_tab(repos, repo_id_blacklist, 'explore')
+      explore_repos = sort_repos_based_on_sort_option(explore_repos, sort_option)
+      blacklist_repos = filter_blacklisted_repos_based_on_current_tab(repos, repo_id_blacklist, 'blacklist')
+      blacklist_repos = sort_repos_based_on_sort_option(blacklist_repos, sort_option)
+
+      // repos = filter_blacklisted_repos_based_on_current_tab(repos, repo_id_blacklist, current_tab)
+      // repos = sort_repos_based_on_sort_option(repos, sort_option)
+
       //repos = repos.splice(0, 99)  // for debugging performance problem
    }
 
@@ -177,11 +186,59 @@
                </li>
             </ul>
          </nav>
-         <div class='flex flex-col gap-5 py-5'>
+         <div class='{current_tab != 'explore' ? 'hidden' : ''} flex flex-col gap-5 py-5'>
             {#if all_repos.length == 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/tutorial/onmount -->
                <p>Hang on..</p>
             {:else}
-               {#each repos as repo, index (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
+               {#each explore_repos as repo, index (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
+                  <div class="flex {repo.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'} -ml-3"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 | use negative margin left because the space before the number is too big -->
+                     <Number numbering={numbering} rank={repo.rank} order={index+1}/> <!-- NUMBER -->
+                     <div class='grow flex flex-col gap-1 min-w-0'> <!-- the rest | grow against number | https://stackoverflow.com/a/75308868/9157799 -->
+                        <div class='flex gap-2'>
+                           <div class='min-w-0 whitespace-pre-wrap'> <!-- https://tailwindcss.com/docs/whitespace#pre-wrap -->
+                              <a href="{repo.html_url}" class="text-blue-600 break-words">{repo.full_name}</a> <!-- REPO FULL NAME / TITLE -->
+                              {#if repo.archived}
+                                 <span> </span> <!-- utilizing whitespace-pre-wrap above. it preserve spaces only if they're not in the edges which is nice -->
+                                 <span class='rounded-full border-solid px-2 py-1 text-xs text-yellow-600 border border-yellow-600 whitespace-nowrap'>Public archive</span>
+                              {/if}
+                           </div>
+                           <div class='grow flex justify-end items-center'>
+                              {#if current_tab == 'explore'}
+                                 <button on:click={() => blacklistRepo(repo.id)} class="bg-gray-100 hover:bg-gray-200 border text-gray-700 text-xs py-1 px-3 rounded-md"> <!-- https://stackoverflow.com/q/58262380/9157799 -->
+                                    Blacklist
+                                 </button>
+                              {:else if current_tab == 'blacklist'}
+                                 <button on:click={() => removeFromBlackList(repo.id)} class="bg-gray-100 hover:bg-gray-200 border text-gray-700 text-xs py-1 px-3 rounded-md"> <!-- https://stackoverflow.com/q/58262380/9157799 -->
+                                    Remove
+                                 </button>
+                              {/if}
+                           </div>
+                        </div>
+                        <Description promise={emoji_image_urls} description={repo.description}/> <!-- REPO DESCRIPTION -->
+                        {#if repo.topics.length > 0} <!-- topics | if clause to prevent parent's flex gap -->
+                           <div class="flex flex-wrap gap-1">
+                              {#each repo.topics as topic}
+                                 <div on:click={excludeTopicToggle} class="cursor-pointer rounded-full bg-sky-100 px-2 py-1 text-xs text-blue-500 {excluded_topics.includes(topic) && 'line-through'}">{topic}</div>
+                              {/each}
+                           </div>
+                        {/if}
+                        <div class='flex flex-wrap gap-x-4 text-xs text-gray-600'> <!-- last_commit_date & PRs thumbs up -->
+                           <StargazersCount stargazers_count={repo.stargazers_count}/>
+                           <Top5ClosedPRThumbsUp total_thumbs_up_of_top_5_closed_pr_since_1_year={repo.total_thumbs_up_of_top_5_closed_pr_since_1_year} html_url={repo.html_url}/>
+                           <Top5ClosedIssuesThumbsUp total_thumbs_up_of_top_5_closed_issues_since_1_year={repo.total_thumbs_up_of_top_5_closed_issues_since_1_year} html_url={repo.html_url} has_issues_tab={repo.has_issues}/>
+                           <!-- <Top5OpenIssueThumbsUp total_thumbs_up_of_top_5_open_issue_of_all_time={repo.total_thumbs_up_of_top_5_open_issue_of_all_time} html_url={repo.html_url} has_issues_tab={repo.has_issues}/> -->
+                           <LastCommitDate last_commit_date={repo.last_commit_date}/>
+                        </div>
+                     </div>
+                  </div>
+               {/each}
+            {/if}
+         </div>
+         <div class='{current_tab != 'blacklist' ? 'hidden' : ''} flex flex-col gap-5 py-5'>
+            {#if all_repos.length == 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/tutorial/onmount -->
+               <p>Hang on..</p>
+            {:else}
+               {#each blacklist_repos as repo, index (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
                   <div class="flex {repo.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'} -ml-3"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 | use negative margin left because the space before the number is too big -->
                      <Number numbering={numbering} rank={repo.rank} order={index+1}/> <!-- NUMBER -->
                      <div class='grow flex flex-col gap-1 min-w-0'> <!-- the rest | grow against number | https://stackoverflow.com/a/75308868/9157799 -->

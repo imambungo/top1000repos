@@ -11,6 +11,7 @@
    import Number from './Number.svelte'
    import NumOfClosedPR from './NumOfClosedPR.svelte'
    import NumOfClosedIssues from './NumOfClosedIssues.svelte'
+   import LoadingAnimation from './LoadingAnimation.svelte'
 
    import {
       filter_blacklisted_repos_based_on_current_tab,
@@ -179,7 +180,7 @@
          </nav>
          <div class='flex flex-col gap-5 py-5'>
             {#if all_repos.length == 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/tutorial/onmount -->
-               <p>Hang on..</p>
+               <LoadingAnimation/>
             {:else}
                {#each repos as repo, index (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
                   <div class="flex {repo.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'} -ml-3"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 | use negative margin left because the space before the number is too big -->

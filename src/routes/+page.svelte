@@ -228,4 +228,14 @@
          </div>
       </div>
    </main>
+   {#if all_repos.length != 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/tutorial/onmount -->
+      <footer class='text-center px-4 py-6 text-xs text-gray-700'>
+         <p>
+            App <a class='underline' target="_blank" href="https://icons8.com/icon/103/star">icon</a> by <a class='underline' target="_blank" href="https://icons8.com">Icons8</a>.
+         </p>
+         <p class='md:hidden'>
+            Options <a class='underline' target="_blank" href="https://icon-icons.com/icon/options/111009">burger</a> and <a class='underline' target='_blank' href='https://icon-icons.com/icon/close/111152'>close</a> button by <a class='underline' target='_blank' href='https://icon-icons.com/users/2j7Ni9Qgct0HtmWmLGnLj/icon-sets/'>akveo</a>.
+         </p>
+      </footer>
+   {/if}
 </div>

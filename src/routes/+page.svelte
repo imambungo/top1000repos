@@ -118,8 +118,8 @@
       <p class='text-lg text-slate-700'>An unofficial web app to explore GitHub's top 1000 repositories</p>
    </header>
    <div class='sticky top-0 z-10 md:hidden'> <!-- navbar and options for mobile view | sticky need defined position e.g. top-0 -->
-      <nav class="text-sm font-medium text-center border-b border-gray-200 sticky top-0 z-10 bg-white flex flex-wrap pr-4 sm:pr-5 pl-2 sm:pl-3"> <!-- TAB BUTTON for mobile screen | https://flowbite.com/docs/components/tabs/#tabs-with-underline -->
-         <ul class="flex flex-wrap -mb-px">
+      <nav class="text-xs sm:text-sm font-medium text-center border-b border-gray-200 sticky top-0 z-10 bg-white flex flex-wrap pr-4 sm:pr-5 pl-2 sm:pl-3"> <!-- TAB BUTTON for mobile screen | https://flowbite.com/docs/components/tabs/#tabs-with-underline -->
+         <ul class="pt-1 sm:pt-0 flex flex-wrap -mb-px">
             <li class="mr-2">
                {#if current_tab == 'explore'}
                   <a href="#" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Explore ({explore_tab_repos_count})</a>
@@ -230,10 +230,10 @@
    </main>
    {#if all_repos.length != 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/tutorial/onmount -->
       <footer class='text-center px-6 py-6 text-xs text-slate-500'>
-         <span class='whitespace-nowrap'>
+         <span class='whitespace-nowrap decoration-slate-300'>
             App <a class='underline' target="_blank" href="https://icons8.com/icon/103/star">icon</a> by <a class='underline' target="_blank" href="https://icons8.com">Icons8</a>.
          </span>
-         <span class='md:hidden whitespace-nowrap'>
+         <span class='md:hidden whitespace-nowrap decoration-slate-300'>
             Option <a class='underline' target="_blank" href="https://icon-icons.com/icon/options/111009">burger</a> and <a class='underline' target='_blank' href='https://icon-icons.com/icon/close/111152'>close</a> button by <a class='underline' target='_blank' href='https://icon-icons.com/users/2j7Ni9Qgct0HtmWmLGnLj/icon-sets/'>akveo</a>.
          </span>
       </footer>

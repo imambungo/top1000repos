@@ -229,13 +229,19 @@
       </div>
    </main>
    {#if all_repos.length != 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/tutorial/onmount -->
-      <footer class='text-center px-6 py-6 text-xs text-slate-500'>
-         <span class='whitespace-nowrap decoration-slate-300'>
-            App <a class='underline' target="_blank" href="https://icons8.com/icon/103/star">icon</a> by <a class='underline' target="_blank" href="https://icons8.com">Icons8</a>.
-         </span>
-         <span class='md:hidden whitespace-nowrap decoration-slate-300'>
-            Option <a class='underline' target="_blank" href="https://icon-icons.com/icon/options/111009">burger</a> and <a class='underline' target='_blank' href='https://icon-icons.com/icon/close/111152'>close</a> button by <a class='underline' target='_blank' href='https://icon-icons.com/users/2j7Ni9Qgct0HtmWmLGnLj/icon-sets/'>akveo</a>.
-         </span>
+      <footer class='text-center px-6 py-6 text-xs'>
+         <p class='flex gap-3 justify-center text-slate-600 decoration-slate-300 font-medium'>
+            <a class='underline' target='_blank' href='#'>Twitter</a>
+            <a class='underline' target='_blank' href='mailto:hello@halo.com'>Contact</a>
+         </p>
+         <p class='mt-2 font-light text-slate-500'>
+            <span class='whitespace-nowrap decoration-slate-300'>
+               App <a class='underline' target="_blank" href="https://icons8.com/icon/103/star">icon</a> by <a class='underline' target="_blank" href="https://icons8.com">Icons8</a>.
+            </span>
+            <span class='md:hidden whitespace-nowrap decoration-slate-300'>
+               Option <a class='underline' target="_blank" href="https://icon-icons.com/icon/options/111009">burger</a> and <a class='underline' target='_blank' href='https://icon-icons.com/icon/close/111152'>close</a> button by <a class='underline' target='_blank' href='https://icon-icons.com/users/2j7Ni9Qgct0HtmWmLGnLj/icon-sets/'>akveo</a>.
+            </span>
+         </p>
       </footer>
    {/if}
 </div>

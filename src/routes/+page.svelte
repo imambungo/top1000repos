@@ -231,7 +231,7 @@
    {#if all_repos.length != 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/tutorial/onmount -->
       <footer class='text-center px-6 py-6 text-xs'>
          <p class='flex gap-3 justify-center text-slate-600 decoration-slate-300 font-medium'>
-            <a class='underline' target='_blank' href='#'>Twitter</a>
+            <a class='underline' target='_blank' href='https://twitter.com/top1000repos'>Twitter</a>
             <a class='underline' target='_blank' href='mailto:contact@top1000repos.com'>Contact</a>
          </p>
          <p class='mt-2 font-light text-slate-500'>

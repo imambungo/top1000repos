@@ -42,3 +42,4 @@ You can preview the production build with `npm run preview`.
 ```
 PUBLIC_BACKEND_URL='http://localhost:3000' # https://kit.svelte.dev/docs/modules#$env-static-public
 ```
+kalo d cloudflare bisa setting waktu mau deploy

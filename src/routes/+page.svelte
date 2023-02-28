@@ -110,6 +110,7 @@
 <svelte:head>
    <title>Top 1000 Repos - An unofficial web app to help you explore GitHub's top 1000 repos</title>
    <meta name="description" content="GitHub's top 1000 repositories, all in one page. Blacklist the ones you're not interested in.">
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2099788966207457" crossorigin="anonymous"></script> <!-- https://www.google.com/adsense -->
 </svelte:head>
 
 <div class='pl-[calc(100vw-100%)]'> <!-- https://stackoverflow.com/a/30293718/9157799 for case when there's few item in blacklist (no scrollbar) -->

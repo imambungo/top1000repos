@@ -1,3 +1,7 @@
+<svelte:head>
+   <title>Privacy Policy</title>
+</svelte:head>
+
 <article class='p-3 md:p-5 mx-auto max-w-[40rem] prose-sm prose prose-slate prose-a:font-semibold prose-a:text-sky-500 hover:prose-a:text-sky-600'> <!-- most of them copied from here lol: https://tailwindui.com/privacy-policy -->
    <h1>Privacy Policy for Top 1000 Repos</h1>
    

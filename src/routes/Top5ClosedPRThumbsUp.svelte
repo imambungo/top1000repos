@@ -8,8 +8,8 @@
 </script>
 
 <div class='whitespace-nowrap'>
-	<span title='total 👍 of the top 5 closed (possibly merged) PRs of the last 12 months'>Top 5 closed PRs (1 year) thumbs up</span>:
-	<a href={top_5_closed_pr_url} target='_blank'>
+	<a href={top_5_closed_pr_url} target='_blank' title='total 👍 of the top 5 closed (possibly merged) PRs of the last 12 months'>
+		Top 5 closed PRs (1 year) thumbs up:
 		{total_thumbs_up_of_top_5_closed_pr_since_1_year}
 	</a>
 </div>

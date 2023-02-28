@@ -1,4 +1,4 @@
-<div class='mx-auto max-w-[40rem] prose-sm prose prose-slate prose-a:font-semibold prose-a:text-sky-500 hover:prose-a:text-sky-600'>
+<article class='p-3 md:p-5 mx-auto max-w-[40rem] prose-sm prose prose-slate prose-a:font-semibold prose-a:text-sky-500 hover:prose-a:text-sky-600'> <!-- most of them copied from here lol: https://tailwindui.com/privacy-policy -->
    <h1>Privacy Policy for Top 1000 Repos</h1>
    
    <p>At Top 1000 Repos, accessible from https://top1000repos.com/, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by Top 1000 Repos and how we use it.</p>
@@ -66,4 +66,4 @@
    <h2>Consent</h2>
    
    <p>By using our website, you hereby consent to our Privacy Policy and agree to its terms.</p>
-</div>
+</article>

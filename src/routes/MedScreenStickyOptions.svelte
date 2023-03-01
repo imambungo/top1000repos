@@ -1,15 +1,23 @@
 <script>
    let scrollY = 0  // window.scrollY | https://svelte.dev/tutorial/svelte-window-bindings | svelte can't detect window "undefined" if we try to use window.scrollY directly
+   let viewport_height = 0 // window.innerHeight
    let element // https://svelte.dev/tutorial/bind-this
    let element_distance_to_viewport_top = 0
+   let in_viewport_footer_height = 0
    $: {
       let trigger = scrollY
-      element_distance_to_viewport_top = element?.getBoundingClientRect().top || 0  // https://stackoverflow.com/a/35571753/9157799
+      if (element != null) {
+         element_distance_to_viewport_top = element.getBoundingClientRect().top // https://stackoverflow.com/a/35571753/9157799
+         
+         in_viewport_footer_height = viewport_height - element.parentNode.getBoundingClientRect().bottom // https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect
+         if (in_viewport_footer_height <= 0) // still below viewport
+            in_viewport_footer_height = 0
+      }
    }
 </script>
 
-<svelte:window bind:scrollY/> <!-- https://svelte.dev/tutorial/svelte-window-bindings -->
+<svelte:window bind:scrollY bind:innerHeight={viewport_height}/> <!-- https://svelte.dev/tutorial/svelte-window-bindings -->
 
-<div class="text-sm sticky top-0 py-4 flex flex-col gap-4 overflow-y-auto" style="max-height: calc(100vh - {element_distance_to_viewport_top}px)" bind:this={element}> <!-- Tailwind doesn’t include any sort of client-side runtime, so class names need to be statically extractable at build-time, and can’t depend on any sort of arbitrary dynamic values that change on the client. Use inline styles for these situations.: https://v2.tailwindcss.com/docs/just-in-time-mode | be careful with calc(): https://stackoverflow.com/q/34419813/9157799 | https://svelte.dev/tutorial/bind-this -->
+<div class="text-sm sticky top-0 py-4 flex flex-col gap-4 overflow-y-auto" style="max-height: calc(100vh - {element_distance_to_viewport_top}px - {in_viewport_footer_height}px)" bind:this={element}> <!-- Tailwind doesn’t include any sort of client-side runtime, so class names need to be statically extractable at build-time, and can’t depend on any sort of arbitrary dynamic values that change on the client. Use inline styles for these situations.: https://v2.tailwindcss.com/docs/just-in-time-mode | be careful with calc(): https://stackoverflow.com/q/34419813/9157799 | https://svelte.dev/tutorial/bind-this -->
    <slot></slot>
 </div>

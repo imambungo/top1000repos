@@ -233,7 +233,6 @@
          <p class='flex gap-3 justify-center text-slate-600 decoration-slate-300 font-medium'>
             <a class='underline' target='_blank' href='https://twitter.com/top1000repos'>Twitter</a>
             <a class='underline' target='_blank' href='mailto:contact@top1000repos.com'>Contact</a>
-            <a class='underline'  href='/privacy-policy'>Privacy Policy</a>
          </p>
          <p class='mt-2 font-light text-slate-500'>
             <span class='whitespace-nowrap decoration-slate-300'>

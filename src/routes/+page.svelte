@@ -110,7 +110,6 @@
 <svelte:head>
    <title>Top 1000 Repos - An unofficial web app to help you explore GitHub's top 1000 repos</title>
    <meta name="description" content="GitHub's top 1000 repositories, all in one page. Blacklist the ones you're not interested in.">
-   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2099788966207457" crossorigin="anonymous"></script> <!-- https://www.google.com/adsense -->
 </svelte:head>
 
 <div class='pl-[calc(100vw-100%)]'> <!-- https://stackoverflow.com/a/30293718/9157799 for case when there's few item in blacklist (no scrollbar) -->
@@ -118,19 +117,6 @@
       <h1 class='text-3xl font-semibold text-slate-800'>Top 1000 Repos</h1>
       <p class='text-lg text-slate-700'>An unofficial web app to explore GitHub's top 1000 repositories</p>
    </header>
-   <div class='px-4 py-8 lg:max-w-5xl lg:mx-auto text-center flex flex-col gap-2'>
-      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2099788966207457" crossorigin="anonymous"></script>
-      <!-- display ads? -->
-      <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-2099788966207457"
-         data-ad-slot="5508607230"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-      <script>
-         (adsbygoogle = window.adsbygoogle || []).push({});
-      </script>
-   </div>
    <div class='sticky top-0 z-10 md:hidden'> <!-- navbar and options for mobile view | sticky need defined position e.g. top-0 -->
       <nav class="text-xs sm:text-sm font-medium text-center border-b border-gray-200 sticky top-0 z-10 bg-white flex flex-wrap pr-4 sm:pr-5 pl-2 sm:pl-3"> <!-- TAB BUTTON for mobile screen | https://flowbite.com/docs/components/tabs/#tabs-with-underline -->
          <ul class="pt-1 sm:pt-0 flex flex-wrap -mb-px">

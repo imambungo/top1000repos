@@ -121,7 +121,7 @@
       })
       return count
    }
-   $: excluded_repos_count = get_excluded_repos_count(repos, excluded_topics)
+   $: excluded_repos_count = get_excluded_repos_count(filtered_repos, excluded_topics)
 </script>
 
 <svelte:head>

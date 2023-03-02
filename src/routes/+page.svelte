@@ -129,7 +129,7 @@
    <meta name="description" content="GitHub's top 1000 repositories, all in one page. Blacklist the ones you're not interested in.">
 </svelte:head>
 
-<div class='pl-[calc(100vw-100%)]'> <!-- https://stackoverflow.com/a/30293718/9157799 for case when there's few item in blacklist (no scrollbar) -->
+<div class='min-h-screen flex flex-col   pl-[calc(100vw-100%)]'> <!-- min-height and flex (combined with "grow" main) to keep footer at the bottom | https://stackoverflow.com/a/30293718/9157799 padding left for case when there's few item in blacklist (no scrollbar) -->
    <header class='px-4 py-8 lg:max-w-5xl lg:mx-auto text-center flex flex-col gap-2'>
       <h1 class='text-3xl font-semibold text-slate-800'>Top 1000 Repos</h1>
       <p class='text-lg text-slate-700'>An unofficial web app to explore GitHub's top 1000 repositories</p>
@@ -169,7 +169,7 @@
          </div>
       {/if}
    </div>
-   <main class="px-3 sm:px-4 lg:px-5 md:flex md:gap-2 lg:max-w-5xl lg:mx-auto">
+   <main class="px-3 sm:px-4 lg:px-5 md:flex md:gap-2 lg:max-w-5xl lg:mx-auto   grow w-full"> <!-- grow to keep footer at the bottom | w-full to grow (cross axis) because parent is flex-col -->
       <div class='w-1/4 hidden md:block'> <!-- OPTIONS (for desktop / md screen size) -->
          <MedScreenStickyOptions>
             <NumberingOption numbering={numbering} handleChange={newNumbering => numbering = newNumbering}/>

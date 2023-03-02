@@ -33,7 +33,14 @@
       all_repos = all_repos.map((repo, index) => ({...repo, rank: index+1}))
       excluded_topics = ss.getItem('excluded_topics') || []
       repo_id_blacklist = ls.getItem('repo_id_blacklist') || []
+      render_repos_gradually()
    })
+
+   const render_repos_gradually = () => {
+      num_of_repos_to_render += 10
+      if (num_of_repos_to_render < 1000)
+         setTimeout(render_repos_gradually, 100) // https://stackoverflow.com/q/63503762/9157799
+   }
 
    import { PUBLIC_BACKEND_URL } from '$env/static/public'; // https://kit.svelte.dev/docs/modules#$env-static-public
 
@@ -51,7 +58,8 @@
    }
 
    let all_repos = []
-   let repos = [] // https://stackoverflow.com/q/61105696/9157799#comment108104142_61105696
+   let filtered_repos = [] // https://stackoverflow.com/q/61105696/9157799#comment108104142_61105696
+   let repos = []
 
    let excluded_topics = []
    const excludeTopicToggle = event => {
@@ -79,10 +87,19 @@
    let numbering = 'rank'
 
    $: { // a bruteforce hammer solution, but it's fine. what causes the slowness is the rendering
-      repos = all_repos
-      repos = filter_blacklisted_repos_based_on_current_tab(repos, repo_id_blacklist, current_tab)
-      repos = sort_repos_based_on_sort_option(repos, sort_option)
+      filtered_repos = all_repos
+      filtered_repos = filter_blacklisted_repos_based_on_current_tab(filtered_repos, repo_id_blacklist, current_tab)
+      filtered_repos = sort_repos_based_on_sort_option(filtered_repos, sort_option)
       //repos = repos.slice(0, 100)  // for debugging performance problem
+   }
+
+   let num_of_repos_to_render = 50
+   $: repos = filtered_repos.slice(0, num_of_repos_to_render)
+
+   $: {
+      let trigger = current_tab
+      num_of_repos_to_render = 50
+      render_repos_gradually()
    }
 
    const get_how_many_repos_in_id_list = (all_repos, repo_id_list) => {

@@ -36,12 +36,6 @@
       render_repos_gradually()
    })
 
-   const render_repos_gradually = () => {
-      num_of_repos_to_render += 10
-      if (num_of_repos_to_render < 1000)
-         setTimeout(render_repos_gradually, 100) // https://stackoverflow.com/q/63503762/9157799
-   }
-
    import { PUBLIC_BACKEND_URL } from '$env/static/public'; // https://kit.svelte.dev/docs/modules#$env-static-public
 
    const fetchRepos = async () => {
@@ -96,9 +90,17 @@
    let num_of_repos_to_render = 50
    $: repos = filtered_repos.slice(0, num_of_repos_to_render)
 
+   let gradual_render_timeoutID = -1
+   const render_repos_gradually = () => {
+      num_of_repos_to_render += 10
+      if (num_of_repos_to_render < 1000)
+         gradual_render_timeoutID = setTimeout(render_repos_gradually, 100) // https://stackoverflow.com/q/63503762/9157799
+   }
+   
    $: {
       let trigger = current_tab
       num_of_repos_to_render = 50
+      clearTimeout(gradual_render_timeoutID)
       render_repos_gradually()
    }
 

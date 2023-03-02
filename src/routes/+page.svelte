@@ -100,9 +100,11 @@
    $: {
       let trigger = current_tab
       num_of_repos_to_render = 50
-      clearTimeout(gradual_render_timeoutID)
+      gradual_render_clearTimeout() // don't use clearTimeout(gradual_render_timeoutID) because render_repos_gradually() updates gradual_render_timeoutID, causing loop
       render_repos_gradually()
    }
+
+   const gradual_render_clearTimeout = () => clearTimeout(gradual_render_timeoutID)
 
    const get_how_many_repos_in_id_list = (all_repos, repo_id_list) => {
       let count = 0

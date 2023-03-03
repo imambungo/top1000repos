@@ -13,7 +13,7 @@
          {/each}
       </div>
       <p class='ml-0.5 mt-0.5 text-gray-500 text-xs tracking-tight'>
-         {#if excluded_repos_count > 0}
+         {#if excluded_topics.length > 0}
             {excluded_repos_count} {excluded_repos_count == 1 ? 'repo' : 'repos'} dimmed.
          {:else}
             None. Select a repo topic to exclude it.

@@ -133,7 +133,7 @@
    <meta name="description" content="GitHub's top 1000 repositories, all in one page. Blacklist the ones you're not interested in.">
 </svelte:head>
 
-<div class='min-h-screen flex flex-col   pl-[calc(100vw-100%)]'> <!-- min-height and flex (combined with "grow" main) to keep footer at the bottom | https://stackoverflow.com/a/30293718/9157799 padding left for case when there's few item in blacklist (no scrollbar) -->
+<div class='min-h-screen flex flex-col   pl-[calc(100vw-100%)]' data-nosnippet> <!-- min-height and flex (combined with "grow" main) to keep footer at the bottom | https://stackoverflow.com/a/30293718/9157799 padding left for case when there's few item in blacklist (no scrollbar) | data-nosnippet: https://stackoverflow.com/a/72508996/9157799 -->
    <header class='px-4 py-8 lg:max-w-5xl lg:mx-auto text-center flex flex-col gap-2'>
       <h1 class='text-3xl font-semibold text-slate-800'>Top 1000 Repos</h1>
       <p class='text-lg text-slate-700'>An unofficial web app to explore GitHub's top 1000 repositories</p>
@@ -199,7 +199,7 @@
                </li>
             </ul>
          </nav>
-         <div class='flex flex-col gap-5 py-5' data-nosnippet> <!-- https://stackoverflow.com/a/72508996/9157799 -->
+         <div class='flex flex-col gap-5 py-5'>
             {#if all_repos.length == 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/tutorial/onmount -->
                <LoadingAnimation/>
             {:else}

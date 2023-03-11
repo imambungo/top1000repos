@@ -86,7 +86,7 @@
       filtered_repos = all_repos
       filtered_repos = filter_blacklisted_repos_based_on_current_tab(filtered_repos, repo_id_blacklist, current_tab)
       filtered_repos = sort_repos_based_on_sort_option(filtered_repos, sort_option)
-      //repos = repos.slice(0, 100)  // for debugging performance problem
+      //filtered_repos = filtered_repos.slice(0, 100)  // for debugging performance problem
    }
 
    let num_of_repos_to_render = 50

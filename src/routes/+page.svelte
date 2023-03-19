@@ -214,7 +214,7 @@
                      <div class='grow flex flex-col gap-1 min-w-0'> <!-- the rest | grow against number | https://stackoverflow.com/a/75308868/9157799 -->
                         <div class='flex gap-2'>
                            <div class='min-w-0 whitespace-pre-wrap'> <!-- https://tailwindcss.com/docs/whitespace#pre-wrap -->
-                              <a href="{repo.html_url}" class="text-blue-600 break-words">{repo.full_name}</a> <!-- REPO FULL NAME / TITLE -->
+                              <a href="{repo.html_url}" rel="nofollow" class="text-blue-600 break-words">{repo.full_name}</a> <!-- REPO FULL NAME / TITLE -->
                               {#if repo.archived}
                                  <span> </span> <!-- utilizing whitespace-pre-wrap above. it preserve spaces only if they're not in the edges which is nice -->
                                  <span class='rounded-full border-solid px-2 py-1 text-xs text-yellow-600 border border-yellow-600 whitespace-nowrap'>Public archive</span>

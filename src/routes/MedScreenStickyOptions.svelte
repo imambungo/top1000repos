@@ -1,6 +1,6 @@
 <script>
-   let scrollY = 0  // window.scrollY | https://svelte.dev/tutorial/svelte-window-bindings | svelte can't detect window "undefined" if we try to use window.scrollY directly
-   let viewport_height = 0 // window.innerHeight
+   let scrollY = 0  // window.scrollY | https://svelte.dev/tutorial/svelte-window-bindings
+   let viewport_height = 0 // window.innerHeight | svelte can't detect window "undefined" if we try to use window.innerHeight directly (ups.. we can, in onMount (window or navigator is not found at server side))
    let element // https://svelte.dev/tutorial/bind-this
    let max_height = 99999
    $: {

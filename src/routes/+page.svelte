@@ -207,7 +207,7 @@
                </li>
             </ul>
          </nav>
-         <div class='flex flex-col gap-5 py-5'>
+         <div class='flex flex-col gap-6 py-5'>
             {#if all_repos.length == 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/tutorial/onmount -->
                {#if !userAgent?.includes('Googlebot')}
                   <LoadingAnimation/>

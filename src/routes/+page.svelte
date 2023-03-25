@@ -30,7 +30,8 @@
 
    onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
       emoji_image_urls = await fetchEmojiImageUrls()
-      all_repos = await fetchRepos()
+      userAgent = navigator.userAgent // need to be assigned at onMount because window or navigator is not found at server side
+      if (!userAgent.includes('Googlebot')) all_repos = await fetchRepos()
       all_repos = sort_repos_based_on_sort_option(all_repos, sort_option)
       all_repos = all_repos.map((repo, index) => ({...repo, rank: index+1}))
       excluded_topics = ss.getItem('excluded_topics') || []
@@ -128,6 +129,8 @@
       return count
    }
    $: excluded_repos_count = get_excluded_repos_count(filtered_repos, excluded_topics)
+
+   let userAgent // need to be assigned at onMount because window or navigator is not found at server side
 </script>
 
 <svelte:head>
@@ -206,7 +209,9 @@
          </nav>
          <div class='flex flex-col gap-5 py-5'>
             {#if all_repos.length == 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/tutorial/onmount -->
-               <LoadingAnimation/>
+               {#if !userAgent?.includes('Googlebot')}
+                  <LoadingAnimation/>
+               {/if}
             {:else}
                {#each repos as repo, index (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
                   <div class="flex {repo.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'} -ml-3 md:-ml-2"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 | use negative margin left because the space before the number is too big -->

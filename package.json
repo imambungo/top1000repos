@@ -1,7 +1,7 @@
 {
   "name": "github-top-repositories-frontend",
   "version": "0.0.1",
-  "private": true,
+  "license": "MIT",
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",

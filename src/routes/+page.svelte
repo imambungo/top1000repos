@@ -261,6 +261,7 @@
    </main>
    <footer class='text-center px-6 py-6 text-xs'>
       <p class='flex gap-3 justify-center text-slate-600 decoration-slate-300 font-medium'>
+         <a class='underline' target='_blank' href='https://github.com/imambungo/top1000repos'>GitHub</a>
          <a class='underline' target='_blank' href='https://twitter.com/top1000repos'>Twitter</a>
          <a class='underline' target='_blank' href='mailto:contact@top1000repos.com'>Contact</a>
       </p>

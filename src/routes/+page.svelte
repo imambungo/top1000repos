@@ -1,6 +1,7 @@
 <script>
    import MedScreenStickyOptions from './MedScreenStickyOptions.svelte'
    import NumberingOption from './NumberingOption.svelte';
+   import SortOption from './SortOption.svelte'
    import ExcludedTopicsOption from './ExcludedTopicsOption.svelte';
    import StargazersCount from './StargazersCount.svelte'
    import LastCommitDate from './LastCommitDate.svelte'
@@ -177,6 +178,7 @@
       {#if option_is_open}
          <div class='text-sm bg-gray-50 py-3 px-4 flex flex-col gap-4 rounded-b drop-shadow overflow-y-auto max-h-[70vh]'> <!-- OPTIONS (for mobile view) -->
             <NumberingOption numbering={numbering} handleChange={newNumbering => numbering = newNumbering}/>
+            <SortOption sort_option={sort_option} handleChange={newSortOption => sort_option = newSortOption}/>
             <ExcludedTopicsOption excluded_topics={excluded_topics} excluded_repos_count={excluded_repos_count} excludeTopicToggle={excludeTopicToggle}/>
          </div>
       {/if}
@@ -185,6 +187,7 @@
       <div class='w-1/4 hidden md:block'> <!-- OPTIONS (for desktop / md screen size) -->
          <MedScreenStickyOptions>
             <NumberingOption numbering={numbering} handleChange={newNumbering => numbering = newNumbering}/>
+            <SortOption sort_option={sort_option} handleChange={newSortOption => sort_option = newSortOption}/>
             <ExcludedTopicsOption excluded_topics={excluded_topics} excluded_repos_count={excluded_repos_count} excludeTopicToggle={excludeTopicToggle}/>
          </MedScreenStickyOptions>
       </div>

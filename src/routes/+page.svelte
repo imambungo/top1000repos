@@ -103,6 +103,7 @@
    
    $: {
       let trigger = current_tab
+      let another_trigger = sort_option
       num_of_repos_to_render = 50
       gradual_render_clearTimeout() // don't use clearTimeout(gradual_render_timeoutID) because render_repos_gradually() updates gradual_render_timeoutID, causing loop
       render_repos_gradually()

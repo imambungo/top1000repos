@@ -21,6 +21,8 @@ npm install
 PUBLIC_BACKEND_URL='http://localhost:3000' # https://kit.svelte.dev/docs/modules#$env-static-public
 ```
 
+Backend repo: https://github.com/imambungo/top1000repos-backend
+
 ### Start development server:
 
 ```bash

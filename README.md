@@ -1,4 +1,4 @@
-# Top1000Repos
+# Top1000repos
 
 Top 1000 GitHub repositories, all on one page. Hide the ones you're not interested in.
 

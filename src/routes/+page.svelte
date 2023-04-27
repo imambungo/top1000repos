@@ -249,7 +249,7 @@
                               {/each}
                            </div>
                         {/if}
-                        <div class='flex flex-wrap gap-x-4 text-xs text-gray-600 decoration-gray-300'> <!-- last_commit_date & PRs thumbs up -->
+                        <div class='flex flex-wrap gap-x-4 text-xs text-gray-600'> <!-- last_commit_date & PRs thumbs up -->
                            <StargazersCount stargazers_count={repo.stargazers_count}/>
                            <Top5ClosedPRThumbsUp total_thumbs_up_of_top_5_closed_pr_since_1_year={repo.total_thumbs_up_of_top_5_closed_pr_since_1_year} html_url={repo.html_url}/>
                            <Top5ClosedIssuesThumbsUp total_thumbs_up_of_top_5_closed_issues_since_1_year={repo.total_thumbs_up_of_top_5_closed_issues_since_1_year} html_url={repo.html_url} has_issues_tab={repo.has_issues}/>

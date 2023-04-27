@@ -136,13 +136,13 @@
 </script>
 
 <svelte:head>
-   <title>Top 1000 Repos - Unofficial top GitHub repositories explorer</title>
+   <title>Top GitHub projects, updated daily | Top1000repos</title>
    <meta name="description" content="Top 1000 open-source GitHub repositories, all on one page. Hide the ones you're not interested in.">
 </svelte:head>
 
 <div class='min-h-screen flex flex-col   pl-[calc(100vw-100%)]' data-nosnippet> <!-- min-height and flex (combined with "grow" main) to keep footer at the bottom | https://stackoverflow.com/a/30293718/9157799 padding left for case when there's few item in blacklist (no scrollbar) | data-nosnippet: https://stackoverflow.com/a/72508996/9157799 -->
    <header class='px-4 py-8 flex flex-col gap-3 items-center'>
-      <h1 class='text-3xl font-semibold text-slate-800'>Top 1000 Repos</h1>
+      <h1 class='text-3xl font-semibold text-slate-800'>Top1000Repos</h1>
       <h2 class='text-lg text-slate-600 leading-snug text-center w-full' use:balancer={{ ratio: 0.70 }}> <!-- https://stackoverflow.com/q/34875725/9157799 -->
          <span class='md:whitespace-nowrap'>Top 1000 open-source GitHub repositories, all on one page.</span>
          <span class='sm:whitespace-nowrap'>Hide the ones you're not interested in.</span>

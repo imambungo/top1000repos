@@ -143,10 +143,14 @@
 <div class='min-h-screen flex flex-col   pl-[calc(100vw-100%)]' data-nosnippet> <!-- min-height and flex (combined with "grow" main) to keep footer at the bottom | https://stackoverflow.com/a/30293718/9157799 padding left for case when there's few item in blacklist (no scrollbar) | data-nosnippet: https://stackoverflow.com/a/72508996/9157799 -->
    <header class='px-4 py-8 flex flex-col gap-3 items-center'>
       <h1 class='text-3xl font-semibold text-slate-800'>Top1000repos</h1>
-      <h2 class='text-lg text-slate-600 leading-snug text-center w-full' use:balancer={{ ratio: 0.70 }}> <!-- https://stackoverflow.com/q/34875725/9157799 -->
+      <!--
+      TODO: npm uninstall svelte-action-balancer
+      <h2 class='text-lg text-slate-600 leading-snug text-center w-full' use:balancer={{ ratio: 0.70 }}> <!~~ https://stackoverflow.com/q/34875725/9157799 ~~>
          <span class='md:whitespace-nowrap'>Top 1000 open-source GitHub repositories, all on one page.</span>
          <span class='sm:whitespace-nowrap'>Hide the ones you're not interested in.</span>
       </h2>
+      -->
+      <h2 class='text-lg text-slate-600 text-center w-full leading-snug'>Top GitHub projects, updated daily.</h2>
    </header>
    <div class='sticky top-0 z-10 md:hidden'> <!-- navbar and options for mobile view | sticky need defined position e.g. top-0 -->
       <nav class="text-xs sm:text-sm font-medium text-center border-b border-gray-200 sticky top-0 z-10 bg-white flex flex-wrap pr-4 sm:pr-5 pl-2 sm:pl-3"> <!-- TAB BUTTON for mobile screen | https://flowbite.com/docs/components/tabs/#tabs-with-underline -->

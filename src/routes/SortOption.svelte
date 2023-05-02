@@ -5,7 +5,7 @@
 
 <div class='flex flex-col gap-1'>
    <p class='text-gray-600 text-xs font-medium'>Sort</p>
-   <div class='bg-gray-300 rounded-full p-0.5 w-fit font-semibold text-xs text-white'>
+   <div class='md:flex md:flex-col lg:block bg-gray-300 rounded-[0.85rem] p-0.5 w-fit font-semibold text-xs text-white'>
       <button class='px-4 py-1 tracking-tight {sort_option == 'stargazers_count' ? 'rounded-full bg-gray-50 text-gray-500 hover:cursor-default' : ''}' on:click={handleChange('stargazers_count')}>
          Stars
       </button>

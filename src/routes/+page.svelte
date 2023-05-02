@@ -150,7 +150,10 @@
          <span class='sm:whitespace-nowrap'>Hide the ones you're not interested in.</span>
       </h2>
       -->
-      <h2 class='text-lg text-slate-600 text-center w-full leading-snug'>Top GitHub projects, updated daily.</h2>
+      <h2 class='text-lg text-slate-600 text-center w-full leading-snug'>
+         <span class='whitespace-nowrap'>Top GitHub projects,</span>
+         <span class='whitespace-nowrap'>updated daily.</span>
+      </h2>
    </header>
    <div class='sticky top-0 z-10 md:hidden'> <!-- navbar and options for mobile view | sticky need defined position e.g. top-0 -->
       <nav class="text-xs sm:text-sm font-medium text-center border-b border-gray-200 sticky top-0 z-10 bg-white flex flex-wrap pr-4 sm:pr-5 pl-2 sm:pl-3"> <!-- TAB BUTTON for mobile screen | https://flowbite.com/docs/components/tabs/#tabs-with-underline -->

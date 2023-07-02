@@ -136,8 +136,8 @@
 </script>
 
 <svelte:head>
-   <title>Top GitHub projects, updated daily | Top1000repos</title>
-   <meta name="description" content="Top 1000 open-source GitHub repositories, all on one page. Hide the ones you're not interested in.">
+   <title>Top GitHub repos, updated daily | Top1000repos</title>
+   <meta name="description" content="Top 1000 GitHub repositories, all on one page.">
 </svelte:head>
 
 <div class='min-h-screen flex flex-col   pl-[calc(100vw-100%)]' data-nosnippet> <!-- min-height and flex (combined with "grow" main) to keep footer at the bottom | https://stackoverflow.com/a/30293718/9157799 padding left for case when there's few item in blacklist (no scrollbar) | data-nosnippet: https://stackoverflow.com/a/72508996/9157799 -->
@@ -151,7 +151,7 @@
       </h2>
       -->
       <h2 class='text-lg text-slate-600 text-center w-full leading-snug'>
-         <span class='whitespace-nowrap'>Top GitHub projects,</span>
+         <span class='whitespace-nowrap'>Top GitHub repositories,</span>
          <span class='whitespace-nowrap'>updated daily.</span>
       </h2>
    </header>

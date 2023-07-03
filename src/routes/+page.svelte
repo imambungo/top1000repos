@@ -31,13 +31,26 @@
 
    onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
       emoji_image_urls = await fetchEmojiImageUrls()
+
       userAgent = navigator.userAgent // need to be assigned at onMount because window or navigator is not found at server side
-      if (!userAgent.includes('Googlebot')) all_repos = await fetchRepos()
-      all_repos = sort_repos_based_on_sort_option(all_repos, sort_option)
-      all_repos = all_repos.map((repo, index) => ({...repo, rank: index+1}))
-      excluded_topics = ss.getItem('excluded_topics') || []
-      repo_id_blacklist = ls.getItem('repo_id_blacklist') || []
-      render_repos_gradually()
+      if (!userAgent.includes('Googlebot')) {
+         all_repos = await fetchRepos()
+         all_repos = sort_repos_based_on_sort_option(all_repos, sort_option)
+         all_repos = all_repos.map((repo, index) => ({...repo, rank: index+1}))
+         excluded_topics = ss.getItem('excluded_topics') || []
+         repo_id_blacklist = ls.getItem('repo_id_blacklist') || []
+         render_repos_gradually()
+      }
+      if (!userAgent.includes('Googlebot')) {
+         const time_of_first_visit = ls.getItem('time_of_first_visit') || new Date().toLocaleString('sv-SE', {timeZone: 'Asia/Jakarta'}).slice(0, 16) // https://stackoverflow.com/a/58633651/9157799
+         let visit_count = 1
+         if (ls.getItem('visit_count')) visit_count = ls.getItem('visit_count') + 1
+         await sendReport(`${time_of_first_visit} ${visit_count}`)
+         ls.setItem('time_of_first_visit', time_of_first_visit)
+         ls.setItem('visit_count', visit_count)
+      } else {
+         await sendReport('Googlebot confirmed')
+      }
    })
 
    import { PUBLIC_BACKEND_URL } from '$env/static/public'; // https://kit.svelte.dev/docs/modules#$env-static-public
@@ -46,6 +59,17 @@
       const response = await fetch(`${PUBLIC_BACKEND_URL}/repositories`)
       const repositories = await response.json()
       return repositories
+   }
+
+   const sendReport = async (message) => {
+      const requestBody = {
+         'message': message,
+      }
+      await fetch(`${PUBLIC_BACKEND_URL}/send-report`, {
+         method: 'POST',
+         body: JSON.stringify(requestBody),
+         headers: { 'Content-Type': 'application/json' }
+      })
    }
 
    let emoji_image_urls = new Promise( () => {} ) // https://stackoverflow.com/a/70846910/9157799 | https://stackoverflow.com/a/74165772/9157799

@@ -184,14 +184,14 @@
                {#if current_tab == 'explore'}
                   <a href="#" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Explore ({explore_tab_repos_count})</a>
                {:else}
-                  <a href="#" class="inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" on:click={() => current_tab = 'explore'}>Explore ({explore_tab_repos_count})</a>
+                  <a href="#" class="inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" on:click={() => current_tab = 'explore'}>Browse ({explore_tab_repos_count})</a>
                {/if}
             </li>
             <li class="mr-2">
                {#if current_tab == 'blacklist'}
                   <a href="#" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Blacklist ({blacklist_tab_repos_count})</a>
                {:else}
-                  <a href="#" class="inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" on:click={() => current_tab = 'blacklist'}>Blacklist ({blacklist_tab_repos_count})</a>
+                  <a href="#" class="inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" on:click={() => current_tab = 'blacklist'}>Hidden ({blacklist_tab_repos_count})</a>
                {/if}
             </li>
          </ul>
@@ -261,7 +261,7 @@
                            <div class='grow flex justify-end items-center'>
                               {#if current_tab == 'explore'}
                                  <button on:click={() => blacklistRepo(repo.id)} class="bg-gray-100 hover:bg-gray-200 border text-gray-700 text-xs py-1 px-3 rounded-md"> <!-- https://stackoverflow.com/q/58262380/9157799 -->
-                                    Blacklist
+                                    Hide
                                  </button>
                               {:else if current_tab == 'blacklist'}
                                  <button on:click={() => removeFromBlackList(repo.id)} class="bg-gray-100 hover:bg-gray-200 border text-gray-700 text-xs py-1 px-3 rounded-md"> <!-- https://stackoverflow.com/q/58262380/9157799 -->

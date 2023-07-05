@@ -173,7 +173,7 @@
          <span class='sm:whitespace-nowrap'>Hide the ones you're not interested in.</span>
       </h2>
       -->
-      <p class='text-lg text-slate-600 text-center w-full leading-snug' use:balancer={{ ratio: 0.60 }}> <!-- https://stackoverflow.com/q/34875725/9157799 -->
+      <p class='text-slate-600 text-center w-full leading-snug' use:balancer={{ ratio: 0.60 }}> <!-- https://stackoverflow.com/q/34875725/9157799 -->
          Browse the top 1000 GitHub repositories based on stars, pull requests, and issues. You can see the top recently closed pull requests and issues of each repository and filter out repositories based on certain topics.
       </p>
    </header>

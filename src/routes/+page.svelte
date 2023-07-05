@@ -168,13 +168,12 @@
    <header class='px-4 py-8 flex flex-col gap-3 items-center'>
       <h1 class='text-3xl font-semibold text-slate-800'>Top1000repos</h1>
       <!--
-      TODO: npm uninstall svelte-action-balancer
       <h2 class='text-lg text-slate-600 leading-snug text-center w-full' use:balancer={{ ratio: 0.70 }}> <!~~ https://stackoverflow.com/q/34875725/9157799 ~~>
          <span class='md:whitespace-nowrap'>Top 1000 open-source GitHub repositories, all on one page.</span>
          <span class='sm:whitespace-nowrap'>Hide the ones you're not interested in.</span>
       </h2>
       -->
-      <p class='text-lg text-slate-600 text-center w-full leading-snug'>
+      <p class='text-lg text-slate-600 text-center w-full leading-snug' use:balancer={{ ratio: 0.60 }}> <!-- https://stackoverflow.com/q/34875725/9157799 -->
          Browse the top 1000 GitHub repositories based on stars, pull requests, and issues. You can see the top recently closed pull requests and issues of each repository and filter out repositories based on certain topics.
       </p>
    </header>

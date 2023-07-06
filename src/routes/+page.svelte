@@ -62,9 +62,9 @@
    }
 
    const sendReport = async (message) => {
-      await fetch(`${PUBLIC_BACKEND_URL}/send-report`, {
-         body: JSON.stringify({ message }),
-         headers: { 'Content-Type': 'application/json' }
+      await fetch(`${PUBLIC_BACKEND_URL}/send-report?${new URLSearchParams({ message })}`, { // https://stackoverflow.com/a/69230317/9157799 | https://stackoverflow.com/a/58437909/9157799
+         //body: JSON.stringify({ message }),
+         //headers: { 'Content-Type': 'application/json' }
       })
    }
 

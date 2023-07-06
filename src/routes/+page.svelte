@@ -62,12 +62,8 @@
    }
 
    const sendReport = async (message) => {
-      const requestBody = {
-         'message': message,
-      }
       await fetch(`${PUBLIC_BACKEND_URL}/send-report`, {
-         method: 'POST',
-         body: JSON.stringify(requestBody),
+         body: JSON.stringify({ message }),
          headers: { 'Content-Type': 'application/json' }
       })
    }

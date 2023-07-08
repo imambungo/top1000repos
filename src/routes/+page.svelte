@@ -33,7 +33,7 @@
       emoji_image_urls = await fetchEmojiImageUrls()
 
       userAgent = navigator.userAgent // need to be assigned at onMount because window or navigator is not found at server side
-      if (!userAgent.includes('Googlebot') && !userAgent.includes('bingbot')) {
+      if (!userAgent.includes('Googlebot') && !userAgent.includes('bingbot') && !userAgent.includes('AhrefsBot')) {
          all_repos = await fetchRepos()
          all_repos = sort_repos_based_on_sort_option(all_repos, sort_option)
          all_repos = all_repos.map((repo, index) => ({...repo, rank: index+1}))
@@ -50,6 +50,7 @@
       }
       if (userAgent.includes('Googlebot')) await sendReport('Googlebot confirmed')
       if (userAgent.includes('bingbot')) await sendReport('bingbot confirmed')
+      if (userAgent.includes('AhrefsBot')) await sendReport('AhrefsBot confirmed')
    })
 
    import { PUBLIC_BACKEND_URL } from '$env/static/public'; // https://kit.svelte.dev/docs/modules#$env-static-public

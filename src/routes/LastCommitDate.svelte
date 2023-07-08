@@ -1,5 +1,5 @@
 <script>
-	export let last_commit_date
+	export let last_commit_date // https://stackoverflow.com/q/15918588/9157799#comment88211717_15922637
 
 	const daysAgo = () => { // https://stackoverflow.com/a/47181114/9157799
 		const startDate  = new Date(last_commit_date)
@@ -55,8 +55,8 @@
 	}
 </script>
 
-<div class='whitespace-nowrap cursor-text' title={tooltip()}> <!-- cursor-text: https://stackoverflow.com/q/25654413/9157799 -->
-	<a href='#' target='_blank' class='pointer-events-none'>Last commit</a>: <!-- when go public in the future, use this url: https://stackoverflow.com/q/15918588/9157799#comment88211717_15922637 -->
+<div class='whitespace-nowrap cursor-help' title={tooltip()}>
+	<span>Last commit:</span>
 	<span class={color()}> <!-- use span because it's an inline element, so we don't need to wrap things in a flex div -->
 		{agoFormat()}
 	</span>

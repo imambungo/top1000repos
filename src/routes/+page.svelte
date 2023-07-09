@@ -48,11 +48,11 @@
          ls.setItem('time_of_first_visit', time_of_first_visit)
          ls.setItem('visit_count', visit_count)
 
-         document.addEventListener("visibilitychange", () => { // https://stackoverflow.com/a/76647328/9157799 | It is redundant to remove the event listener in onDestroy() as closing the tab will terminate any listeners running within it
+         document.addEventListener("visibilitychange", async () => { // https://stackoverflow.com/a/76647328/9157799 | It is redundant to remove the event listener in onDestroy() as closing the tab will terminate any listeners running within it
             if (document.visibilityState === "visible") {
-               sendReport(`${time_of_first_visit} in\nlocal time: ${Date().slice(16,24)}`) // https://stackoverflow.com/a/46599746/9157799
+               await sendReport(`${time_of_first_visit} in\nlocal time: ${Date().slice(16,24)}`) // https://stackoverflow.com/a/46599746/9157799
             } else {
-               sendReport(`${time_of_first_visit} out\nlocal time: ${Date().slice(16,24)}`)
+               await sendReport(`${time_of_first_visit} out\nlocal time: ${Date().slice(16,24)}`)
             }
          })
       }
@@ -74,7 +74,7 @@
    const sendReport = async (message) => {
       await fetch(`${PUBLIC_BACKEND_URL}/send-report?${new URLSearchParams({ message })}`, { // bingbot can't or won't do POST | URLSearchParams: https://stackoverflow.com/a/58437909/9157799
          //body: JSON.stringify({ message }), // GET request can but can't have body: https://stackoverflow.com/a/69230317/9157799
-         keepalive: true
+         keepalive: true // https://stackoverflow.com/a/76647328/9157799
       })
    }
 

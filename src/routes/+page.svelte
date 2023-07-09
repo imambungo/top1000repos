@@ -44,9 +44,17 @@
          const time_of_first_visit = ls.getItem('time_of_first_visit') || new Date().toLocaleString('sv-SE', {timeZone: 'Asia/Jakarta'}).slice(0, 16) // https://stackoverflow.com/a/58633651/9157799
          let visit_count = 1
          if (ls.getItem('visit_count')) visit_count = ls.getItem('visit_count') + 1
-         await sendReport(`${time_of_first_visit} ${visit_count} ${document.referrer}\nlocal time: ${Date().slice(16,21)}`) // https://stackoverflow.com/a/6856725/9157799 | https://stackoverflow.com/a/46599746/9157799
+         await sendReport(`${time_of_first_visit} ${visit_count} ${document.referrer}\nlocal time: ${Date().slice(16,21)}`) // https://stackoverflow.com/a/6856725/9157799 | Date().slice(16,21) -> https://stackoverflow.com/a/46599746/9157799
          ls.setItem('time_of_first_visit', time_of_first_visit)
          ls.setItem('visit_count', visit_count)
+
+         document.addEventListener("visibilitychange", () => { // https://stackoverflow.com/a/76647328/9157799 | It is redundant to remove the event listener in onDestroy() as closing the tab will terminate any listeners running within it
+            if (document.visibilityState === "visible") {
+               sendReport(`${time_of_first_visit} in\nlocal time: ${Date().slice(16,24)}`) // https://stackoverflow.com/a/46599746/9157799
+            } else {
+               sendReport(`${time_of_first_visit} out\nlocal time: ${Date().slice(16,24)}`)
+            }
+         })
       }
       if (userAgent.includes('Googlebot')) await sendReport('Googlebot confirmed')
       if (userAgent.includes('bingbot')) await sendReport('bingbot confirmed')
@@ -55,6 +63,8 @@
 
    import { PUBLIC_BACKEND_URL } from '$env/static/public'; // https://kit.svelte.dev/docs/modules#$env-static-public
 
+   let userAgent // need to be assigned at onMount because window or navigator is not found at server side
+
    const fetchRepos = async () => {
       const response = await fetch(`${PUBLIC_BACKEND_URL}/repositories`)
       const repositories = await response.json()
@@ -62,9 +72,9 @@
    }
 
    const sendReport = async (message) => {
-      await fetch(`${PUBLIC_BACKEND_URL}/send-report?${new URLSearchParams({ message })}`, { // https://stackoverflow.com/a/69230317/9157799 | https://stackoverflow.com/a/58437909/9157799
-         //body: JSON.stringify({ message }),
-         //headers: { 'Content-Type': 'application/json' }
+      await fetch(`${PUBLIC_BACKEND_URL}/send-report?${new URLSearchParams({ message })}`, { // bingbot can't or won't do POST | URLSearchParams: https://stackoverflow.com/a/58437909/9157799
+         //body: JSON.stringify({ message }), // GET request can but can't have body: https://stackoverflow.com/a/69230317/9157799
+         keepalive: true
       })
    }
 
@@ -151,8 +161,6 @@
       return count
    }
    $: excluded_repos_count = get_excluded_repos_count(filtered_repos, excluded_topics)
-
-   let userAgent // need to be assigned at onMount because window or navigator is not found at server side
 </script>
 
 <svelte:head>

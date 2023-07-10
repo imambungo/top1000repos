@@ -71,7 +71,7 @@
       return repositories
    }
 
-   const sendReport = async (message) => {
+   const sendReport = async (message) => { // https://grugbrain.dev/#grug-on-logging
       await fetch(`${PUBLIC_BACKEND_URL}/send-report?${new URLSearchParams({ message })}`, { // bingbot can't or won't do POST | URLSearchParams: https://stackoverflow.com/a/58437909/9157799
          //body: JSON.stringify({ message }), // GET request can but can't have body: https://stackoverflow.com/a/69230317/9157799
          keepalive: true // https://stackoverflow.com/a/76647328/9157799

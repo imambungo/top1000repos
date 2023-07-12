@@ -274,11 +274,11 @@
                            </div>
                            <div class='grow flex justify-end items-center'>
                               {#if current_tab == 'explore'}
-                                 <button on:click={() => blacklistRepo(repo.id)} class="bg-gray-100 hover:bg-gray-200 border text-gray-700 text-xs py-1 px-3 rounded-md"> <!-- https://stackoverflow.com/q/58262380/9157799 -->
+                                 <button on:click={ () => {blacklistRepo(repo.id); sendReport(`hide ${repo.full_name}`)} } class="bg-gray-100 hover:bg-gray-200 border text-gray-700 text-xs py-1 px-3 rounded-md"> <!-- https://stackoverflow.com/q/58262380/9157799 -->
                                     Hide
                                  </button>
                               {:else if current_tab == 'blacklist'}
-                                 <button on:click={() => removeFromBlackList(repo.id)} class="bg-gray-100 hover:bg-gray-200 border text-gray-700 text-xs py-1 px-3 rounded-md"> <!-- https://stackoverflow.com/q/58262380/9157799 -->
+                                 <button on:click={ () => {removeFromBlackList(repo.id); sendReport(`remove ${repo.full_name}`)} } class="bg-gray-100 hover:bg-gray-200 border text-gray-700 text-xs py-1 px-3 rounded-md"> <!-- https://stackoverflow.com/q/58262380/9157799 -->
                                     Remove
                                  </button>
                               {/if}

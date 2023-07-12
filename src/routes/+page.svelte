@@ -187,7 +187,8 @@
       </div>
    </header>
    <div class='sticky top-0 z-10 md:hidden'> <!-- navbar and options FOR MOBILE VIEW | sticky need defined position e.g. top-0 -->
-      <nav class="text-xs sm:text-sm font-medium text-center border-b border-gray-200 sticky top-0 z-10 bg-white flex flex-wrap pr-4 sm:pr-5 pl-2 sm:pl-3"> <!-- TAB BUTTON for mobile screen | https://flowbite.com/docs/components/tabs/#tabs-with-underline -->
+      <!-- TAB BUTTON for mobile screen | https://flowbite.com/docs/components/tabs/#tabs-with-underline -->
+      <nav class="text-xs sm:text-sm font-medium text-center border-b border-gray-200 sticky top-0 z-10 bg-white flex flex-wrap pr-4 sm:pr-5 pl-2 sm:pl-3">
          <ul class="pt-1 sm:pt-0 flex flex-wrap -mb-px">
             <li class="mr-2">
                {#if current_tab == 'explore'}
@@ -215,7 +216,8 @@
          </div>
       </nav>
       {#if option_is_open}
-         <div class='text-sm bg-gray-50 py-3 px-4 flex flex-col gap-4 rounded-b drop-shadow overflow-y-auto max-h-[70vh]'> <!-- OPTIONS (for mobile view) -->
+         <!-- OPTIONS (for mobile view) -->
+         <div class='text-sm bg-gray-50 py-3 px-4 flex flex-col gap-4 rounded-b drop-shadow overflow-y-auto max-h-[70vh]'>
             <NumberingOption numbering={numbering} handleChange={newNumbering => numbering = newNumbering}/>
             <SortOption sort_option={sort_option} handleChange={newSortOption => sort_option = newSortOption}/>
             <ExcludedTopicsOption excluded_topics={excluded_topics} excluded_repos_count={excluded_repos_count} excludeTopicToggle={excludeTopicToggle}/>
@@ -223,7 +225,8 @@
       {/if}
    </div>
    <main class="px-3 sm:px-4 lg:px-5 md:flex md:gap-2 lg:max-w-5xl lg:mx-auto   grow w-full"> <!-- grow to keep footer at the bottom | w-full to grow (cross axis) because parent is flex-col -->
-      <div class='w-1/4 hidden md:block'> <!-- OPTIONS (for desktop / md screen size) -->
+      <!-- OPTIONS (for desktop / md screen size) -->
+      <div class='w-1/4 hidden md:block'>
          <MedScreenStickyOptions>
             <NumberingOption numbering={numbering} handleChange={newNumbering => numbering = newNumbering}/>
             <SortOption sort_option={sort_option} handleChange={newSortOption => sort_option = newSortOption}/>
@@ -231,7 +234,8 @@
          </MedScreenStickyOptions>
       </div>
       <div class='md:w-3/4'>
-         <nav class="hidden md:block text-sm font-medium text-center border-b border-gray-200 sticky top-0 z-10 bg-white"> <!-- TAB BUTTON for md screen | https://flowbite.com/docs/components/tabs/#tabs-with-underline -->
+         <!-- TAB BUTTON for md screen | https://flowbite.com/docs/components/tabs/#tabs-with-underline -->
+         <nav class="hidden md:block text-sm font-medium text-center border-b border-gray-200 sticky top-0 z-10 bg-white">
             <ul class="flex flex-wrap -mb-px">
                <li class="mr-2">
                   {#if current_tab == 'explore'}
@@ -261,7 +265,8 @@
                      <div class='grow flex flex-col gap-1 min-w-0'> <!-- the rest | grow against number | https://stackoverflow.com/a/75308868/9157799 -->
                         <div class='flex gap-2'>
                            <div class='min-w-0 whitespace-pre-wrap'> <!-- https://tailwindcss.com/docs/whitespace#pre-wrap -->
-                              <a href="{repo.html_url}" rel="nofollow" class="text-blue-600 break-words">{repo.full_name}</a> <!-- REPO FULL NAME / TITLE -->
+                              <!-- REPO FULL NAME / TITLE -->
+                              <a href="{repo.html_url}" rel="nofollow" class="text-blue-600 break-words">{repo.full_name}</a>
                               {#if repo.archived}
                                  <span> </span> <!-- utilizing whitespace-pre-wrap above. it preserve spaces only if they're not in the edges which is nice -->
                                  <span class='rounded-full border-solid px-2 py-1 text-xs text-yellow-600 border border-yellow-600 whitespace-nowrap'>Public archive</span>

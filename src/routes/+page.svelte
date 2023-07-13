@@ -92,10 +92,13 @@
    let excluded_topics = []
    const excludeTopicToggle = event => {
       const topic = event.target.innerText // https://stackoverflow.com/a/68455563/9157799
-      if (!excluded_topics.includes(topic)) // if topic not excluded yet, add to excluded_topics
+      if (!excluded_topics.includes(topic)) { // if topic not excluded yet, add to excluded_topics
          excluded_topics = [...excluded_topics, topic] // https://svelte.dev/tutorial/updating-arrays-and-objects
-      else // if already excluded, remove from excluded_topics
+         sendReport(`exclude ${topic}`)
+      } else { // if already excluded, remove from excluded_topics
          excluded_topics = excluded_topics.filter(t => t !== topic) // https://stackoverflow.com/a/44433050/9157799
+         sendReport(`include ${topic}`)
+      }
       ss.setItem('excluded_topics', excluded_topics)
    }
 

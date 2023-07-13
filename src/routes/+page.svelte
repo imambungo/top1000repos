@@ -269,7 +269,7 @@
                         <div class='flex gap-2'>
                            <div class='min-w-0 whitespace-pre-wrap'> <!-- https://tailwindcss.com/docs/whitespace#pre-wrap -->
                               <!-- REPO FULL NAME / TITLE -->
-                              <a href="{repo.html_url}" rel="nofollow" class="text-blue-600 break-words">{repo.full_name}</a>
+                              <a href="{repo.html_url}" on:click={sendReport(`click/tap ${repo.full_name}`)} target="_blank" class="text-blue-600 break-words">{repo.full_name}</a>
                               {#if repo.archived}
                                  <span> </span> <!-- utilizing whitespace-pre-wrap above. it preserve spaces only if they're not in the edges which is nice -->
                                  <span class='rounded-full border-solid px-2 py-1 text-xs text-yellow-600 border border-yellow-600 whitespace-nowrap'>Public archive</span>

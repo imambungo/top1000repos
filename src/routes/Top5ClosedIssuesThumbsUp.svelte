@@ -11,7 +11,8 @@
 {#if has_issues_tab}
 	<div class='whitespace-nowrap'>
 		<a href={top_5_closed_issues_url} target='_blank' title='total 👍 of the top 5 closed issues of the last 12 months'>
-			Top 5 closed issues (1 year) thumbs up:
+			<span class='decoration-gray-300 underline'>Top 5 closed issues</span>
+			(1 year) thumbs up:
 			<span class='decoration-gray-300 underline'>{total_thumbs_up_of_top_5_closed_issues_since_1_year}</span>
 		</a>
 	</div>

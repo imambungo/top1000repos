@@ -10,10 +10,10 @@
          Stars
       </button>
       <button class='px-4 py-1 tracking-tight {sort_option == 'total_thumbs_up_of_top_5_closed_pr_since_1_year' ? 'rounded-full bg-gray-50 text-gray-500 hover:cursor-default' : ''}' on:click={handleChange('total_thumbs_up_of_top_5_closed_pr_since_1_year')}>
-         PR 👍
+         PR <span class='drop-shadow-[0_0_0.6px_rgba(0,0,0,0.6)]'>👍</span> <!-- https://stackoverflow.com/a/74753353/9157799 -->
       </button>
       <button class='px-4 py-1 tracking-tight {sort_option == 'total_thumbs_up_of_top_5_closed_issues_since_1_year' ? 'rounded-full bg-gray-50 text-gray-500 hover:cursor-default' : ''}' on:click={handleChange('total_thumbs_up_of_top_5_closed_issues_since_1_year')}>
-         Issues 👍
+         Issues <span class='drop-shadow-[0_0_0.6px_rgba(0,0,0,0.6)]'>👍</span> <!-- https://stackoverflow.com/a/74753353/9157799 -->
       </button>
    </div>
 </div>

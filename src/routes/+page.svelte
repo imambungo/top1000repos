@@ -172,7 +172,7 @@
 </svelte:head>
 
 <div class='min-h-screen flex flex-col   pl-[calc(100vw-100%)]' data-nosnippet> <!-- min-height and flex (combined with "grow" main) to keep footer at the bottom | https://stackoverflow.com/a/30293718/9157799 padding left for case when there's few item in blacklist (no scrollbar) | data-nosnippet: https://stackoverflow.com/a/72508996/9157799 -->
-   <header class='px-4 py-8 flex flex-col gap-3 items-center lg:max-w-5xl lg:mx-auto w-full'>
+   <header class='p-4 mb-4 flex flex-col gap-3 items-center lg:max-w-5xl lg:mx-auto w-full'>
       <div class='flex justify-between w-full'>
          <p class='text-lg font-semibold text-slate-700'>Top1000repos</p>
          <div class='flex gap-3 justify-center text-slate-600 decoration-slate-300 text-xs font-medium items-center mt-1'>

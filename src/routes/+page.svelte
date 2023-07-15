@@ -173,16 +173,16 @@
 
 <div class='min-h-screen flex flex-col   pl-[calc(100vw-100%)]' data-nosnippet> <!-- min-height and flex (combined with "grow" main) to keep footer at the bottom | https://stackoverflow.com/a/30293718/9157799 padding left for case when there's few item in blacklist (no scrollbar) | data-nosnippet: https://stackoverflow.com/a/72508996/9157799 -->
    <header class='p-4 mb-4 flex flex-col gap-3 items-center lg:max-w-5xl lg:mx-auto w-full'>
-      <div class='flex justify-between w-full'>
+      <div class='flex justify-between w-full'> <!-- website name and social media links -->
          <p class='text-lg font-semibold text-slate-700'>Top1000repos</p>
          <div class='flex gap-3 justify-center text-slate-600 decoration-slate-300 text-xs font-medium items-center mt-1'>
             <a class='underline' target='_blank' href='https://twitter.com/top1000repos'>Twitter</a>
             <a class='underline' target='_blank' href='https://github.com/imambungo/top1000repos'>GitHub</a>
          </div>
       </div>
-      <div class='my-4 flex flex-col items-center gap-3 w-full'>
+      <div class='my-4 flex flex-col items-center gap-3 w-full'> <!-- header 1 and header text -->
          <h1 class='mt-3 text-2xl font-semibold text-slate-800 text-center w-full' use:balancer={{ ratio: 0.60 }}> <!-- https://stackoverflow.com/q/34875725/9157799 -->
-            Top GitHub repositories browser for lazy people
+            Unofficial top GitHub repositories ranking browser
          </h1>
          <p class='text-slate-600 text-center w-full leading-snug' use:balancer={{ ratio: 0.60 }}> <!-- https://stackoverflow.com/q/34875725/9157799 -->
             Browse the top 1000 GitHub repositories based on stars, pull requests, and issues. You can see the top recently closed pull requests and issues of each repository and filter out repositories based on certain topics.

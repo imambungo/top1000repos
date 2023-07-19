@@ -236,7 +236,7 @@
             <ExcludedTopicsOption excluded_topics={excluded_topics} excluded_repos_count={excluded_repos_count} excludeTopicToggle={excludeTopicToggle}/>
          </MedScreenStickyOptions>
       </div>
-      <div class='md:w-3/4'>
+      <div class='md:w-3/4'> <!-- browse/hidden navbar & repo list -->
          <!-- TAB BUTTON for md screen | https://flowbite.com/docs/components/tabs/#tabs-with-underline -->
          <nav class="hidden md:block text-sm font-medium text-center border-b border-gray-200 sticky top-0 z-10 bg-white">
             <ul class="flex flex-wrap -mb-px">
@@ -256,7 +256,7 @@
                </li>
             </ul>
          </nav>
-         <div class='flex flex-col gap-6 py-5'>
+         <div class='flex flex-col gap-6 py-5'> <!-- repo list -->
             {#if all_repos.length == 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/tutorial/onmount -->
                {#if !userAgent?.includes('Googlebot')}
                   <LoadingAnimation/>
@@ -267,7 +267,7 @@
                      <Number numbering={numbering} rank={repo.rank} order={index+1}/> <!-- NUMBER -->
                      <div class='grow flex flex-col gap-1 min-w-0'> <!-- the rest | grow against number | https://stackoverflow.com/a/75308868/9157799 -->
                         <div class='flex gap-2'>
-                           <div class='min-w-0 whitespace-pre-wrap'> <!-- https://tailwindcss.com/docs/whitespace#pre-wrap -->
+                           <div class='min-w-0 whitespace-pre-wrap'> <!-- repo name & archived sign | https://tailwindcss.com/docs/whitespace#pre-wrap -->
                               <!-- REPO FULL NAME / TITLE -->
                               <a href="{repo.html_url}" on:mousedown={sendReport(`click/tap ${repo.full_name}`)} target="_blank" class="text-blue-600 break-words">{repo.full_name}</a> <!-- mousedown: https://stackoverflow.com/a/12365382/9157799 -->
                               {#if repo.archived}
@@ -275,7 +275,7 @@
                                  <span class='rounded-full border-solid px-2 py-1 text-xs text-yellow-600 border border-yellow-600 whitespace-nowrap'>Public archive</span>
                               {/if}
                            </div>
-                           <div class='grow flex justify-end items-center'>
+                           <div class='grow flex justify-end items-center'> <!-- browse/hide button -->
                               {#if current_tab == 'explore'}
                                  <button on:click={ () => {blacklistRepo(repo.id); sendReport(`hide ${repo.full_name}`)} } class="bg-gray-100 hover:bg-gray-200 border text-gray-700 text-xs py-1 px-3 rounded-md"> <!-- https://stackoverflow.com/q/58262380/9157799 -->
                                     Hide

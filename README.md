@@ -1,4 +1,4 @@
-# Top1000repos
+# Top 1000 Repos
 
 Browse the top 1000 GitHub repositories based on stars, pull requests, and issues. You can see the top recently closed pull requests and issues of each repository and filter out repositories based on certain topics.
 

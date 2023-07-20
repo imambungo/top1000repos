@@ -33,14 +33,14 @@
       emoji_image_urls = await fetchEmojiImageUrls()
 
       userAgent = navigator.userAgent // need to be assigned at onMount because window or navigator is not found at server side
-      if (!userAgent.includes('Googlebot') && !userAgent.includes('bingbot') && !userAgent.includes('AhrefsBot')) {
-         all_repos = await fetchRepos()
-         all_repos = sort_repos_based_on_sort_option(all_repos, sort_option)
-         all_repos = all_repos.map((repo, index) => ({...repo, rank: index+1}))
-         excluded_topics = ss.getItem('excluded_topics') || []
-         repo_id_blacklist = ls.getItem('repo_id_blacklist') || []
-         render_repos_gradually()
+      all_repos = await fetchRepos()
+      all_repos = sort_repos_based_on_sort_option(all_repos, sort_option)
+      all_repos = all_repos.map((repo, index) => ({...repo, rank: index+1}))
+      excluded_topics = ss.getItem('excluded_topics') || []
+      repo_id_blacklist = ls.getItem('repo_id_blacklist') || []
+      render_repos_gradually()
 
+      if (!userAgent.includes('Googlebot') && !userAgent.includes('bingbot') && !userAgent.includes('AhrefsBot')) {
          const time_of_first_visit = ls.getItem('time_of_first_visit') || new Date().toLocaleString('sv-SE', {timeZone: 'Asia/Jakarta'}).slice(0, 16) // https://stackoverflow.com/a/58633651/9157799
          let visit_count = 1
          if (ls.getItem('visit_count')) visit_count = ls.getItem('visit_count') + 1

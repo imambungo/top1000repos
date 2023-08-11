@@ -309,7 +309,7 @@
          </div>
       </div>
    </main>
-   <footer class='text-center px-6 py-6 text-xs'>
+   <footer class='text-center p-6 text-xs'>
       <p class='mt-2 font-light text-slate-500'>
          <span class='whitespace-nowrap decoration-slate-300'>
             App <a class='underline' target="_blank" href="https://icons8.com/icon/103/star">icon</a> by <a class='underline' target="_blank" href="https://icons8.com">Icons8</a>.

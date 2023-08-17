@@ -127,7 +127,7 @@
    let num_of_repos_to_render = 50
    $: repos = filtered_repos.slice(0, num_of_repos_to_render)
 
-   let gradual_render_timeoutID = -1
+   let gradual_render_timeoutID = -1  // https://developer.mozilla.org/en-US/docs/Web/API/clearTimeout#notes
    const render_repos_gradually = () => {
       num_of_repos_to_render += 10
       if (num_of_repos_to_render < 1000)

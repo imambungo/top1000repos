@@ -38,7 +38,7 @@
       all_repos = all_repos.map((repo, index) => ({...repo, rank: index+1}))
       excluded_topics = ss.getItem('excluded_topics') || []
       repo_id_blacklist = ls.getItem('repo_id_blacklist') || []
-      render_repos_gradually()
+      num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 100})
 
       if (!userAgent.includes('Googlebot') && !userAgent.includes('bingbot') && !userAgent.includes('AhrefsBot')) {
          const time_of_first_visit = ls.getItem('time_of_first_visit') || new Date().toLocaleString('sv-SE', {timeZone: 'Asia/Jakarta'}).slice(0, 16) // https://stackoverflow.com/a/58633651/9157799
@@ -124,25 +124,16 @@
       //filtered_repos = filtered_repos.slice(0, 100)  // for debugging performance problem
    }
 
-   let num_of_repos_to_render = 50
-   $: repos = filtered_repos.slice(0, num_of_repos_to_render)
-
-   let gradual_render_timeoutID = -1  // https://developer.mozilla.org/en-US/docs/Web/API/clearTimeout#notes
-   const render_repos_gradually = () => {
-      num_of_repos_to_render += 10
-      if (num_of_repos_to_render < 1000)
-         gradual_render_timeoutID = setTimeout(render_repos_gradually, 100) // https://stackoverflow.com/q/63503762/9157799
-   }
+   import { num_of_repos_to_render } from './num_of_repos_to_render_store.js'
+   $num_of_repos_to_render = 50
+   $: repos = filtered_repos.slice(0, $num_of_repos_to_render)
    
    $: {
       let trigger = current_tab
       let another_trigger = sort_option
-      num_of_repos_to_render = 50
-      gradual_render_clearTimeout() // don't use clearTimeout(gradual_render_timeoutID) because render_repos_gradually() updates gradual_render_timeoutID, causing loop
-      render_repos_gradually()
+      $num_of_repos_to_render = 50
+      num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 100})
    }
-
-   const gradual_render_clearTimeout = () => clearTimeout(gradual_render_timeoutID)
 
    const get_how_many_repos_in_id_list = (all_repos, repo_id_list) => {
       let count = 0

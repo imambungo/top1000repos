@@ -159,7 +159,7 @@
 
 <svelte:head>
    <title>Top GitHub repositories ranking browser | Top 1000 Repos</title>
-   <meta name="description" content="Browse the top 1000 GitHub repositories based on stars, pull requests, and issues. You can see the top recently closed pull requests and issues of each repository and filter out repositories based on certain topics.">
+   <meta name="description" content="Browse the top 1000 GitHub repositories based on stars, pull requests, and issues. Hide repos that you don't need, they stay hidden every time you open the page. See the top pull requests and issues closed in the last 12 months of each repository.">
 </svelte:head>
 
 <div class='min-h-screen flex flex-col   pl-[calc(100vw-100%)]' data-nosnippet> <!-- min-height and flex (combined with "grow" main) to keep footer at the bottom | https://stackoverflow.com/a/30293718/9157799 padding left for case when there's few item in blacklist (no scrollbar) | data-nosnippet: https://stackoverflow.com/a/72508996/9157799 -->
@@ -176,7 +176,7 @@
             Top GitHub repositories ranking browser
          </h1>
          <p class='text-slate-600 text-center w-full leading-snug' use:balancer={{ ratio: 0.60 }}> <!-- https://stackoverflow.com/q/34875725/9157799 -->
-            Browse the top 1000 GitHub repositories based on stars, pull requests, and issues. You can see the top recently closed pull requests and issues of each repository and filter out repositories based on certain topics.
+            Browse the top 1000 GitHub repositories based on stars, pull requests, and issues. Hide repos that you don't need, they stay hidden every time you open the page. See the top pull requests and issues closed in the last 12 months of each repository.
          </p>
       </div>
    </header>

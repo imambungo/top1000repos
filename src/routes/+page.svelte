@@ -67,8 +67,13 @@
 
    const fetchRepos = async () => {
       const response = await fetch(`${PUBLIC_BACKEND_URL}/repositories`)
-      const repositories = await response.json()
-      return repositories
+      if (response.ok) { // https://developer.mozilla.org/en-US/docs/Web/API/Response/ok
+         const repositories = await response.json()
+         return repositories
+      } else {
+         console.log(response.text()) // https://svelte.dev/examples/await-blocks
+         return ['an array with one element']
+      }
    }
 
    const sendReport = async (message) => { // https://grugbrain.dev/#grug-on-logging
@@ -248,10 +253,12 @@
             </ul>
          </nav>
          <div class='flex flex-col gap-6 py-5'> <!-- repo list -->
-            {#if all_repos.length == 0} <!-- https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/tutorial/onmount -->
+            {#if all_repos.length == 0} <!-- don't use await block since there's reactive variables that depend on all_repos | https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/tutorial/onmount -->
                {#if !userAgent?.includes('Googlebot')}
                   <LoadingAnimation/>
                {/if}
+            {:else if all_repos.length == 1} <!-- fetchRepos() returns an array of one element if there's an HTTP error -->
+               <p>Can't reach the backend. It maybe crashed or something. Please try again later.</p>
             {:else}
                {#each repos as repo, index (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
                   <div class="flex {repo.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'} -ml-3 md:-ml-2"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 | use negative margin left because the space before the number is too big -->

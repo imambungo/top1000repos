@@ -277,7 +277,7 @@
                         <div class='flex gap-2'>
                            <div class='min-w-0 whitespace-pre-wrap'> <!-- repo name & archived sign | https://tailwindcss.com/docs/whitespace#pre-wrap -->
                               <!-- REPO FULL NAME / TITLE -->
-                              <a href="{repo.html_url}" on:mousedown={sendReport(`click/tap ${repo.full_name}`)} target="_blank" class="text-blue-600 break-words">{repo.full_name}</a> <!-- mousedown: https://stackoverflow.com/a/12365382/9157799 -->
+                              <a href="{repo.html_url}" on:mousedown={sendReport(repo.full_name)} target="_blank" class="text-blue-600 break-words">{repo.full_name}</a> <!-- mousedown: https://stackoverflow.com/a/12365382/9157799 -->
                               {#if repo.archived}
                                  <span> </span> <!-- utilizing whitespace-pre-wrap above. it preserve spaces only if they're not in the edges which is nice -->
                                  <span class='rounded-full border-solid px-2 py-1 text-xs text-yellow-600 border border-yellow-600 whitespace-nowrap'>Public archive</span>
@@ -305,8 +305,8 @@
                         {/if}
                         <div class='flex flex-wrap gap-x-4 text-xs text-gray-600'> <!-- last_commit_date & PRs thumbs up -->
                            <StargazersCount stargazers_count={repo.stargazers_count}/>
-                           <Top5ClosedPRThumbsUp on:mousedown={sendReport(`click PR ${repo.full_name}`)} total_thumbs_up_of_top_5_closed_pr_since_1_year={repo.total_thumbs_up_of_top_5_closed_pr_since_1_year} html_url={repo.html_url}/>
-                           <Top5ClosedIssuesThumbsUp on:mousedown={sendReport(`click issues ${repo.full_name}`)} total_thumbs_up_of_top_5_closed_issues_since_1_year={repo.total_thumbs_up_of_top_5_closed_issues_since_1_year} html_url={repo.html_url} has_issues_tab={repo.has_issues}/>
+                           <Top5ClosedPRThumbsUp on:mousedown={sendReport(`PR: ${repo.full_name}`)} total_thumbs_up_of_top_5_closed_pr_since_1_year={repo.total_thumbs_up_of_top_5_closed_pr_since_1_year} html_url={repo.html_url}/>
+                           <Top5ClosedIssuesThumbsUp on:mousedown={sendReport(`ISSUES: ${repo.full_name}`)} total_thumbs_up_of_top_5_closed_issues_since_1_year={repo.total_thumbs_up_of_top_5_closed_issues_since_1_year} html_url={repo.html_url} has_issues_tab={repo.has_issues}/>
                            <!-- <Top5OpenIssueThumbsUp total_thumbs_up_of_top_5_open_issue_of_all_time={repo.total_thumbs_up_of_top_5_open_issue_of_all_time} html_url={repo.html_url} has_issues_tab={repo.has_issues}/> -->
                            <LastCommitDate last_commit_date={repo.last_commit_date}/>
                         </div>

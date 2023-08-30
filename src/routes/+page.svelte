@@ -122,6 +122,16 @@
    let sort_option = 'stargazers_count'
    let numbering = 'rank'
 
+   const change_sort_option = new_sort_option => {
+      sendReport(`sort: ${sort_option}`) // don't use reactive statement since it will get fired twice on mount
+      sort_option = new_sort_option
+   }
+
+   const change_numbering = new_numbering => {
+      sendReport(`numbering: ${numbering}`) // don't use reactive statement since it will get fired twice on mount
+      numbering = new_numbering
+   }
+
    $: { // a bruteforce hammer solution, but it's fine. what causes the slowness is the rendering
       filtered_repos = all_repos
       filtered_repos = filter_blacklisted_repos_based_on_current_tab(filtered_repos, repo_id_blacklist, current_tab)
@@ -217,8 +227,8 @@
       {#if option_is_open}
          <!-- OPTIONS (for mobile view) -->
          <div class='text-sm bg-gray-50 py-3 px-4 flex flex-col gap-4 rounded-b drop-shadow overflow-y-auto max-h-[70vh]'>
-            <NumberingOption numbering={numbering} handleChange={newNumbering => numbering = newNumbering}/>
-            <SortOption sort_option={sort_option} handleChange={newSortOption => sort_option = newSortOption}/>
+            <NumberingOption numbering={numbering} handleChange={change_numbering}/>
+            <SortOption sort_option={sort_option} handleChange={change_sort_option}/>
             <ExcludedTopicsOption excluded_topics={excluded_topics} excluded_repos_count={excluded_repos_count} excludeTopicToggle={excludeTopicToggle}/>
          </div>
       {/if}
@@ -227,8 +237,8 @@
       <!-- OPTIONS (for desktop / md screen size) -->
       <div class='w-1/4 hidden md:block'>
          <MedScreenStickyOptions>
-            <NumberingOption numbering={numbering} handleChange={newNumbering => numbering = newNumbering}/>
-            <SortOption sort_option={sort_option} handleChange={newSortOption => sort_option = newSortOption}/>
+            <NumberingOption numbering={numbering} handleChange={change_numbering}/>
+            <SortOption sort_option={sort_option} handleChange={change_sort_option}/>
             <ExcludedTopicsOption excluded_topics={excluded_topics} excluded_repos_count={excluded_repos_count} excludeTopicToggle={excludeTopicToggle}/>
          </MedScreenStickyOptions>
       </div>

@@ -66,12 +66,17 @@
    let userAgent // need to be assigned at onMount because window or navigator is not found at server side
 
    const fetchRepos = async () => {
-      const response = await fetch(`${PUBLIC_BACKEND_URL}/repositories`)
-      if (response.ok) { // https://developer.mozilla.org/en-US/docs/Web/API/Response/ok
-         const repositories = await response.json()
-         return repositories
-      } else {
-         console.log(response.text()) // https://svelte.dev/examples/await-blocks
+      try { // Typically we don't need try catch. But when a service is crashed in Railway, now the endpoint is pointing to Railway itself which doesn't allow CORS, which cause the fetch to fail (fetch will not fail if it's just an HTTP error).
+         const response = await fetch(`${PUBLIC_BACKEND_URL}/repositories`)
+         if (response.ok) { // https://developer.mozilla.org/en-US/docs/Web/API/Response/ok
+            const repositories = await response.json()
+            return repositories
+         } else { // HTTP error 503 Service Unavailable (on cloud provider side): The server is currently unable to handle the request due to a temporary overload or scheduled maintenance
+            console.log(response.text()) // https://svelte.dev/examples/await-blocks
+            return ['an array with one element']
+         }
+      } catch (err) { // failed to fetch because of CORS error
+         console.log(err)
          return ['an array with one element']
       }
    }
@@ -133,10 +138,12 @@
    }
 
    $: { // a bruteforce hammer solution, but it's fine. what causes the slowness is the rendering
-      filtered_repos = all_repos
-      filtered_repos = filter_blacklisted_repos_based_on_current_tab(filtered_repos, repo_id_blacklist, current_tab)
-      filtered_repos = sort_repos_based_on_sort_option(filtered_repos, sort_option)
-      //filtered_repos = filtered_repos.slice(0, 100)  // for debugging performance problem
+      if (all_repos.length > 1) { // fetchRepos() returns an array of one element if there's an error
+         filtered_repos = all_repos
+         filtered_repos = filter_blacklisted_repos_based_on_current_tab(filtered_repos, repo_id_blacklist, current_tab)
+         filtered_repos = sort_repos_based_on_sort_option(filtered_repos, sort_option)
+         //filtered_repos = filtered_repos.slice(0, 100)  // for debugging performance problem
+      }
    }
 
    import { num_of_repos_to_render } from './num_of_repos_to_render_store.js'
@@ -268,7 +275,7 @@
                {#if !userAgent?.includes('Googlebot')}
                   <LoadingAnimation/>
                {/if}
-            {:else if all_repos.length == 1} <!-- fetchRepos() returns an array of one element if there's an HTTP error -->
+            {:else if all_repos.length == 1} <!-- fetchRepos() returns an array of one element if there's an error -->
                <p>Can't reach the backend. It maybe crashed or something. Please try again later.</p>
             {:else}
                {#each repos as repo, index (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->

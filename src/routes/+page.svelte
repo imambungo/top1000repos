@@ -52,7 +52,7 @@
             if (document.visibilityState === "visible") {
                //await sendReport(`${time_of_first_visit} in`)
             } else {
-               await sendReport(`${time_of_first_visit} out`)
+               await sendReport(`${time_of_first_visit} ${visit_count} out`)
             }
          })
       }

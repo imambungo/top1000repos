@@ -56,9 +56,6 @@
             }
          })
       }
-      if (userAgent.includes('Googlebot')) await sendReport('Googlebot confirmed')
-      if (userAgent.includes('bingbot')) await sendReport('bingbot confirmed')
-      if (userAgent.includes('AhrefsBot')) await sendReport('AhrefsBot confirmed')
    })
 
    import { PUBLIC_BACKEND_URL } from '$env/static/public'; // https://kit.svelte.dev/docs/modules#$env-static-public

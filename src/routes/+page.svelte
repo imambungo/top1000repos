@@ -101,10 +101,10 @@
       const topic = event.target.innerText // https://stackoverflow.com/a/68455563/9157799
       if (!excluded_topics.includes(topic)) { // if topic not excluded yet, add to excluded_topics
          excluded_topics = [...excluded_topics, topic] // https://svelte.dev/tutorial/updating-arrays-and-objects
-         sendReport(`exclude ${topic}`)
+         //sendReport(`exclude ${topic}`)
       } else { // if already excluded, remove from excluded_topics
          excluded_topics = excluded_topics.filter(t => t !== topic) // https://stackoverflow.com/a/44433050/9157799
-         sendReport(`include ${topic}`)
+         //sendReport(`include ${topic}`)
       }
       ss.setItem('excluded_topics', excluded_topics)
    }
@@ -125,12 +125,12 @@
    let numbering = 'rank'
 
    const change_sort_option = new_sort_option => {
-      sendReport(`sort: ${sort_option}`) // don't use reactive statement since it will get fired twice on mount
+      //sendReport(`sort: ${sort_option}`) // don't use reactive statement since it will get fired twice on mount
       sort_option = new_sort_option
    }
 
    const change_numbering = new_numbering => {
-      sendReport(`numbering: ${numbering}`) // don't use reactive statement since it will get fired twice on mount
+      //sendReport(`numbering: ${numbering}`) // don't use reactive statement since it will get fired twice on mount
       numbering = new_numbering
    }
 

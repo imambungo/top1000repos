@@ -48,13 +48,13 @@
          ls.setItem('time_of_first_visit', time_of_first_visit)
          ls.setItem('visit_count', visit_count)
 
-         document.addEventListener("visibilitychange", async () => { // https://stackoverflow.com/a/76647328/9157799 | It is redundant to remove the event listener in onDestroy() as closing the tab will terminate any listeners running within it
-            if (document.visibilityState === "visible") {
-               //await sendReport(`${time_of_first_visit} in`)
-            } else {
-               await sendReport(`${time_of_first_visit} ${visit_count} out`)
-            }
-         })
+         //document.addEventListener("visibilitychange", async () => { // https://stackoverflow.com/a/76647328/9157799 | It is redundant to remove the event listener in onDestroy() as closing the tab will terminate any listeners running within it
+         //   if (document.visibilityState === "visible") {
+         //      //await sendReport(`${time_of_first_visit} in`)
+         //   } else {
+         //      await sendReport(`${time_of_first_visit} ${visit_count} out`)
+         //   }
+         //})
       }
    })
 

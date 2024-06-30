@@ -178,7 +178,7 @@
 
 <svelte:head>
    <title>Top GitHub repositories ranking browser | Top 1000 Repos</title>
-   <meta name="description" content="Browse the top 1000 GitHub repositories based on stars, pull requests, and issues. Hide repos that you don't need, they stay hidden every time you open the page. See the top pull requests and issues closed in the last 12 months of each repository.">
+   <meta name="description" content="Browse the top 1000 GitHub repositories based on stars, pull requests, and issues. Hide repos that you don't need. See the top pull requests and issues closed in the last 12 months of each repository.">
    <link rel="canonical" href="https://top1000repos.com/">
 </svelte:head>
 

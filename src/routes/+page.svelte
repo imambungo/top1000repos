@@ -34,8 +34,6 @@
 
       userAgent = navigator.userAgent // need to be assigned at onMount because window or navigator is not found at server side
       all_repos = await fetchRepos()
-      all_repos = sort_repos_based_on_sort_option(all_repos, sort_option)
-      all_repos = all_repos.map((repo, index) => ({...repo, rank: index+1}))
       excluded_topics = ss.getItem('excluded_topics') || []
       repo_id_blacklist = ls.getItem('repo_id_blacklist') || []
       num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 100})
@@ -137,8 +135,9 @@
    $: { // a bruteforce hammer solution, but it's fine. what causes the slowness is the rendering
       if (all_repos.length > 1) { // fetchRepos() returns an array of one element if there's an error
          filtered_repos = all_repos
-         filtered_repos = filter_blacklisted_repos_based_on_current_tab(filtered_repos, repo_id_blacklist, current_tab)
          filtered_repos = sort_repos_based_on_sort_option(filtered_repos, sort_option)
+         filtered_repos = filtered_repos.map((repo, index) => ({...repo, rank: index+1}))
+         filtered_repos = filter_blacklisted_repos_based_on_current_tab(filtered_repos, repo_id_blacklist, current_tab)
          //filtered_repos = filtered_repos.slice(0, 100)  // for debugging performance problem
       }
    }

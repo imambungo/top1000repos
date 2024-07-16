@@ -8,7 +8,7 @@
 </script>
 
 <div class='whitespace-nowrap'>
-	<a on:mousedown href={top_5_closed_pr_url} target='_blank' title='total 👍 of the top 5 closed (possibly merged) PRs of the last 12 months'> <!--  on:click ==> https://svelte.dev/tutorial/dom-event-forwarding  -->
+	<a on:mousedown href={top_5_closed_pr_url} target='_blank' title='total 👍 of the top 5 closed (possibly merged) PRs of the last 12 months'> <!--  on:mousedown ==> https://svelte.dev/tutorial/dom-event-forwarding  -->
 		<span class='decoration-gray-300 underline'>Top 5 closed PRs</span>
 		(1 year) thumbs up:
 		<span class='decoration-gray-300 underline'>{total_thumbs_up_of_top_5_closed_pr_since_1_year}</span>

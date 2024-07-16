@@ -168,6 +168,9 @@
       return count
    }
    $: excluded_repos_count = get_excluded_repos_count(filtered_repos, excluded_topics)
+
+   let visible_chain_link_index = -1
+   const setVisibleChainLinkIndex = (index) => visible_chain_link_index = index
 </script>
 
 <svelte:head>
@@ -270,7 +273,7 @@
                <p>Can't reach the backend. It maybe crashed or something. Please try again later.</p>
             {:else}
                {#each repos as repo, index (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
-                  <Repo repo={repo} index={index} excluded_topics={excluded_topics} numbering={numbering} current_tab={current_tab} emoji_image_urls={emoji_image_urls} blacklistRepo={blacklistRepo} removeFromBlackList={removeFromBlackList} sendReport={sendReport} excludeTopicToggle={excludeTopicToggle}/>
+                  <Repo visible_chain_link_index={visible_chain_link_index} setVisibleChainLinkIndex={setVisibleChainLinkIndex} repo={repo} index={index} excluded_topics={excluded_topics} numbering={numbering} current_tab={current_tab} emoji_image_urls={emoji_image_urls} blacklistRepo={blacklistRepo} removeFromBlackList={removeFromBlackList} sendReport={sendReport} excludeTopicToggle={excludeTopicToggle}/>
                {/each}
             {/if}
          </div>

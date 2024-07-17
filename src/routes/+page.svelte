@@ -17,7 +17,7 @@
 
    import { sort_repos_based_on_sort_option } from './repos_sort_functions'
 
-   import { onMount } from 'svelte'; // https://stackoverflow.com/a/74165772/9157799
+   import { onMount, tick } from 'svelte'; // https://stackoverflow.com/a/74165772/9157799
 
    import {
       local_storage as ls,
@@ -32,6 +32,9 @@
       excluded_topics = ss.getItem('excluded_topics') || []
       repo_id_blacklist = ls.getItem('repo_id_blacklist') || []
       num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 100})
+
+      initial_url_hash = window.location.hash.substring(1) // for delayed scroll. the browser will not scroll if the content is rendered late. | https://stackoverflow.com/a/6682514/9157799
+      if (initial_url_hash) need_initial_scroll = true
 
       if (!userAgent.includes('Googlebot') && !userAgent.includes('bingbot') && !userAgent.includes('AhrefsBot')) {
          const time_of_first_visit = ls.getItem('time_of_first_visit') || new Date().toLocaleString('sv-SE', {timeZone: 'Asia/Jakarta'}).slice(0, 16) // https://stackoverflow.com/a/58633651/9157799
@@ -50,6 +53,26 @@
          //})
       }
    })
+
+   let initial_url_hash = ''
+   let need_initial_scroll = false
+   const scrollIfNeeded = async (repos) => {
+      if (need_initial_scroll) {
+         const scrollToHash = (url_hash) => { // https://stackoverflow.com/a/21447965/9157799
+            window.location.hash = ''
+            window.location.hash = url_hash
+         }
+         if (repos.find((repo) => repo.full_name == initial_url_hash)) {
+            await tick() // if the corresponding repo has rendered
+            scrollToHash(initial_url_hash)
+            need_initial_scroll = false
+         }
+      }
+   }
+   $: {
+      let trigger = repos
+      scrollIfNeeded(repos)
+   }
 
    import { PUBLIC_BACKEND_URL } from '$env/static/public'; // https://kit.svelte.dev/docs/modules#$env-static-public
 

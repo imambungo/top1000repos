@@ -58,13 +58,21 @@
    let need_initial_scroll = false
    const scrollIfNeeded = async (repos) => {
       if (need_initial_scroll) {
-         const scrollToHash = (url_hash) => { // https://stackoverflow.com/a/21447965/9157799
-            window.location.hash = ''
-            window.location.hash = url_hash // don't need to add '#' back
-         }
          if (repos.find((repo) => repo.full_name == initial_url_hash)) {
             await tick() // if the corresponding repo has rendered | https://svelte.dev/docs/svelte#tick
+            const scrollToHash = (url_hash) => { // https://stackoverflow.com/a/21447965/9157799
+               window.location.hash = ''
+               window.location.hash = url_hash // don't need to add '#' back
+            }
             scrollToHash(initial_url_hash)
+            const disableScrolling = () => { // https://stackoverflow.com/a/26186979/9157799
+               let x = window.scrollX
+               let y = window.scrollY
+               window.onscroll = () => window.scrollTo(x, y)
+            }
+            disableScrolling()
+            const enableScrolling = () => window.onscroll = null // https://stackoverflow.com/q/4770025/9157799#comment117243053_26186979
+            setTimeout(enableScrolling, 2000)
             need_initial_scroll = false
          }
       }

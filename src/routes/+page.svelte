@@ -69,7 +69,7 @@
          }
       }
    }
-   $: {
+   $: { // for delayed scroll. the browser will not scroll if the content is rendered late.
       let trigger = repos
       scrollIfNeeded(repos)
    }

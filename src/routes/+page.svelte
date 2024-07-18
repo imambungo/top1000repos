@@ -55,8 +55,9 @@
    })
 
    let initial_url_hash = ''
+   let repo_to_highlight = ''
    let need_initial_scroll = false
-   const scrollIfNeeded = async (repos) => {
+   const initialScrollAndHighlightIfNeeded = async (repos) => {
       if (need_initial_scroll) {
          if (repos.find((repo) => repo.full_name == initial_url_hash)) {
             await tick() // if the corresponding repo has rendered | https://svelte.dev/docs/svelte#tick
@@ -74,12 +75,18 @@
             const enableScrolling = () => window.onscroll = null // https://stackoverflow.com/q/4770025/9157799#comment117243053_26186979
             setTimeout(enableScrolling, 2000)
             need_initial_scroll = false
+
+            repo_to_highlight = initial_url_hash
+            setTimeout(
+               () => repo_to_highlight = '',
+               1000
+            )
          }
       }
    }
    $: { // for delayed scroll. the browser will not scroll if the content is rendered late.
       let trigger = repos
-      scrollIfNeeded(repos)
+      initialScrollAndHighlightIfNeeded(repos)
    }
 
    import { PUBLIC_BACKEND_URL } from '$env/static/public'; // https://kit.svelte.dev/docs/modules#$env-static-public
@@ -304,7 +311,7 @@
                <p>Can't reach the backend. It maybe crashed or something. Please try again later.</p>
             {:else}
                {#each repos as repo, index (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
-                  <Repo visible_chain_link_index={visible_chain_link_index} setVisibleChainLinkIndex={setVisibleChainLinkIndex} repo={repo} index={index} excluded_topics={excluded_topics} numbering={numbering} current_tab={current_tab} emoji_image_urls={emoji_image_urls} blacklistRepo={blacklistRepo} removeFromBlackList={removeFromBlackList} sendReport={sendReport} excludeTopicToggle={excludeTopicToggle}/>
+                  <Repo visible_chain_link_index={visible_chain_link_index} setVisibleChainLinkIndex={setVisibleChainLinkIndex} repo={repo} index={index} excluded_topics={excluded_topics} numbering={numbering} current_tab={current_tab} emoji_image_urls={emoji_image_urls} blacklistRepo={blacklistRepo} removeFromBlackList={removeFromBlackList} sendReport={sendReport} excludeTopicToggle={excludeTopicToggle} repo_to_highlight={repo_to_highlight}/>
                {/each}
             {/if}
          </div>

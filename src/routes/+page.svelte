@@ -31,7 +31,7 @@
       all_repos = await fetchRepos()
       excluded_topics = ss.getItem('excluded_topics') || []
       repo_id_blacklist = ls.getItem('repo_id_blacklist') || []
-      num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 100})
+      num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 80})
 
       initial_url_hash = window.location.hash.substring(1) // for delayed scroll. the browser will not scroll if the content is rendered late. | https://stackoverflow.com/a/6682514/9157799
       if (initial_url_hash) need_initial_scroll = true
@@ -79,7 +79,7 @@
             repo_to_highlight = initial_url_hash
             setTimeout(
                () => repo_to_highlight = '',
-               500
+               1000
             )
          }
       }
@@ -183,7 +183,7 @@
       let trigger = current_tab
       let another_trigger = sort_option
       $num_of_repos_to_render = 50
-      num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 100})
+      num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 80})
    }
 
    const get_how_many_repos_in_id_list = (all_repos, repo_id_list) => {

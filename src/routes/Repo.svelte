@@ -22,7 +22,7 @@
    import Number from './Number.svelte'
 </script>
 
-<div id="{repo.full_name}" on:mouseenter={()=>{setVisibleChainLinkIndex(index)}} on:mouseleave={()=>{setVisibleChainLinkIndex(-1)}} on:touchstart={()=>{setVisibleChainLinkIndex(index)}} class="scroll-my-20 flex {repo.full_name == repo_to_highlight ? 'bg-amber-200 transition-colors duration-700' : 'duration-[5000ms]'} {repo.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'} -ml-3 md:-ml-2"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 | use negative margin left because the space before the number is too big | scroll-my: https://stackoverflow.com/a/60975588/9157799 -->
+<div id="{repo.full_name}" on:mouseenter={()=>{setVisibleChainLinkIndex(index)}} on:mouseleave={()=>{setVisibleChainLinkIndex(-1)}} on:touchstart={()=>{setVisibleChainLinkIndex(index)}} class="scroll-my-20 flex {repo.full_name == repo_to_highlight ? 'bg-amber-100 transition-colors duration-500' : 'duration-[5000ms]'} {repo.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'} -ml-3 md:-ml-2"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 | use negative margin left because the space before the number is too big | scroll-my: https://stackoverflow.com/a/60975588/9157799 -->
    <div class="text-sm pt-0.5 w-8 shrink-0 mr-2 text-gray-700 flex flex-col items-end md:ml-0"> <!-- number and link-to-scroll | shrink: https://stackoverflow.com/a/45741742/9157799 -->
       <Number numbering={numbering} rank={repo.rank} order={index+1}/>
       <div class='grow flex flex-col justify-end'>

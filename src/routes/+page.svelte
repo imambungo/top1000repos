@@ -73,13 +73,13 @@
             }
             disableScrolling()
             const enableScrolling = () => window.onscroll = null // https://stackoverflow.com/q/4770025/9157799#comment117243053_26186979
-            setTimeout(enableScrolling, 2000)
+            setTimeout(enableScrolling, 1000)
             need_initial_scroll = false
 
             repo_to_highlight = initial_url_hash
             setTimeout(
                () => repo_to_highlight = '',
-               1000
+               500
             )
          }
       }

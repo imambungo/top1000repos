@@ -3,16 +3,11 @@
    import NumberingOption from './NumberingOption.svelte';
    import SortOption from './SortOption.svelte'
    import ExcludedTopicsOption from './ExcludedTopicsOption.svelte';
-   import StargazersCount from './StargazersCount.svelte'
-   import LastCommitDate from './LastCommitDate.svelte'
-   import Top5ClosedPRThumbsUp from './Top5ClosedPRThumbsUp.svelte'
-   import Top5ClosedIssuesThumbsUp from './Top5ClosedIssuesThumbsUp.svelte'
    import Top5OpenIssueThumbsUp from './Top5OpenIssueThumbsUp.svelte'
-   import Description from './Description.svelte'
-   import Number from './Number.svelte'
    import NumOfClosedPR from './NumOfClosedPR.svelte'
    import NumOfClosedIssues from './NumOfClosedIssues.svelte'
    import LoadingAnimation from './LoadingAnimation.svelte'
+   import Repo from './Repo.svelte';
 
    import { balancer } from 'svelte-action-balancer' // https://stackoverflow.com/q/34875725/9157799
 
@@ -22,7 +17,7 @@
 
    import { sort_repos_based_on_sort_option } from './repos_sort_functions'
 
-   import { onMount } from 'svelte'; // https://stackoverflow.com/a/74165772/9157799
+   import { onMount, tick } from 'svelte'; // https://stackoverflow.com/a/74165772/9157799
 
    import {
       local_storage as ls,
@@ -36,7 +31,10 @@
       all_repos = await fetchRepos()
       excluded_topics = ss.getItem('excluded_topics') || []
       repo_id_blacklist = ls.getItem('repo_id_blacklist') || []
-      num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 100})
+      num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 80})
+
+      initial_url_hash = window.location.hash.substring(1) // for delayed scroll. the browser will not scroll if the content is rendered late. | https://stackoverflow.com/a/6682514/9157799
+      if (initial_url_hash) need_initial_scroll = true
 
       if (!userAgent.includes('Googlebot') && !userAgent.includes('bingbot') && !userAgent.includes('AhrefsBot')) {
          const time_of_first_visit = ls.getItem('time_of_first_visit') || new Date().toLocaleString('sv-SE', {timeZone: 'Asia/Jakarta'}).slice(0, 16) // https://stackoverflow.com/a/58633651/9157799
@@ -55,6 +53,41 @@
          //})
       }
    })
+
+   let initial_url_hash = ''
+   let repo_to_highlight = ''
+   let need_initial_scroll = false
+   const initialScrollAndHighlightIfNeeded = async (repos) => {
+      if (need_initial_scroll) {
+         if (repos.find((repo) => repo.full_name == initial_url_hash)) {
+            await tick() // if the corresponding repo has rendered | https://svelte.dev/docs/svelte#tick
+            const scrollToHash = (url_hash) => { // https://stackoverflow.com/a/21447965/9157799
+               window.location.hash = ''
+               window.location.hash = url_hash // don't need to add '#' back
+            }
+            scrollToHash(initial_url_hash)
+            const disableScrolling = () => { // https://stackoverflow.com/a/26186979/9157799
+               let x = window.scrollX
+               let y = window.scrollY
+               window.onscroll = () => window.scrollTo(x, y)
+            }
+            disableScrolling()
+            const enableScrolling = () => window.onscroll = null // https://stackoverflow.com/q/4770025/9157799#comment117243053_26186979
+            setTimeout(enableScrolling, 1000)
+            need_initial_scroll = false
+
+            repo_to_highlight = initial_url_hash
+            setTimeout(
+               () => repo_to_highlight = '',
+               1000
+            )
+         }
+      }
+   }
+   $: { // for delayed scroll. the browser will not scroll if the content is rendered late.
+      let trigger = repos
+      initialScrollAndHighlightIfNeeded(repos)
+   }
 
    import { PUBLIC_BACKEND_URL } from '$env/static/public'; // https://kit.svelte.dev/docs/modules#$env-static-public
 
@@ -150,7 +183,7 @@
       let trigger = current_tab
       let another_trigger = sort_option
       $num_of_repos_to_render = 50
-      num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 100})
+      num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 80})
    }
 
    const get_how_many_repos_in_id_list = (all_repos, repo_id_list) => {
@@ -173,6 +206,9 @@
       return count
    }
    $: excluded_repos_count = get_excluded_repos_count(filtered_repos, excluded_topics)
+
+   let visible_chain_link_index = -1
+   const setVisibleChainLinkIndex = (index) => visible_chain_link_index = index
 </script>
 
 <svelte:head>
@@ -266,7 +302,7 @@
                </li>
             </ul>
          </nav>
-         <div class='flex flex-col gap-6 py-5'> <!-- repo list -->
+         <div class='flex flex-col gap-6 py-5' data-nosnippet> <!-- repo list | https://www.google.com/search?q=what+is+data-nosnippet -->
             {#if all_repos.length == 0} <!-- don't use await block since there's reactive variables that depend on all_repos | https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/tutorial/onmount -->
                {#if !userAgent?.includes('Googlebot')}
                   <LoadingAnimation/>
@@ -275,48 +311,7 @@
                <p>Can't reach the backend. It maybe crashed or something. Please try again later.</p>
             {:else}
                {#each repos as repo, index (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
-                  <div data-nosnippet class="flex {repo.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'} -ml-3 md:-ml-2"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 | use negative margin left because the space before the number is too big -->
-                     <Number numbering={numbering} rank={repo.rank} order={index+1}/> <!-- NUMBER -->
-                     <div class='grow flex flex-col gap-1 min-w-0'> <!-- the rest | grow against number | https://stackoverflow.com/a/75308868/9157799 -->
-                        <div class='flex gap-2'>
-                           <div class='min-w-0 whitespace-pre-wrap'> <!-- repo name & archived sign | https://tailwindcss.com/docs/whitespace#pre-wrap -->
-                              <!-- REPO FULL NAME / TITLE -->
-                              <a href="{repo.html_url}" target="_blank" class="text-blue-600 break-words">{repo.full_name}</a>
-                              <!-- <a href="{repo.html_url}" on:mousedown={sendReport(repo.full_name)} target="_blank" class="text-blue-600 break-words">{repo.full_name}</a> -->   <!-- mousedown: https://stackoverflow.com/a/12365382/9157799 -->
-                              {#if repo.archived}
-                                 <span> </span> <!-- utilizing whitespace-pre-wrap above. it preserve spaces only if they're not in the edges which is nice -->
-                                 <span class='rounded-full border-solid px-2 py-1 text-xs text-yellow-600 border border-yellow-600 whitespace-nowrap'>Public archive</span>
-                              {/if}
-                           </div>
-                           <div class='grow flex justify-end items-center'> <!-- browse/hide button -->
-                              {#if current_tab == 'explore'}
-                                 <button on:click={ () => {blacklistRepo(repo.id)/*; sendReport(`hide ${repo.full_name}`)*/} } class="bg-gray-100 hover:bg-gray-200 border text-gray-700 text-xs py-1 px-3 rounded-md"> <!-- https://stackoverflow.com/q/58262380/9157799 -->
-                                    Hide
-                                 </button>
-                              {:else if current_tab == 'blacklist'}
-                                 <button on:click={ () => {removeFromBlackList(repo.id)/*; sendReport(`remove ${repo.full_name}`)*/} } class="bg-gray-100 hover:bg-gray-200 border text-gray-700 text-xs py-1 px-3 rounded-md"> <!-- https://stackoverflow.com/q/58262380/9157799 -->
-                                    Remove
-                                 </button>
-                              {/if}
-                           </div>
-                        </div>
-                        <Description promise={emoji_image_urls} description={repo.description}/> <!-- REPO DESCRIPTION -->
-                        {#if repo.topics.length > 0} <!-- topics | if clause to prevent parent's flex gap -->
-                           <div class="flex flex-wrap gap-1">
-                              {#each repo.topics as topic}
-                                 <div on:click={excludeTopicToggle} class="cursor-pointer rounded-full bg-sky-100 px-2 py-1 text-xs text-blue-500 {excluded_topics.includes(topic) && 'line-through'}">{topic}</div>
-                              {/each}
-                           </div>
-                        {/if}
-                        <div class='flex flex-wrap gap-x-4 text-xs text-gray-600'> <!-- last_commit_date & PRs thumbs up -->
-                           <StargazersCount stargazers_count={repo.stargazers_count}/>
-                           <Top5ClosedPRThumbsUp on:mousedown={sendReport(`PR: ${repo.full_name}`)} total_thumbs_up_of_top_5_closed_pr_since_1_year={repo.total_thumbs_up_of_top_5_closed_pr_since_1_year} html_url={repo.html_url}/>
-                           <Top5ClosedIssuesThumbsUp on:mousedown={sendReport(`ISSUES: ${repo.full_name}`)} total_thumbs_up_of_top_5_closed_issues_since_1_year={repo.total_thumbs_up_of_top_5_closed_issues_since_1_year} html_url={repo.html_url} has_issues_tab={repo.has_issues}/>
-                           <!-- <Top5OpenIssueThumbsUp total_thumbs_up_of_top_5_open_issue_of_all_time={repo.total_thumbs_up_of_top_5_open_issue_of_all_time} html_url={repo.html_url} has_issues_tab={repo.has_issues}/> -->
-                           <LastCommitDate last_commit_date={repo.last_commit_date}/>
-                        </div>
-                     </div>
-                  </div>
+                  <Repo visible_chain_link_index={visible_chain_link_index} setVisibleChainLinkIndex={setVisibleChainLinkIndex} repo={repo} index={index} excluded_topics={excluded_topics} numbering={numbering} current_tab={current_tab} emoji_image_urls={emoji_image_urls} blacklistRepo={blacklistRepo} removeFromBlackList={removeFromBlackList} sendReport={sendReport} excludeTopicToggle={excludeTopicToggle} repo_to_highlight={repo_to_highlight}/>
                {/each}
             {/if}
          </div>

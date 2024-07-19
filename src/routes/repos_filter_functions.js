@@ -8,7 +8,7 @@ export const filter_blacklisted_repos_based_on_current_tab = (repos, repo_id_bla
       }
       return repos.filter(not_blacklisted_repo)
    }
-   
+
    const filter_only_blacklisted_repos = (repos, repo_id_blacklist) => {
       const is_blacklisted_repo = repo => {
          if (repo_id_blacklist.includes(repo.id))

@@ -34,7 +34,17 @@
       num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 80})
 
       initial_url_hash = window.location.hash.substring(1) // for delayed scroll. the browser will not scroll if the content is rendered late. | https://stackoverflow.com/a/6682514/9157799
-      if (initial_url_hash) need_initial_scroll = true
+      if (initial_url_hash) {
+         need_initial_scroll = true
+         const repoIsHidden = () => {
+            let repo = all_repos.find((repo) => repo.full_name == initial_url_hash)
+            if (repo_id_blacklist.includes(repo.id))
+               return true
+            else
+               return false
+         }
+         if (repoIsHidden()) current_tab = 'blacklist'
+      }
 
       if (!userAgent.includes('Googlebot') && !userAgent.includes('bingbot') && !userAgent.includes('AhrefsBot')) {
          const time_of_first_visit = ls.getItem('time_of_first_visit') || new Date().toLocaleString('sv-SE', {timeZone: 'Asia/Jakarta'}).slice(0, 16) // https://stackoverflow.com/a/58633651/9157799
@@ -57,7 +67,7 @@
    let initial_url_hash = ''
    let repo_to_highlight = ''
    let need_initial_scroll = false
-   const initialScrollAndHighlightIfNeeded = async (repos) => {
+   const initialScrollAndHighlightIfNeeded = async () => {
       if (need_initial_scroll) {
          if (repos.find((repo) => repo.full_name == initial_url_hash)) {
             await tick() // if the corresponding repo has rendered | https://svelte.dev/docs/svelte#tick
@@ -86,7 +96,7 @@
    }
    $: { // for delayed scroll. the browser will not scroll if the content is rendered late.
       let trigger = repos
-      initialScrollAndHighlightIfNeeded(repos)
+      initialScrollAndHighlightIfNeeded()
    }
 
    import { PUBLIC_BACKEND_URL } from '$env/static/public'; // https://kit.svelte.dev/docs/modules#$env-static-public

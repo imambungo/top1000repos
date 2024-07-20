@@ -27,7 +27,7 @@
    import { page } from '$app/stores' // https://stackoverflow.com/a/68578884/9157799
 
    onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
-      if ($page.url.pathname.includes('pr')) sort_option = 'total_thumbs_up_of_top_5_closed_pr_since_1_year'
+      if ($page.url.pathname.includes('pr')) sort_option = 'total_thumbs_up_of_top_5_closed_pr_since_1_year' // https://stackoverflow.com/a/68578884/9157799
       if ($page.url.pathname.includes('issues')) sort_option = 'total_thumbs_up_of_top_5_closed_issues_since_1_year'
 
       emoji_image_urls = await fetchEmojiImageUrls()

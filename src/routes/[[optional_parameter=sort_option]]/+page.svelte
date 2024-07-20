@@ -27,16 +27,13 @@
    import { page } from '$app/stores' // https://stackoverflow.com/a/68578884/9157799
 
    onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
-      emoji_image_urls = await fetchEmojiImageUrls()
+      if ($page.url.pathname.includes('pr')) sort_option = 'total_thumbs_up_of_top_5_closed_pr_since_1_year'
+      if ($page.url.pathname.includes('issues')) sort_option = 'total_thumbs_up_of_top_5_closed_issues_since_1_year'
 
-      userAgent = navigator.userAgent // need to be assigned at onMount because window or navigator is not found at server side
+      emoji_image_urls = await fetchEmojiImageUrls()
       all_repos = await fetchRepos()
       excluded_topics = ss.getItem('excluded_topics') || []
       repo_id_blacklist = ls.getItem('repo_id_blacklist') || []
-      num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 80})
-
-      if ($page.url.pathname.includes('pr')) sort_option = 'total_thumbs_up_of_top_5_closed_pr_since_1_year'
-      if ($page.url.pathname.includes('issues')) sort_option = 'total_thumbs_up_of_top_5_closed_issues_since_1_year'
 
       initial_url_hash = window.location.hash.substring(1) // for delayed scroll. the browser will not scroll if the content is rendered late. | https://stackoverflow.com/a/6682514/9157799
       if (initial_url_hash) {
@@ -51,6 +48,9 @@
          if (repoIsHidden()) current_tab = 'blacklist'
       }
 
+      num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 80})
+
+      userAgent = navigator.userAgent // need to be assigned at onMount because window or navigator is not found at server side
       if (!userAgent.includes('Googlebot') && !userAgent.includes('bingbot') && !userAgent.includes('AhrefsBot')) {
          const time_of_first_visit = ls.getItem('time_of_first_visit') || new Date().toLocaleString('sv-SE', {timeZone: 'Asia/Jakarta'}).slice(0, 16) // https://stackoverflow.com/a/58633651/9157799
          let visit_count = 1

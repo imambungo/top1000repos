@@ -229,13 +229,15 @@
 <svelte:head>
    {#if $page.url.pathname.includes('pr')}
       <title>Top GitHub Repositories Based on Pull Requests</title>
+      <link rel="canonical" href="https://top1000repos.com/based-on-pr">
    {:else if $page.url.pathname.includes('issues')}
       <title>Top GitHub Repositories Based on Closed Issues</title>
+      <link rel="canonical" href="https://top1000repos.com/based-on-issues">
    {:else}
       <title>Top GitHub Repositories Ranking Browser | Top 1000 Repos</title>
+      <link rel="canonical" href="https://top1000repos.com">
    {/if}
    <meta name="description" content="Browse the top 1000 GitHub repositories based on stars, pull requests, and issues. Hide repos that you don't need. See the top pull requests and issues closed in the last 12 months of each repository.">
-   <link rel="canonical" href="https://top1000repos.com/">
 </svelte:head>
 
 <div class='min-h-screen flex flex-col   pl-[calc(100vw-100%)]' data-nosnippet> <!-- min-height and flex (combined with "grow" main) to keep footer at the bottom | https://stackoverflow.com/a/30293718/9157799 padding left for case when there's few item in blacklist (no scrollbar) | data-nosnippet: https://stackoverflow.com/a/72508996/9157799 -->

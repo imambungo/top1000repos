@@ -24,14 +24,16 @@
       session_storage as ss
    } from '$lib/local_storage.js'
 
-   onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
-      emoji_image_urls = await fetchEmojiImageUrls()
+   import { page } from '$app/stores' // https://stackoverflow.com/a/68578884/9157799
 
-      userAgent = navigator.userAgent // need to be assigned at onMount because window or navigator is not found at server side
+   onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
+      if ($page.url.pathname.includes('pr')) sort_option = 'total_thumbs_up_of_top_5_closed_pr_since_1_year' // https://stackoverflow.com/a/68578884/9157799
+      if ($page.url.pathname.includes('issues')) sort_option = 'total_thumbs_up_of_top_5_closed_issues_since_1_year'
+
+      emoji_image_urls = await fetchEmojiImageUrls()
       all_repos = await fetchRepos()
       excluded_topics = ss.getItem('excluded_topics') || []
       repo_id_blacklist = ls.getItem('repo_id_blacklist') || []
-      num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 80})
 
       initial_url_hash = window.location.hash.substring(1) // for delayed scroll. the browser will not scroll if the content is rendered late. | https://stackoverflow.com/a/6682514/9157799
       if (initial_url_hash) {
@@ -46,6 +48,9 @@
          if (repoIsHidden()) current_tab = 'blacklist'
       }
 
+      num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 80})
+
+      userAgent = navigator.userAgent // need to be assigned at onMount because window or navigator is not found at server side
       if (!userAgent.includes('Googlebot') && !userAgent.includes('bingbot') && !userAgent.includes('AhrefsBot')) {
          const time_of_first_visit = ls.getItem('time_of_first_visit') || new Date().toLocaleString('sv-SE', {timeZone: 'Asia/Jakarta'}).slice(0, 16) // https://stackoverflow.com/a/58633651/9157799
          let visit_count = 1
@@ -222,7 +227,13 @@
 </script>
 
 <svelte:head>
-   <title>Top GitHub repositories ranking browser | Top 1000 Repos</title>
+   {#if $page.url.pathname.includes('pr')}
+      <title>Top GitHub Repositories Based on Pull Requests</title>
+   {:else if $page.url.pathname.includes('issues')}
+      <title>Top GitHub Repositories Based on Closed Issues</title>
+   {:else}
+      <title>Top GitHub Repositories Ranking Browser | Top 1000 Repos</title>
+   {/if}
    <meta name="description" content="Browse the top 1000 GitHub repositories based on stars, pull requests, and issues. Hide repos that you don't need. See the top pull requests and issues closed in the last 12 months of each repository.">
    <link rel="canonical" href="https://top1000repos.com/">
 </svelte:head>
@@ -238,7 +249,7 @@
       </div>
       <div class='my-4 flex flex-col items-center gap-3 w-full'> <!-- header 1 and header text -->
          <h1 class='mt-3 text-2xl font-semibold text-slate-800 text-center w-full' use:balancer={{ ratio: 0.60 }}> <!-- https://stackoverflow.com/q/34875725/9157799 -->
-            Top GitHub repositories ranking browser
+            Top GitHub Repositories Ranking Browser
          </h1>
          <p class='text-slate-600 text-center w-full leading-snug' use:balancer={{ ratio: 0.60 }}> <!-- https://stackoverflow.com/q/34875725/9157799 -->
             Browse the top 1000 GitHub repositories based on stars, pull requests, and issues. Hide repos that you don't need, they stay hidden every time you open the page. See the top pull requests and issues closed in the last 12 months of each repository.

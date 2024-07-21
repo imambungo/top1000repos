@@ -227,7 +227,13 @@
 </script>
 
 <svelte:head>
-   <title>Top GitHub repositories ranking browser | Top 1000 Repos</title>
+   {#if $page.url.pathname.includes('pr')}
+      <title>Top GitHub Repositories Based on Pull Requests</title>
+   {:else if $page.url.pathname.includes('issues')}
+      <title>Top GitHub Repositories Based on Closed Issues</title>
+   {:else}
+      <title>Top GitHub Repositories Ranking Browser | Top 1000 Repos</title>
+   {/if}
    <meta name="description" content="Browse the top 1000 GitHub repositories based on stars, pull requests, and issues. Hide repos that you don't need. See the top pull requests and issues closed in the last 12 months of each repository.">
    <link rel="canonical" href="https://top1000repos.com/">
 </svelte:head>
@@ -243,7 +249,7 @@
       </div>
       <div class='my-4 flex flex-col items-center gap-3 w-full'> <!-- header 1 and header text -->
          <h1 class='mt-3 text-2xl font-semibold text-slate-800 text-center w-full' use:balancer={{ ratio: 0.60 }}> <!-- https://stackoverflow.com/q/34875725/9157799 -->
-            Top GitHub repositories ranking browser
+            Top GitHub Repositories Ranking Browser
          </h1>
          <p class='text-slate-600 text-center w-full leading-snug' use:balancer={{ ratio: 0.60 }}> <!-- https://stackoverflow.com/q/34875725/9157799 -->
             Browse the top 1000 GitHub repositories based on stars, pull requests, and issues. Hide repos that you don't need, they stay hidden every time you open the page. See the top pull requests and issues closed in the last 12 months of each repository.

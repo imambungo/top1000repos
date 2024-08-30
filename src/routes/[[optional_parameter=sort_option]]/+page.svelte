@@ -92,10 +92,6 @@
             need_initial_scroll = false
 
             repo_to_highlight = initial_url_hash
-            setTimeout(
-               () => repo_to_highlight = '',
-               1000
-            )
          }
       }
    }

@@ -22,7 +22,7 @@
    import Number from './Number.svelte'
 
    let transition_animation_class = ''
-   $: {
+   const runCodeWithoutReactiveBlockFootGun = () => {
       if (repo.full_name == repo_to_highlight) {
          transition_animation_class = 'bg-amber-100 duration-500'
          setTimeout(
@@ -38,6 +38,10 @@
             1000
          )
       }
+   }
+   $: {
+      let trigger = repo_to_highlight
+      runCodeWithoutReactiveBlockFootGun()
    }
 </script>
 

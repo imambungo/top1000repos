@@ -21,7 +21,7 @@
    import Description from './Description.svelte'
    import Number from './Number.svelte'
 
-   let transition_animation_class = ''
+   let transition_animation_class = $state('')
    const runCodeWithoutReactiveBlockFootGun = () => {
       if (repo.full_name == repo_to_highlight) {
          transition_animation_class = 'bg-amber-100 duration-500'
@@ -45,7 +45,7 @@
    }
 </script>
 
-<div id="{repo.full_name}" on:mouseenter={()=>{setVisibleChainLinkIndex(index)}} on:mouseleave={()=>{setVisibleChainLinkIndex(-1)}} on:touchstart={()=>{setVisibleChainLinkIndex(index)}} class="scroll-my-20 flex {transition_animation_class} {repo.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'} -ml-3 md:-ml-2"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 | use negative margin left because the space before the number is too big | scroll-my: https://stackoverflow.com/a/60975588/9157799 -->
+<div id="{repo.full_name}" onmouseenter={()=>{setVisibleChainLinkIndex(index)}} onmouseleave={()=>{setVisibleChainLinkIndex(-1)}} ontouchstart={()=>{setVisibleChainLinkIndex(index)}} class="scroll-my-20 flex {transition_animation_class} {repo.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'} -ml-3 md:-ml-2"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 | use negative margin left because the space before the number is too big | scroll-my: https://stackoverflow.com/a/60975588/9157799 -->
    <div class="text-sm pt-0.5 w-8 shrink-0 mr-2 text-gray-700 flex flex-col items-end md:ml-0"> <!-- number and link-to-scroll | shrink: https://stackoverflow.com/a/45741742/9157799 -->
       <Number numbering={numbering} rank={repo.rank} order={index+1}/>
       <div class='grow flex flex-col justify-end'>
@@ -70,11 +70,11 @@
          </div>
          <div class='grow flex justify-end items-center'> <!-- browse/hide button -->
             {#if current_tab == 'explore'}
-               <button on:click={ () => {blacklistRepo(repo.id)/*; sendReport(`hide ${repo.full_name}`)*/} } class="bg-gray-100 hover:bg-gray-200 border text-gray-700 text-xs py-1 px-3 rounded-md"> <!-- https://stackoverflow.com/q/58262380/9157799 -->
+               <button onclick={() => {blacklistRepo(repo.id)/*; sendReport(`hide ${repo.full_name}`)*/}} class="bg-gray-100 hover:bg-gray-200 border text-gray-700 text-xs py-1 px-3 rounded-md"> <!-- https://stackoverflow.com/q/58262380/9157799 -->
                   Hide
                </button>
             {:else if current_tab == 'blacklist'}
-               <button on:click={ () => {removeFromBlackList(repo.id)/*; sendReport(`remove ${repo.full_name}`)*/} } class="bg-gray-100 hover:bg-gray-200 border text-gray-700 text-xs py-1 px-3 rounded-md"> <!-- https://stackoverflow.com/q/58262380/9157799 -->
+               <button onclick={() => {removeFromBlackList(repo.id)/*; sendReport(`remove ${repo.full_name}`)*/}} class="bg-gray-100 hover:bg-gray-200 border text-gray-700 text-xs py-1 px-3 rounded-md"> <!-- https://stackoverflow.com/q/58262380/9157799 -->
                   Remove
                </button>
             {/if}
@@ -84,7 +84,7 @@
       {#if repo.topics.length > 0} <!-- topics | if clause to prevent parent's flex gap -->
          <div class="flex flex-wrap gap-1">
             {#each repo.topics as topic}
-               <div on:click={excludeTopicToggle} class="cursor-pointer rounded-full bg-sky-100 px-2 py-1 text-xs text-blue-500 {excluded_topics.includes(topic) && 'line-through'}">{topic}</div>
+               <div onclick={excludeTopicToggle} class="cursor-pointer rounded-full bg-sky-100 px-2 py-1 text-xs text-blue-500 {excluded_topics.includes(topic) && 'line-through'}">{topic}</div>
             {/each}
          </div>
       {/if}

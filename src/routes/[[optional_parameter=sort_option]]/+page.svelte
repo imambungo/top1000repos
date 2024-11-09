@@ -1,4 +1,6 @@
 <script>
+   import { run } from 'svelte/legacy';
+
    import MedScreenStickyOptions from './MedScreenStickyOptions.svelte'
    import NumberingOption from './NumberingOption.svelte';
    import SortOption from './SortOption.svelte'
@@ -70,7 +72,7 @@
    })
 
    let initial_url_hash = ''
-   let repo_to_highlight = ''
+   let repo_to_highlight = $state('')
    let need_initial_scroll = false
    const initialScrollAndHighlightIfNeeded = async () => {
       if (need_initial_scroll) {
@@ -126,18 +128,18 @@
       })
    }
 
-   let emoji_image_urls = new Promise( () => {} ) // https://stackoverflow.com/a/70846910/9157799 | https://stackoverflow.com/a/74165772/9157799
+   let emoji_image_urls = $state(new Promise( () => {} )) // https://stackoverflow.com/a/70846910/9157799 | https://stackoverflow.com/a/74165772/9157799
    const fetchEmojiImageUrls = async () => {
       const response = await fetch('https://api.github.com/emojis')
       const emoji_image_urls = await response.json()
       return emoji_image_urls
    }
 
-   let all_repos = []
-   let filtered_repos = [] // https://stackoverflow.com/q/61105696/9157799#comment108104142_61105696
-   let repos = []
+   let all_repos = $state([])
+   let filtered_repos = $state([]) // https://stackoverflow.com/q/61105696/9157799#comment108104142_61105696
+   let repos = $state([])
 
-   let excluded_topics = []
+   let excluded_topics = $state([])
    const excludeTopicToggle = event => {
       const topic = event.target.innerText // https://stackoverflow.com/a/68455563/9157799
       if (!excluded_topics.includes(topic)) { // if topic not excluded yet, add to excluded_topics
@@ -150,7 +152,7 @@
       ss.setItem('excluded_topics', excluded_topics)
    }
 
-   let repo_id_blacklist = []
+   let repo_id_blacklist = $state([])
    const blacklistRepo = repo_id => {
       repo_id_blacklist = [...repo_id_blacklist, repo_id]
       ls.setItem('repo_id_blacklist', repo_id_blacklist)
@@ -160,10 +162,10 @@
       ls.setItem('repo_id_blacklist', repo_id_blacklist)
    }
 
-   let option_is_open = false // for mobile view
-   let current_tab = 'explore'
-   let sort_option = 'stargazers_count'
-   let numbering = 'rank'
+   let option_is_open = $state(false) // for mobile view
+   let current_tab = $state('explore')
+   let sort_option = $state('stargazers_count')
+   let numbering = $state('rank')
 
    const change_sort_option = new_sort_option => {
       //sendReport(`sort: ${sort_option}`) // don't use reactive statement since it will get fired twice on mount
@@ -217,7 +219,7 @@
    }
    $: excluded_repos_count = get_excluded_repos_count(filtered_repos, excluded_topics)
 
-   let visible_chain_link_index = -1
+   let visible_chain_link_index = $state(-1)
    const setVisibleChainLinkIndex = (index) => visible_chain_link_index = index
 </script>
 
@@ -261,19 +263,19 @@
                {#if current_tab == 'explore'}
                   <a href="#" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Browse ({explore_tab_repos_count})</a>
                {:else}
-                  <a href="#" class="inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" on:click={() => current_tab = 'explore'}>Browse ({explore_tab_repos_count})</a>
+                  <a href="#" class="inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" onclick={() => current_tab = 'explore'}>Browse ({explore_tab_repos_count})</a>
                {/if}
             </li>
             <li class="mr-2">
                {#if current_tab == 'blacklist'}
                   <a href="#" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Hidden ({blacklist_tab_repos_count})</a>
                {:else}
-                  <a href="#" class="inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" on:click={() => current_tab = 'blacklist'}>Hidden ({blacklist_tab_repos_count})</a>
+                  <a href="#" class="inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" onclick={() => current_tab = 'blacklist'}>Hidden ({blacklist_tab_repos_count})</a>
                {/if}
             </li>
          </ul>
          <div class='md:hidden grow flex justify-end items-center'>
-            <button class='h-7 w-7 relative text-gray-600' on:click={() => option_is_open = !option_is_open}> <!-- https://stackoverflow.com/a/38327984/9157799 -->
+            <button class='h-7 w-7 relative text-gray-600' onclick={() => option_is_open = !option_is_open}> <!-- https://stackoverflow.com/a/38327984/9157799 -->
                {#if !option_is_open}
                   <svg class='h-6 fill-current absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><style>.cls-1{fill:#fff;opacity:0;}.cls-2{fill:#231f20;}</style></defs><title>options-2</title><g id="Layer_2" data-name="Layer 2"><g id="options-2"><g id="options-2-2" data-name="options-2"><rect class="cls-1" width="24" height="24" transform="translate(24 0) rotate(90)"/><path class="previously-cls-2" d="M19,9a3,3,0,0,0-2.82,2H3a1,1,0,0,0,0,2H16.18A3,3,0,1,0,19,9Z"/><path class="previously-cls-2" d="M3,7H4.18A3,3,0,0,0,9.82,7H21a1,1,0,0,0,0-2H9.82A3,3,0,0,0,4.18,5H3A1,1,0,0,0,3,7Z"/><path class="previously-cls-2" d="M21,17H13.82a3,3,0,0,0-5.64,0H3a1,1,0,0,0,0,2H8.18a3,3,0,0,0,5.64,0H21a1,1,0,0,0,0-2Z"/></g></g></g></svg> <!-- https://icon-icons.com/icon/options/111009 | NOTE: Changed all 3 "cls-2" to "previously-cls-2" to be able to use fill-current : https://youtu.be/ZT5vwF6Ooig?t=107 -->
                {:else}
@@ -308,14 +310,14 @@
                   {#if current_tab == 'explore'}
                      <a href="#" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Browse ({explore_tab_repos_count})</a>
                   {:else}
-                     <a href="#" class="border-transparent inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" on:click={() => current_tab = 'explore'}>Browse ({explore_tab_repos_count})</a>
+                     <a href="#" class="border-transparent inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" onclick={() => current_tab = 'explore'}>Browse ({explore_tab_repos_count})</a>
                   {/if}
                </li>
                <li class="mr-2">
                   {#if current_tab == 'blacklist'}
                      <a href="#" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Hidden ({blacklist_tab_repos_count})</a>
                   {:else}
-                     <a href="#" class="border-transparent inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" on:click={() => current_tab = 'blacklist'}>Hidden ({blacklist_tab_repos_count})</a>
+                     <a href="#" class="border-transparent inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" onclick={() => current_tab = 'blacklist'}>Hidden ({blacklist_tab_repos_count})</a>
                   {/if}
                </li>
             </ul>

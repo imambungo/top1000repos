@@ -1,7 +1,5 @@
 <script>
-   export let excludeTopicToggle
-   export let excluded_topics
-   export let excluded_repos_count
+   let { excludeTopicToggle, excluded_topics, excluded_repos_count } = $props();
 </script>
 
 <div class='flex flex-col gap-1'>
@@ -9,7 +7,7 @@
    <div>
       <div class="flex flex-wrap gap-1"> <!-- excluded topics -->
          {#each excluded_topics as topic}
-            <div on:click={excludeTopicToggle} class="cursor-pointer rounded-full bg-sky-100 px-2 py-1 text-xs text-blue-500">{topic}</div>
+            <div onclick={excludeTopicToggle} class="cursor-pointer rounded-full bg-sky-100 px-2 py-1 text-xs text-blue-500">{topic}</div>
          {/each}
       </div>
       <p class='ml-0.5 mt-0.5 text-gray-500 text-xs tracking-tight'>

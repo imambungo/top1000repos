@@ -1,7 +1,7 @@
 <script>
    import { onMount } from 'svelte'; // https://svelte.dev/tutorial/bind-this
 
-   let loading
+   let loading = $state()
 
    onMount(() => {  // https://svelte.dev/tutorial/bind-this
       let num_of_dots = 1

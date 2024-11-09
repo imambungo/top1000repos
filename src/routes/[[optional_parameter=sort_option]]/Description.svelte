@@ -1,13 +1,15 @@
 <script>
-	export let promise //  emoji_image_urls
-	export let description // watch out, some description is null
-	$: splitted_description = description?.split(/(:[^ :]+:)/) // to differentiate the emoji markups | https://stackoverflow.com/a/4514223/9157799
 
 	import Emoji from './Emoji.svelte'
+	let {
+		promise, //  emoji_image_urls
+		description // watch out, some description is null
+	} = $props();
 
 	const is_emoji = (normal_text_or_emoji_markup, emoji_image_urls) => {
 		return emoji_image_urls[ normal_text_or_emoji_markup.replaceAll(':', '') ]
 	}
+	let splitted_description = $derived(description?.split(/(:[^ :]+:)/)) // to differentiate the emoji markups | https://stackoverflow.com/a/4514223/9157799
 </script>
 
 {#await promise then emoji_image_urls}

@@ -96,14 +96,10 @@
          }
       }
    }
-   $: { // for delayed scroll. the browser will not scroll if the content is rendered late.
-      let trigger = repos
-      initialScrollAndHighlightIfNeeded()
-   }
 
    import { PUBLIC_BACKEND_URL } from '$env/static/public'; // https://kit.svelte.dev/docs/modules#$env-static-public
 
-   let userAgent // need to be assigned at onMount because window or navigator is not found at server side
+   let userAgent = $state() // need to be assigned at onMount because window or navigator is not found at server side
 
    const fetchRepos = async () => {
       try { // Typically we don't need try catch. But when a service is crashed in Railway, now the endpoint is pointing to Railway itself which doesn't allow CORS, which cause the fetch to fail (fetch will not fail if it's just an HTTP error).
@@ -177,26 +173,10 @@
       numbering = new_numbering
    }
 
-   $: { // a bruteforce hammer solution, but it's fine. what causes the slowness is the rendering
-      if (all_repos.length > 1) { // fetchRepos() returns an array of one element if there's an error
-         filtered_repos = all_repos
-         filtered_repos = sort_repos_based_on_sort_option(filtered_repos, sort_option)
-         filtered_repos = filtered_repos.map((repo, index) => ({...repo, rank: index+1}))
-         filtered_repos = filter_blacklisted_repos_based_on_current_tab(filtered_repos, repo_id_blacklist, current_tab)
-         //filtered_repos = filtered_repos.slice(0, 100)  // for debugging performance problem
-      }
-   }
 
    import { num_of_repos_to_render } from './num_of_repos_to_render_store.js'
    $num_of_repos_to_render = 50
-   $: repos = filtered_repos.slice(0, $num_of_repos_to_render)
    
-   $: {
-      let trigger = current_tab
-      let another_trigger = sort_option
-      $num_of_repos_to_render = 50
-      num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 80})
-   }
 
    const get_how_many_repos_in_id_list = (all_repos, repo_id_list) => {
       let count = 0
@@ -206,8 +186,6 @@
       })
       return count
    }
-   $: blacklist_tab_repos_count = get_how_many_repos_in_id_list(all_repos, repo_id_blacklist) // don't just use repo_id_blacklist.length because when a blacklisted repo is no longer in top 1000, it still get counted
-   $: explore_tab_repos_count = 1000 - blacklist_tab_repos_count
 
    const get_excluded_repos_count = (repos, excluded_topics) => {
       let count = 0
@@ -217,10 +195,34 @@
       })
       return count
    }
-   $: excluded_repos_count = get_excluded_repos_count(filtered_repos, excluded_topics)
 
    let visible_chain_link_index = $state(-1)
    const setVisibleChainLinkIndex = (index) => visible_chain_link_index = index
+   run(() => { // a bruteforce hammer solution, but it's fine. what causes the slowness is the rendering
+      if (all_repos.length > 1) { // fetchRepos() returns an array of one element if there's an error
+         filtered_repos = all_repos
+         filtered_repos = sort_repos_based_on_sort_option(filtered_repos, sort_option)
+         filtered_repos = filtered_repos.map((repo, index) => ({...repo, rank: index+1}))
+         filtered_repos = filter_blacklisted_repos_based_on_current_tab(filtered_repos, repo_id_blacklist, current_tab)
+         //filtered_repos = filtered_repos.slice(0, 100)  // for debugging performance problem
+      }
+   });
+   run(() => {
+      let trigger = current_tab
+      let another_trigger = sort_option
+      $num_of_repos_to_render = 50
+      num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 80})
+   });
+   run(() => {
+      repos = filtered_repos.slice(0, $num_of_repos_to_render)
+   });
+   run(() => { // for delayed scroll. the browser will not scroll if the content is rendered late.
+      let trigger = repos
+      initialScrollAndHighlightIfNeeded()
+   });
+   let blacklist_tab_repos_count = $derived(get_how_many_repos_in_id_list(all_repos, repo_id_blacklist)) // don't just use repo_id_blacklist.length because when a blacklisted repo is no longer in top 1000, it still get counted
+   let explore_tab_repos_count = $derived(1000 - blacklist_tab_repos_count)
+   let excluded_repos_count = $derived(get_excluded_repos_count(filtered_repos, excluded_topics))
 </script>
 
 <svelte:head>

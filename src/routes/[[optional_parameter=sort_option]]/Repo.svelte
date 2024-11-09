@@ -1,18 +1,5 @@
 <script>
-   export let visible_chain_link_index
-   export let setVisibleChainLinkIndex
-   export let repo
-   export let index
-   export let excluded_topics
-   export let numbering
-   export let current_tab
-   export let emoji_image_urls
-   export let repo_to_highlight
-
-   export let blacklistRepo
-   export let removeFromBlackList
-   export let sendReport
-   export let excludeTopicToggle
+   import { run } from 'svelte/legacy';
 
    import StargazersCount from './StargazersCount.svelte'
    import LastCommitDate from './LastCommitDate.svelte'
@@ -20,6 +7,22 @@
    import Top5ClosedIssuesThumbsUp from './Top5ClosedIssuesThumbsUp.svelte'
    import Description from './Description.svelte'
    import Number from './Number.svelte'
+   let {
+      visible_chain_link_index,
+      setVisibleChainLinkIndex,
+      repo,
+      index,
+      excluded_topics,
+      numbering,
+      current_tab,
+      emoji_image_urls,
+      repo_to_highlight,
+
+      blacklistRepo,
+      removeFromBlackList,
+      sendReport,
+      excludeTopicToggle
+   } = $props();
 
    let transition_animation_class = $state('')
    const runCodeWithoutReactiveBlockFootGun = () => {
@@ -39,10 +42,10 @@
          )
       }
    }
-   $: {
+   run(() => {
       let trigger = repo_to_highlight
       runCodeWithoutReactiveBlockFootGun()
-   }
+   });
 </script>
 
 <div id="{repo.full_name}" onmouseenter={()=>{setVisibleChainLinkIndex(index)}} onmouseleave={()=>{setVisibleChainLinkIndex(-1)}} ontouchstart={()=>{setVisibleChainLinkIndex(index)}} class="scroll-my-20 flex {transition_animation_class} {repo.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'} -ml-3 md:-ml-2"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 | use negative margin left because the space before the number is too big | scroll-my: https://stackoverflow.com/a/60975588/9157799 -->

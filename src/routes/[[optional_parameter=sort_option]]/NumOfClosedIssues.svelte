@@ -1,6 +1,4 @@
 <script>
-	export let num_of_closed_issue_since_1_year
-	export let html_url
 
 	const color = () => {
 		if (num_of_closed_issue_since_1_year <= 10 || num_of_closed_issue_since_1_year == null)
@@ -14,6 +12,7 @@
 	}
 
 	import { a_year_ago } from '$lib/date.js' // https://kit.svelte.dev/docs/project-structure#project-files
+	let { num_of_closed_issue_since_1_year, html_url } = $props();
 
 	const top_5_closed_issues_url = `${html_url}/issues?q=is%3Aissue+sort%3Areactions-%2B1-desc+is%3Aclosed+closed%3A%3E${a_year_ago()}`
 

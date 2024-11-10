@@ -19,7 +19,7 @@
 
    import { sort_repos_based_on_sort_option } from './repos_sort_functions'
 
-   import { onMount, tick } from 'svelte'; // https://stackoverflow.com/a/74165772/9157799
+   import { onMount, tick, untrack } from 'svelte'; // https://stackoverflow.com/a/74165772/9157799
 
    import {
       local_storage as ls,

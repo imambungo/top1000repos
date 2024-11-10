@@ -1,18 +1,10 @@
 <script>
-   import { run } from 'svelte/legacy';
-
-   /**
-    * @typedef {Object} Props
-    * @property {import('svelte').Snippet} [children]
-    */
-
-   /** @type {Props} */
    let { children } = $props();
    let scrollY = $state(0)  // window.scrollY | https://svelte.dev/tutorial/svelte-window-bindings
    let viewport_height = $state(0) // window.innerHeight | svelte can't detect window "undefined" if we try to use window.innerHeight directly (ups.. we can, in onMount (window or navigator is not found at server side))
    let element = $state() // https://svelte.dev/tutorial/bind-this
    let max_height = $state(99999)
-   run(() => {
+   $effect(() => {
       let trigger = scrollY
       if (element != null) {
          let element_distance_to_viewport_top = element.getBoundingClientRect().top // https://stackoverflow.com/a/35571753/9157799
@@ -25,7 +17,7 @@
          
          max_height = viewport_height - element_distance_to_viewport_top - in_viewport_footer_height
       }
-   });
+   })
 
    const children_render = $derived(children);
 </script>

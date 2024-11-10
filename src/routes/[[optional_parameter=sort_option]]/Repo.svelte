@@ -42,7 +42,7 @@
    }
    $effect(() => {
       let trigger = repo_to_highlight
-      runCodeWithoutReactiveBlockFootGun()
+      runCodeWithoutReactiveBlockFootGun() // still a footgun: https://github.com/sveltejs/svelte/issues/9248#issuecomment-1998643597
    })
 </script>
 

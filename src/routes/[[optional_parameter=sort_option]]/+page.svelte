@@ -1,6 +1,4 @@
 <script>
-   import { run } from 'svelte/legacy';
-
    import MedScreenStickyOptions from './MedScreenStickyOptions.svelte'
    import NumberingOption from './NumberingOption.svelte';
    import SortOption from './SortOption.svelte'
@@ -217,10 +215,12 @@
          num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 80})
       })
    })
-   run(() => { // for delayed scroll. the browser will not scroll if the content is rendered late.
+   $effect(() => { // for delayed scroll. the browser will not scroll if the content is rendered late.
       let trigger = repos
-      initialScrollAndHighlightIfNeeded()
-   });
+      untrack(() => { // https://github.com/sveltejs/svelte/issues/9248
+         initialScrollAndHighlightIfNeeded()
+      })
+   })
    let blacklist_tab_repos_count = $derived(get_how_many_repos_in_id_list(all_repos, repo_id_blacklist)) // don't just use repo_id_blacklist.length because when a blacklisted repo is no longer in top 1000, it still get counted
    let explore_tab_repos_count = $derived(1000 - blacklist_tab_repos_count)
    let excluded_repos_count = $derived(get_excluded_repos_count(filtered_repos, excluded_topics))

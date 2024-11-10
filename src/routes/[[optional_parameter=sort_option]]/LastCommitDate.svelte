@@ -1,5 +1,5 @@
 <script>
-	export let last_commit_date // https://stackoverflow.com/q/15918588/9157799#comment88211717_15922637
+	let { last_commit_date } = $props(); // https://stackoverflow.com/q/15918588/9157799#comment88211717_15922637
 
 	const daysAgo = () => { // https://stackoverflow.com/a/47181114/9157799
 		const startDate  = new Date(last_commit_date)

@@ -1,6 +1,5 @@
 <script>
-	export let num_of_closed_pr_since_1_year
-	export let html_url
+	let { num_of_closed_pr_since_1_year, html_url } = $props()
 
 	const color = () => {
 		if (num_of_closed_pr_since_1_year <= 10 || num_of_closed_pr_since_1_year == null)

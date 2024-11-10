@@ -1,7 +1,5 @@
 <script>
-   export let numbering
-   export let rank
-   export let order
+   let { numbering, rank, order } = $props();
 </script>
 
 {#if numbering == 'rank'}

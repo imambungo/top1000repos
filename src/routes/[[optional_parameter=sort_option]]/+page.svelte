@@ -134,7 +134,7 @@
    let all_repos = $state([])
    let filtered_repos = $derived.by(() => { // a bruteforce hammer solution, but it's fine. what causes the slowness is the rendering
       if (all_repos.length > 1) { // fetchRepos() returns an array of one element if there's an error
-         let filtered_repos = all_repos
+         let filtered_repos = JSON.parse(JSON.stringify(all_repos))
          filtered_repos = sort_repos_based_on_sort_option(filtered_repos, sort_option)
          filtered_repos = filtered_repos.map((repo, index) => ({...repo, rank: index+1}))
          filtered_repos = filter_blacklisted_repos_based_on_current_tab(filtered_repos, repo_id_blacklist, current_tab)

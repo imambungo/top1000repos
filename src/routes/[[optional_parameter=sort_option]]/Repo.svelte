@@ -1,6 +1,4 @@
 <script>
-   import { run } from 'svelte/legacy';
-
    import StargazersCount from './StargazersCount.svelte'
    import LastCommitDate from './LastCommitDate.svelte'
    import Top5ClosedPRThumbsUp from './Top5ClosedPRThumbsUp.svelte'
@@ -42,10 +40,10 @@
          )
       }
    }
-   run(() => {
+   $effect(() => {
       let trigger = repo_to_highlight
       runCodeWithoutReactiveBlockFootGun()
-   });
+   })
 </script>
 
 <div id="{repo.full_name}" onmouseenter={()=>{setVisibleChainLinkIndex(index)}} onmouseleave={()=>{setVisibleChainLinkIndex(-1)}} ontouchstart={()=>{setVisibleChainLinkIndex(index)}} class="scroll-my-20 flex {transition_animation_class} {repo.topics.some(topic => excluded_topics.includes(topic)) && 'opacity-50'} -ml-3 md:-ml-2"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 | use negative margin left because the space before the number is too big | scroll-my: https://stackoverflow.com/a/60975588/9157799 -->

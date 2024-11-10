@@ -1,5 +1,5 @@
 <script>
-   let { children } = $props();
+   let { children } = $props() // https://svelte.dev/docs/svelte/snippet#Passing-snippets-to-components
    let scrollY = $state(0)  // window.scrollY | https://svelte.dev/tutorial/svelte-window-bindings
    let viewport_height = $state(0) // window.innerHeight | svelte can't detect window "undefined" if we try to use window.innerHeight directly (ups.. we can, in onMount (window or navigator is not found at server side))
    let element = $state() // https://svelte.dev/tutorial/bind-this

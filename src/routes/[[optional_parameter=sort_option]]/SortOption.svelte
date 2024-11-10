@@ -1,6 +1,5 @@
 <script>
-   let { handleChange, sort_option } = $props();
-
+   let { handleChange, sort_option } = $props()
    const needed_when_switching_from_button_to_a = 'inline-block cursor-default hover:cursor-pointer'
 </script>
 

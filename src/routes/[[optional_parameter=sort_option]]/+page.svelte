@@ -132,8 +132,19 @@
    }
 
    let all_repos = $state([])
-   let filtered_repos = $state([]) // https://stackoverflow.com/q/61105696/9157799#comment108104142_61105696
-   let repos = $state([])
+   let filtered_repos = $derived.by(() => { // a bruteforce hammer solution, but it's fine. what causes the slowness is the rendering
+      if (all_repos.length > 1) { // fetchRepos() returns an array of one element if there's an error
+         let filtered_repos = all_repos
+         filtered_repos = sort_repos_based_on_sort_option(filtered_repos, sort_option)
+         filtered_repos = filtered_repos.map((repo, index) => ({...repo, rank: index+1}))
+         filtered_repos = filter_blacklisted_repos_based_on_current_tab(filtered_repos, repo_id_blacklist, current_tab)
+         //filtered_repos = filtered_repos.slice(0, 100)  // for debugging performance problem
+         return filtered_repos
+      } else {
+         return [] // https://stackoverflow.com/q/61105696/9157799#comment108104142_61105696
+      }
+   })
+   let repos = $derived(filtered_repos.slice(0, num_of_repos_to_render.value))
 
    let excluded_topics = $state([])
    const excludeTopicToggle = event => {
@@ -198,15 +209,6 @@
 
    let visible_chain_link_index = $state(-1)
    const setVisibleChainLinkIndex = (index) => visible_chain_link_index = index
-   run(() => { // a bruteforce hammer solution, but it's fine. what causes the slowness is the rendering
-      if (all_repos.length > 1) { // fetchRepos() returns an array of one element if there's an error
-         filtered_repos = all_repos
-         filtered_repos = sort_repos_based_on_sort_option(filtered_repos, sort_option)
-         filtered_repos = filtered_repos.map((repo, index) => ({...repo, rank: index+1}))
-         filtered_repos = filter_blacklisted_repos_based_on_current_tab(filtered_repos, repo_id_blacklist, current_tab)
-         //filtered_repos = filtered_repos.slice(0, 100)  // for debugging performance problem
-      }
-   });
    $effect(() => {
       let trigger = current_tab
       let another_trigger = sort_option
@@ -215,9 +217,6 @@
          num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 80})
       })
    })
-   run(() => {
-      repos = filtered_repos.slice(0, num_of_repos_to_render.value)
-   });
    run(() => { // for delayed scroll. the browser will not scroll if the content is rendered late.
       let trigger = repos
       initialScrollAndHighlightIfNeeded()

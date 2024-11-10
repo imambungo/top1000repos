@@ -174,8 +174,8 @@
    }
 
 
-   import { num_of_repos_to_render } from './num_of_repos_to_render_store.js'
-   $num_of_repos_to_render = 50
+   import { num_of_repos_to_render } from './num_of_repos_to_render.svelte.js'
+   num_of_repos_to_render.value = 50
    
 
    const get_how_many_repos_in_id_list = (all_repos, repo_id_list) => {
@@ -207,14 +207,16 @@
          //filtered_repos = filtered_repos.slice(0, 100)  // for debugging performance problem
       }
    });
-   run(() => {
+   $effect(() => {
       let trigger = current_tab
       let another_trigger = sort_option
-      $num_of_repos_to_render = 50
-      num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 80})
-   });
+      num_of_repos_to_render.value = 50
+      untrack(() => { // https://svelte.dev/docs/svelte/svelte#untrack
+         num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 80})
+      })
+   })
    run(() => {
-      repos = filtered_repos.slice(0, $num_of_repos_to_render)
+      repos = filtered_repos.slice(0, num_of_repos_to_render.value)
    });
    run(() => { // for delayed scroll. the browser will not scroll if the content is rendered late.
       let trigger = repos

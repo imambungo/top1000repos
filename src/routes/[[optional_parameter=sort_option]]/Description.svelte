@@ -1,5 +1,4 @@
 <script>
-
 	import Emoji from './Emoji.svelte'
 	let {
 		promise, //  emoji_image_urls

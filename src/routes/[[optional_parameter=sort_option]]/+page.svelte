@@ -55,7 +55,8 @@
          const time_of_first_visit = ls.getItem('time_of_first_visit') || new Date().toLocaleString('sv-SE', {timeZone: 'Asia/Jakarta'}).slice(0, 16) // https://stackoverflow.com/a/58633651/9157799
          let visit_count = 1
          if (ls.getItem('visit_count')) visit_count = ls.getItem('visit_count') + 1
-         await sendReport(`${time_of_first_visit} ${visit_count} ${document.referrer}`) // https://stackoverflow.com/a/6856725/9157799
+         if (visit_count > 1 || `${document.referrer}` == '')
+            await sendReport(`${time_of_first_visit} ${visit_count} ${document.referrer}`) // https://stackoverflow.com/a/6856725/9157799
          ls.setItem('time_of_first_visit', time_of_first_visit)
          ls.setItem('visit_count', visit_count)
 

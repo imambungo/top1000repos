@@ -13,7 +13,7 @@ npm install
 
 ### Setup environment variables
 ```
-PUBLIC_BACKEND_URL='http://localhost:3000' # https://kit.svelte.dev/docs/modules#$env-static-public
+PUBLIC_BACKEND_URL='http://localhost:3000' # https://svelte.dev/docs/kit/$env-static-public
 ```
 
 Backend repo: https://github.com/imambungo/top1000repos-backend

@@ -53,12 +53,22 @@
       userAgent = navigator.userAgent // need to be assigned at onMount because window or navigator is not found at server side
       if (!userAgent.includes('Googlebot') && !userAgent.includes('bingbot') && !userAgent.includes('AhrefsBot')) {
          const time_of_first_visit = ls.getItem('time_of_first_visit') || new Date().toLocaleString('sv-SE', {timeZone: 'Asia/Jakarta'}).slice(0, 16) // https://stackoverflow.com/a/58633651/9157799
-         let visit_count = 1
-         if (ls.getItem('visit_count')) visit_count = ls.getItem('visit_count') + 1
-         if (visit_count > 1)
+         let last_visit_date
+         if (ls.getItem('last_visit_date'))
+            last_visit_date = ls.getItem('last_visit_date')
+         else
+            last_visit_date = 'never'
+         let visit_count
+         if (ls.getItem('visit_count'))
+            visit_count = ls.getItem('visit_count') + 1
+         else
+            visit_count = 1
+         const today = new Date().toLocaleString('sv-SE', {timeZone: 'Asia/Jakarta'}).slice(0, 10) // https://stackoverflow.com/a/58633651/9157799
+         if (last_visit_date != today && visit_count > 1) // in the future, replace visit_count > 1 with last_visit_date != 'never'
             await sendReport(`${time_of_first_visit} ${visit_count} ${document.referrer}`) // https://stackoverflow.com/a/6856725/9157799
          ls.setItem('time_of_first_visit', time_of_first_visit)
          ls.setItem('visit_count', visit_count)
+         ls.setItem('last_visit_date', today)
       }
    })
 

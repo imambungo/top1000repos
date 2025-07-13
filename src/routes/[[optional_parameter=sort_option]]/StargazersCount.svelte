@@ -13,7 +13,7 @@
 	}
 </script>
 
-<div class="flex"> <!-- stars -->
+<div class="flex cursor-help" title="{stargazers_count} (data is updated once per day)"> <!-- stars -->
 	<p class="font-bold mr-0.5">✩</p>
 	{readableNumber(stargazers_count)}
 </div>

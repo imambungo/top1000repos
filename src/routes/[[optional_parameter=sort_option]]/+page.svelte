@@ -234,10 +234,10 @@
 <svelte:head>
    {#if $page.url.pathname.includes('pr')}
       <title>Top 1000 GitHub Repositories Sorted by Pull Requests</title>
-      <link rel="canonical" href="https://top1000repos.com/based-on-pr">
+      <link rel="canonical" href="https://top1000repos.com/sorted-by-pr">
    {:else if $page.url.pathname.includes('issues')}
       <title>Top 1000 GitHub Repositories Sorted by Closed Issues</title>
-      <link rel="canonical" href="https://top1000repos.com/based-on-issues">
+      <link rel="canonical" href="https://top1000repos.com/sorted-by-issues">
    {:else}
       <title>Top 1000 GitHub repositories, updated daily, all on one page.</title>
       <link rel="canonical" href="https://top1000repos.com">

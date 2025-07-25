@@ -295,8 +295,8 @@
       {#if option_is_open}
          <!-- OPTIONS (for mobile view) -->
          <div class='text-sm bg-gray-50 py-3 px-4 flex flex-col gap-4 rounded-b drop-shadow overflow-y-auto max-h-[70vh]'>
-            <NumberingOption numbering={numbering} handleChange={change_numbering}/>
             <SortOption sort_option={sort_option} handleChange={change_sort_option}/>
+            <NumberingOption numbering={numbering} handleChange={change_numbering}/>
             <ExcludedTopicsOption excluded_topics={excluded_topics} excluded_repos_count={excluded_repos_count} excludeTopicToggle={excludeTopicToggle}/>
          </div>
       {/if}
@@ -305,8 +305,8 @@
       <!-- OPTIONS (for desktop / md screen size) -->
       <div class='w-1/4 hidden md:block'>
          <MedScreenStickyOptions>
-            <NumberingOption numbering={numbering} handleChange={change_numbering}/>
             <SortOption sort_option={sort_option} handleChange={change_sort_option}/>
+            <NumberingOption numbering={numbering} handleChange={change_numbering}/>
             <ExcludedTopicsOption excluded_topics={excluded_topics} excluded_repos_count={excluded_repos_count} excludeTopicToggle={excludeTopicToggle}/>
          </MedScreenStickyOptions>
       </div>

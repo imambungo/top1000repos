@@ -308,6 +308,19 @@
             <SortOption sort_option={sort_option} handleChange={change_sort_option}/>
             <NumberingOption numbering={numbering} handleChange={change_numbering}/>
             <ExcludedTopicsOption excluded_topics={excluded_topics} excluded_repos_count={excluded_repos_count} excludeTopicToggle={excludeTopicToggle}/>
+            <div class='mt-6 min-h-40 max-h-60 border'>
+               <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2099788966207457" crossorigin="anonymous"></script>
+               <!-- Ad -->
+               <ins class="adsbygoogle"
+                  style="display:block"
+                  data-ad-client="ca-pub-2099788966207457"
+                  data-ad-slot="7664224172"
+                  data-ad-format="auto"
+                  data-full-width-responsive="true"></ins>
+               <script>
+                  (adsbygoogle = window.adsbygoogle || []).push({});
+               </script>
+            </div>
          </MedScreenStickyOptions>
       </div>
       <div class='md:w-3/4'> <!-- browse/hidden navbar & repo list -->

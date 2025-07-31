@@ -308,7 +308,7 @@
             <SortOption sort_option={sort_option} handleChange={change_sort_option}/>
             <NumberingOption numbering={numbering} handleChange={change_numbering}/>
             <ExcludedTopicsOption excluded_topics={excluded_topics} excluded_repos_count={excluded_repos_count} excludeTopicToggle={excludeTopicToggle}/>
-            <div class='mt-6'> <!-- parent container height will be set to auto by google adsense -->
+            <div class='mt-6 w-[100%]'> <!-- parent container height will be set to auto by google adsense -->
                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2099788966207457" crossorigin="anonymous"></script>
                <!-- Ad -->
                <ins class="adsbygoogle"

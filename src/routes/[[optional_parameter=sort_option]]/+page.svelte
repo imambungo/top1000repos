@@ -308,15 +308,15 @@
             <SortOption sort_option={sort_option} handleChange={change_sort_option}/>
             <NumberingOption numbering={numbering} handleChange={change_numbering}/>
             <ExcludedTopicsOption excluded_topics={excluded_topics} excluded_repos_count={excluded_repos_count} excludeTopicToggle={excludeTopicToggle}/>
-            <div class='mt-6 min-h-40 max-h-60 border'>
+            <div class='mt-6 h-[35vh] border'> <!-- parent container height will be set to auto by google adsense -->
                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2099788966207457" crossorigin="anonymous"></script>
                <!-- Ad -->
                <ins class="adsbygoogle"
-                  style="display:block"
+                  style="display:block;height:35vh"
                   data-ad-client="ca-pub-2099788966207457"
                   data-ad-slot="7664224172"
                   data-ad-format="auto"
-                  data-full-width-responsive="true"></ins>
+                  data-full-width-responsive="true"></ins> <!-- set height in the style attribute: https://stackoverflow.com/q/26338357/9157799 -->
                <script>
                   (adsbygoogle = window.adsbygoogle || []).push({});
                </script>

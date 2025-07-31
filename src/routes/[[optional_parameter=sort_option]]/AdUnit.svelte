@@ -1,4 +1,4 @@
-<div class='mt-6 w-[100%]'> <!-- set width to 100% so the <ins> width:93% will work | parent container height will be set to auto by google adsense -->
+<div class='mt-6 w-[100%] border'> <!-- set width to 100% so the <ins> width:93% will work | parent container height will be set to auto by google adsense -->
    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2099788966207457" crossorigin="anonymous"></script>
    <!-- Ad -->
    <ins class="adsbygoogle"
@@ -12,7 +12,7 @@
    </script>
 </div>
 
-<style> /* https://stackoverflow.com/q/65937507/9157799 */
+<style> /* not sure why this doesn't work: https://stackoverflow.com/q/65937507/9157799 */
    ins.adsbygoogle[data-ad-status="unfilled"] {
       display: none !important;
    }

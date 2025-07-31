@@ -1,13 +1,14 @@
 <script>
    import MedScreenStickyOptions from './MedScreenStickyOptions.svelte'
-   import NumberingOption from './NumberingOption.svelte';
    import SortOption from './SortOption.svelte'
-   import ExcludedTopicsOption from './ExcludedTopicsOption.svelte';
+   import NumberingOption from './NumberingOption.svelte'
+   import ExcludedTopicsOption from './ExcludedTopicsOption.svelte'
+   import AdUnit from './AdUnit.svelte'
    import Top5OpenIssueThumbsUp from './Top5OpenIssueThumbsUp.svelte'
    import NumOfClosedPR from './NumOfClosedPR.svelte'
    import NumOfClosedIssues from './NumOfClosedIssues.svelte'
    import LoadingAnimation from './LoadingAnimation.svelte'
-   import Repo from './Repo.svelte';
+   import Repo from './Repo.svelte'
 
    import { balancer } from 'svelte-action-balancer' // https://stackoverflow.com/q/34875725/9157799
 
@@ -308,19 +309,7 @@
             <SortOption sort_option={sort_option} handleChange={change_sort_option}/>
             <NumberingOption numbering={numbering} handleChange={change_numbering}/>
             <ExcludedTopicsOption excluded_topics={excluded_topics} excluded_repos_count={excluded_repos_count} excludeTopicToggle={excludeTopicToggle}/>
-            <div class='mt-6 w-[100%]'> <!-- set width to 100% so the <ins> width:93% will work | parent container height will be set to auto by google adsense -->
-               <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2099788966207457" crossorigin="anonymous"></script>
-               <!-- Ad -->
-               <ins class="adsbygoogle"
-                  style="display:block;height:40vh;width:93%"
-                  data-ad-client="ca-pub-2099788966207457"
-                  data-ad-slot="7664224172"
-                  data-ad-format="rectangle"
-                  data-full-width-responsive="true"></ins> <!-- https://stackoverflow.com/q/26338357/9157799 | set width to 93% to prevent horizontal scroll -->
-               <script>
-                  (adsbygoogle = window.adsbygoogle || []).push({});
-               </script>
-            </div>
+            <AdUnit/>
          </MedScreenStickyOptions>
       </div>
       <div class='md:w-3/4'> <!-- browse/hidden navbar & repo list -->

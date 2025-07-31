@@ -312,7 +312,7 @@
                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2099788966207457" crossorigin="anonymous"></script>
                <!-- Ad -->
                <ins class="adsbygoogle"
-                  style="display:block;height:35vh"
+                  style="display:block;height:40vh;width:95%"
                   data-ad-client="ca-pub-2099788966207457"
                   data-ad-slot="7664224172"
                   data-ad-format="rectangle"

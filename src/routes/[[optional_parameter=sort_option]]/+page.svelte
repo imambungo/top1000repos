@@ -315,8 +315,8 @@
                   style="display:block;height:35vh"
                   data-ad-client="ca-pub-2099788966207457"
                   data-ad-slot="7664224172"
-                  data-ad-format="auto"
-                  data-full-width-responsive="true"></ins> <!-- set height in the style attribute: https://stackoverflow.com/q/26338357/9157799 -->
+                  data-ad-format="rectangle"
+                  data-full-width-responsive="true"></ins> <!-- https://stackoverflow.com/q/26338357/9157799 -->
                <script>
                   (adsbygoogle = window.adsbygoogle || []).push({});
                </script>

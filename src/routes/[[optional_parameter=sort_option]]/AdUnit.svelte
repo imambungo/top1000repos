@@ -1,4 +1,4 @@
-<div class='mt-6 w-[100%] min-h-[25vh] border'> <!-- set width to 100% so the <ins> width:93% will work | parent container height will be set to auto by google adsense -->
+<div class='mt-6 w-[100%] border'> <!-- set width to 100% so the <ins> width:93% will work | parent container height will be set to auto by google adsense -->
    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2099788966207457" crossorigin="anonymous"></script>
    <!-- Ad -->
    <ins class="adsbygoogle"

@@ -67,7 +67,7 @@
          const today = new Date().toLocaleString('sv-SE', {timeZone: 'Asia/Jakarta'}).slice(0, 10) // https://stackoverflow.com/a/58633651/9157799
          if (initial_url_hash && last_visit_date != today)
             await sendReport(`${time_of_first_visit} ${visit_count} ${document.referrer} #${initial_url_hash}`) // document.referrer: https://stackoverflow.com/a/6856725/9157799
-         else if (last_visit_date != today && visit_count > 5)
+         else if (last_visit_date != today && visit_count >= 5)
             await sendReport(`${time_of_first_visit} ${visit_count} ${document.referrer}`) // document.referrer: https://stackoverflow.com/a/6856725/9157799
          ls.setItem('time_of_first_visit', time_of_first_visit)
          ls.setItem('visit_count', visit_count)

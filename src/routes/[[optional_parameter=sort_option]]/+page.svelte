@@ -76,7 +76,7 @@
    const initialScrollAndHighlightIfNeeded = async () => {
       if (need_initial_scroll) {
          if (repos.find((repo) => repo.full_name == initial_url_hash)) {
-            await tick() // if the corresponding repo has rendered | https://svelte.dev/docs/svelte#tick
+            await tick() // if the corresponding repo has rendered | https://svelte.dev/docs/svelte/lifecycle-hooks#tick
             const scrollToHash = (url_hash) => { // https://stackoverflow.com/a/21447965/9157799
                window.location.hash = ''
                window.location.hash = url_hash // don't need to add '#' back

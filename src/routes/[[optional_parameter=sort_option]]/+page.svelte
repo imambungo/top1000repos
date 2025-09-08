@@ -29,7 +29,6 @@
       if ($page.url.pathname.includes('issues')) sort_option = 'total_thumbs_up_of_top_5_closed_issues_since_1_year'
 
       all_repos = await fetchRepos()
-      excluded_topics = ss.getItem('excluded_topics') || []
       repo_id_blacklist = ls.getItem('repo_id_blacklist') || []
 
       initial_url_hash = window.location.hash.substring(1) // for delayed scroll. the browser will not scroll if the content is rendered late. | https://stackoverflow.com/a/6682514/9157799
@@ -139,19 +138,6 @@
    })
    let repos = $derived(filtered_repos.slice(0, num_of_repos_to_render.value))
 
-   let excluded_topics = $state([])
-   const excludeTopicToggle = event => {
-      const topic = event.target.innerText // https://stackoverflow.com/a/68455563/9157799
-      if (!excluded_topics.includes(topic)) { // if topic not excluded yet, add to excluded_topics
-         excluded_topics = [...excluded_topics, topic] // https://svelte.dev/tutorial/updating-arrays-and-objects
-         //sendReport(`exclude ${topic}`)
-      } else { // if already excluded, remove from excluded_topics
-         excluded_topics = excluded_topics.filter(t => t !== topic) // https://stackoverflow.com/a/44433050/9157799
-         //sendReport(`include ${topic}`)
-      }
-      ss.setItem('excluded_topics', excluded_topics)
-   }
-
    let repo_id_blacklist = $state([])
    const blacklistRepo = repo_id => {
       repo_id_blacklist = [...repo_id_blacklist, repo_id]
@@ -191,6 +177,8 @@
       return count
    }
 
+   import { excluded_topics } from './excluded_topics.svelte'
+
    const get_excluded_repos_count = (repos, excluded_topics) => {
       let count = 0
       repos.forEach(repo => {
@@ -218,7 +206,7 @@
    })
    let blacklist_tab_repos_count = $derived(get_how_many_repos_in_id_list(all_repos, repo_id_blacklist)) // don't just use repo_id_blacklist.length because when a blacklisted repo is no longer in top 1000, it still get counted
    let explore_tab_repos_count = $derived(1000 - blacklist_tab_repos_count)
-   let excluded_repos_count = $derived(get_excluded_repos_count(filtered_repos, excluded_topics))
+   let excluded_repos_count = $derived(get_excluded_repos_count(filtered_repos, excluded_topics.topics))
 </script>
 
 <svelte:head>
@@ -287,7 +275,7 @@
          <div class='text-sm bg-gray-50 py-3 px-4 flex flex-col gap-4 rounded-b drop-shadow overflow-y-auto max-h-[70vh]'>
             <SortOption sort_option={sort_option} handleChange={change_sort_option}/>
             <NumberingOption numbering={numbering} handleChange={change_numbering}/>
-            <ExcludedTopicsOption excluded_topics={excluded_topics} excluded_repos_count={excluded_repos_count} excludeTopicToggle={excludeTopicToggle}/>
+            <ExcludedTopicsOption excluded_topics={excluded_topics} excluded_repos_count={excluded_repos_count}/>
          </div>
       {/if}
    </div>
@@ -297,7 +285,7 @@
          <MedScreenStickyOptions>
             <SortOption sort_option={sort_option} handleChange={change_sort_option}/>
             <NumberingOption numbering={numbering} handleChange={change_numbering}/>
-            <ExcludedTopicsOption excluded_topics={excluded_topics} excluded_repos_count={excluded_repos_count} excludeTopicToggle={excludeTopicToggle}/>
+            <ExcludedTopicsOption excluded_topics={excluded_topics} excluded_repos_count={excluded_repos_count}/>
             <AdUnit/>
          </MedScreenStickyOptions>
       </div>
@@ -330,7 +318,7 @@
                <p>Can't reach the backend. It maybe crashed or something. Please try again later.</p>
             {:else}
                {#each repos as repo, index (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
-                  <Repo visible_chain_link_index={visible_chain_link_index} setVisibleChainLinkIndex={setVisibleChainLinkIndex} repo={repo} index={index} excluded_topics={excluded_topics} numbering={numbering} current_tab={current_tab} blacklistRepo={blacklistRepo} removeFromBlackList={removeFromBlackList} sendReport={sendReport} excludeTopicToggle={excludeTopicToggle} repo_to_highlight={repo_to_highlight}/>
+                  <Repo visible_chain_link_index={visible_chain_link_index} setVisibleChainLinkIndex={setVisibleChainLinkIndex} repo={repo} index={index} excluded_topics={excluded_topics} numbering={numbering} current_tab={current_tab} blacklistRepo={blacklistRepo} removeFromBlackList={removeFromBlackList} sendReport={sendReport} repo_to_highlight={repo_to_highlight}/>
                {/each}
             {/if}
          </div>

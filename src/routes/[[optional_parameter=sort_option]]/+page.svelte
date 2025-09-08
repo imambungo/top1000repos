@@ -4,9 +4,6 @@
    import NumberingOption from './NumberingOption.svelte'
    import ExcludedTopicsOption from './ExcludedTopicsOption.svelte'
    import AdUnit from './AdUnit.svelte'
-   import Top5OpenIssueThumbsUp from './Top5OpenIssueThumbsUp.svelte'
-   import NumOfClosedPR from './NumOfClosedPR.svelte'
-   import NumOfClosedIssues from './NumOfClosedIssues.svelte'
    import LoadingAnimation from './LoadingAnimation.svelte'
    import Repo from './Repo.svelte'
 

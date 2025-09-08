@@ -31,7 +31,6 @@
       if ($page.url.pathname.includes('pr')) sort_option = 'total_thumbs_up_of_top_5_closed_pr_since_1_year' // https://stackoverflow.com/a/68578884/9157799
       if ($page.url.pathname.includes('issues')) sort_option = 'total_thumbs_up_of_top_5_closed_issues_since_1_year'
 
-      emoji_image_urls = await fetchEmojiImageUrls()
       all_repos = await fetchRepos()
       excluded_topics = ss.getItem('excluded_topics') || []
       repo_id_blacklist = ls.getItem('repo_id_blacklist') || []
@@ -126,13 +125,6 @@
          //body: JSON.stringify({ message }), // GET request can but can't have body: https://stackoverflow.com/a/69230317/9157799
          keepalive: true // https://stackoverflow.com/a/76647328/9157799
       })
-   }
-
-   let emoji_image_urls = $state(new Promise( () => {} )) // https://stackoverflow.com/a/70846910/9157799 | https://stackoverflow.com/a/74165772/9157799
-   const fetchEmojiImageUrls = async () => {
-      const response = await fetch('https://api.github.com/emojis')
-      const emoji_image_urls = await response.json()
-      return emoji_image_urls
    }
 
    let all_repos = $state([])
@@ -341,7 +333,7 @@
                <p>Can't reach the backend. It maybe crashed or something. Please try again later.</p>
             {:else}
                {#each repos as repo, index (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
-                  <Repo visible_chain_link_index={visible_chain_link_index} setVisibleChainLinkIndex={setVisibleChainLinkIndex} repo={repo} index={index} excluded_topics={excluded_topics} numbering={numbering} current_tab={current_tab} emoji_image_urls={emoji_image_urls} blacklistRepo={blacklistRepo} removeFromBlackList={removeFromBlackList} sendReport={sendReport} excludeTopicToggle={excludeTopicToggle} repo_to_highlight={repo_to_highlight}/>
+                  <Repo visible_chain_link_index={visible_chain_link_index} setVisibleChainLinkIndex={setVisibleChainLinkIndex} repo={repo} index={index} excluded_topics={excluded_topics} numbering={numbering} current_tab={current_tab} blacklistRepo={blacklistRepo} removeFromBlackList={removeFromBlackList} sendReport={sendReport} excludeTopicToggle={excludeTopicToggle} repo_to_highlight={repo_to_highlight}/>
                {/each}
             {/if}
          </div>

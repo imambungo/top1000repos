@@ -13,7 +13,6 @@
       excluded_topics,
       numbering,
       current_tab,
-      emoji_image_urls,
       repo_to_highlight,
 
       blacklistRepo,
@@ -81,7 +80,7 @@
             {/if}
          </div>
       </div>
-      <Description promise={emoji_image_urls} description={repo.description}/> <!-- REPO DESCRIPTION -->
+      <Description description={repo.description}/> <!-- REPO DESCRIPTION -->
       {#if repo.topics.length > 0} <!-- topics | if clause to prevent parent's flex gap -->
          <div class="flex flex-wrap gap-1">
             {#each repo.topics as topic}

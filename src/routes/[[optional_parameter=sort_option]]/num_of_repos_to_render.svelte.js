@@ -20,4 +20,4 @@ const create_num_of_repos_to_render = () => {
    }
 }
 
-export const num_of_repos_to_render = create_num_of_repos_to_render() // create a singleton by running the function inside this file | https://nodejs.org/docs/latest/api/modules.html#caching
+export const num_of_repos_to_render = create_num_of_repos_to_render() // create a singleton by running the function inside this file: https://nodejs.org/docs/latest/api/modules.html#caching

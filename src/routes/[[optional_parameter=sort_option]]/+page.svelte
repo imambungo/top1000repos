@@ -9,12 +9,6 @@
 
    import { balancer } from 'svelte-action-balancer' // https://stackoverflow.com/q/34875725/9157799
 
-   import {
-      filter_blacklisted_repos_based_on_current_tab,
-   } from './repos_filter_functions' // bisa pake .js atau tidak
-
-   import { sort_repos_based_on_sort_option } from './repos_sort_functions'
-
    import { onMount, tick, untrack } from 'svelte'; // https://stackoverflow.com/a/74165772/9157799
 
    import {
@@ -24,24 +18,26 @@
 
    import { page } from '$app/stores' // https://stackoverflow.com/a/68578884/9157799
 
-   onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
-      if ($page.url.pathname.includes('pr')) sort_option = 'total_thumbs_up_of_top_5_closed_pr_since_1_year' // https://stackoverflow.com/a/68578884/9157799
-      if ($page.url.pathname.includes('issues')) sort_option = 'total_thumbs_up_of_top_5_closed_issues_since_1_year'
+   import { current_tab } from './current_tab.svelte.js'
+   import { hidden_repos } from './hidden_repos.svelte.js'
+   import { repos } from './repos.svelte.js'
+   import { sort_option } from './sort_option.svelte.js'
 
-      all_repos = await fetchRepos()
-      repo_id_blacklist = ls.getItem('repo_id_blacklist') || []
+   onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
+      if ($page.url.pathname.includes('pr')) sort_option.option = 'total_thumbs_up_of_top_5_closed_pr_since_1_year' // https://stackoverflow.com/a/68578884/9157799
+      if ($page.url.pathname.includes('issues')) sort_option.option = 'total_thumbs_up_of_top_5_closed_issues_since_1_year'
 
       initial_url_hash = window.location.hash.substring(1) // for delayed scroll. the browser will not scroll if the content is rendered late. | https://stackoverflow.com/a/6682514/9157799
       if (initial_url_hash) {
          need_initial_scroll = true
          const repoIsHidden = () => {
-            let repo = all_repos.find((repo) => repo.full_name == initial_url_hash)
-            if (repo_id_blacklist.includes(repo.id))
+            let repo = repos.all.find((repo) => repo.full_name == initial_url_hash)
+            if (hidden_repos.ids.includes(repo.id))
                return true
             else
                return false
          }
-         if (repoIsHidden()) current_tab = 'blacklist'
+         if (repoIsHidden()) current_tab.tab = 'blacklist'
       }
 
       num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 80})
@@ -100,22 +96,6 @@
 
    let userAgent = $state() // need to be assigned at onMount because window or navigator is not found at server side
 
-   const fetchRepos = async () => {
-      try { // Typically we don't need try catch. But when a service is crashed in Railway, now the endpoint is pointing to Railway itself which doesn't allow CORS, which cause the fetch to fail (fetch will not fail if it's just an HTTP error).
-         const response = await fetch(`${PUBLIC_BACKEND_URL}/repositories`)
-         if (response.ok) { // https://developer.mozilla.org/en-US/docs/Web/API/Response/ok
-            const repositories = await response.json()
-            return repositories
-         } else { // HTTP error 503 Service Unavailable (on cloud provider side): The server is currently unable to handle the request due to a temporary overload or scheduled maintenance
-            console.log(response.text()) // https://svelte.dev/examples/await-blocks
-            return ['an array with one element']
-         }
-      } catch (err) { // failed to fetch because of CORS error
-         console.log(err)
-         return ['an array with one element']
-      }
-   }
-
    const sendReport = async (message) => { // https://grugbrain.dev/#grug-on-logging
       await fetch(`${PUBLIC_BACKEND_URL}/send-report?${new URLSearchParams({ message })}`, { // bingbot can't or won't do POST | URLSearchParams: https://stackoverflow.com/a/58437909/9157799
          //body: JSON.stringify({ message }), // GET request can but can't have body: https://stackoverflow.com/a/69230317/9157799
@@ -123,39 +103,8 @@
       })
    }
 
-   let all_repos = $state([])
-   let filtered_repos = $derived.by(() => { // a bruteforce hammer solution, but it's fine. what causes the slowness is the rendering
-      if (all_repos.length > 1) { // fetchRepos() returns an array of one element if there's an error
-         let filtered_repos = JSON.parse(JSON.stringify(all_repos))
-         filtered_repos = sort_repos_based_on_sort_option(filtered_repos, sort_option)
-         filtered_repos = filtered_repos.map((repo, index) => ({...repo, rank: index+1}))
-         filtered_repos = filter_blacklisted_repos_based_on_current_tab(filtered_repos, repo_id_blacklist, current_tab)
-         //filtered_repos = filtered_repos.slice(0, 100)  // for debugging performance problem
-         return filtered_repos
-      } else {
-         return [] // https://stackoverflow.com/q/61105696/9157799#comment108104142_61105696
-      }
-   })
-   let repos = $derived(filtered_repos.slice(0, num_of_repos_to_render.value))
-
-   let repo_id_blacklist = $state([])
-   const blacklistRepo = repo_id => {
-      repo_id_blacklist = [...repo_id_blacklist, repo_id]
-      ls.setItem('repo_id_blacklist', repo_id_blacklist)
-   }
-   const removeFromBlackList = repo_id => {
-      repo_id_blacklist = repo_id_blacklist.filter(id => id != repo_id)
-      ls.setItem('repo_id_blacklist', repo_id_blacklist)
-   }
-
    let option_is_open = $state(false) // for mobile view
-   let current_tab = $state('explore')
-   let sort_option = $state('stargazers_count')
    let numbering = $state('rank')
-
-   const change_sort_option = new_sort_option => {
-      sort_option = new_sort_option
-   }
 
    const change_numbering = new_numbering => {
       numbering = new_numbering
@@ -166,9 +115,9 @@
    num_of_repos_to_render.value = 50
    
 
-   const get_how_many_repos_in_id_list = (all_repos, repo_id_list) => {
+   const get_how_many_repos_in_id_list = (repos, repo_id_list) => {
       let count = 0
-      all_repos.forEach(repo => {
+      repos.forEach(repo => {
          if (repo_id_list.includes(repo.id))
             count++
       })
@@ -188,23 +137,15 @@
 
    let visible_chain_link_index = $state(-1)
    const setVisibleChainLinkIndex = (index) => visible_chain_link_index = index
-   $effect(() => {
-      let trigger = current_tab
-      let another_trigger = sort_option
-      num_of_repos_to_render.value = 50
-      untrack(() => { // https://svelte.dev/docs/svelte/svelte#untrack
-         num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 80})
-      })
-   })
    $effect(() => { // for delayed scroll. the browser will not scroll if the content is rendered late.
-      let trigger = repos
+      let trigger = repos.actually_shown
       untrack(() => { // https://github.com/sveltejs/svelte/issues/9248
          initialScrollAndHighlightIfNeeded()
       })
    })
-   let blacklist_tab_repos_count = $derived(get_how_many_repos_in_id_list(all_repos, repo_id_blacklist)) // don't just use repo_id_blacklist.length because when a blacklisted repo is no longer in top 1000, it still get counted
-   let explore_tab_repos_count = $derived(1000 - blacklist_tab_repos_count)
-   let excluded_repos_count = $derived(get_excluded_repos_count(filtered_repos, excluded_topics.topics))
+   let hidden_tab_repos_count = $derived(get_how_many_repos_in_id_list(repos.all, hidden_repos.ids)) // don't just use hidden_repos.ids.length because when a hidden repo is no longer in top 1000, it still get counted
+   let explore_tab_repos_count = $derived(1000 - hidden_tab_repos_count)
+   let excluded_repos_count = $derived(get_excluded_repos_count(repos.to_show, excluded_topics.topics))
 </script>
 
 <svelte:head>
@@ -221,7 +162,7 @@
    <meta name="description" content="Browse the top 1000 GitHub repositories. Sort them by stars, pull requests, and issues. Hide repos that you don't need. See the top pull requests and issues closed in the last 12 months of each repository.">
 </svelte:head>
 
-<div class='min-h-screen flex flex-col   pl-[calc(100vw-100%)]' data-nosnippet> <!-- min-height and flex (combined with "grow" main) to keep footer at the bottom | https://stackoverflow.com/a/30293718/9157799 padding left for case when there's few item in blacklist (no scrollbar) | data-nosnippet: https://stackoverflow.com/a/72508996/9157799 -->
+<div class='min-h-screen flex flex-col   pl-[calc(100vw-100%)]' data-nosnippet> <!-- min-height and flex (combined with "grow" main) to keep footer at the bottom | https://stackoverflow.com/a/30293718/9157799 padding left for case when there's few item in hidden tab (no scrollbar) | data-nosnippet: https://stackoverflow.com/a/72508996/9157799 -->
    <header class='p-4 mb-4 flex flex-col gap-3 items-center lg:max-w-5xl lg:mx-auto w-full'>
       <div class='flex justify-between w-full'> <!-- website name and social media links -->
          <p class='text-lg font-semibold text-slate-700'>Top 1000 Repos</p>
@@ -244,17 +185,17 @@
       <nav class="text-xs sm:text-sm font-medium text-center border-b border-gray-200 sticky top-0 z-10 bg-white flex flex-wrap pr-4 sm:pr-5 pl-2 sm:pl-3">
          <ul class="pt-1 sm:pt-0 flex flex-wrap -mb-px">
             <li class="mr-2">
-               {#if current_tab == 'explore'}
+               {#if current_tab.tab == 'explore'}
                   <a href="#" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Browse ({explore_tab_repos_count})</a>
                {:else}
-                  <a href="#" class="inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" onclick={() => current_tab = 'explore'}>Browse ({explore_tab_repos_count})</a>
+                  <a href="#" class="inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" onclick={() => current_tab.tab = 'explore'}>Browse ({explore_tab_repos_count})</a>
                {/if}
             </li>
             <li class="mr-2">
-               {#if current_tab == 'blacklist'}
-                  <a href="#" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Hidden ({blacklist_tab_repos_count})</a>
+               {#if current_tab.tab == 'blacklist'}
+                  <a href="#" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Hidden ({hidden_tab_repos_count})</a>
                {:else}
-                  <a href="#" class="inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" onclick={() => current_tab = 'blacklist'}>Hidden ({blacklist_tab_repos_count})</a>
+                  <a href="#" class="inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" onclick={() => current_tab.tab = 'blacklist'}>Hidden ({hidden_tab_repos_count})</a>
                {/if}
             </li>
          </ul>
@@ -271,7 +212,7 @@
       {#if option_is_open}
          <!-- OPTIONS (for mobile view) -->
          <div class='text-sm bg-gray-50 py-3 px-4 flex flex-col gap-4 rounded-b drop-shadow overflow-y-auto max-h-[70vh]'>
-            <SortOption sort_option={sort_option} handleChange={change_sort_option}/>
+            <SortOption sort_option={sort_option}/>
             <NumberingOption numbering={numbering} handleChange={change_numbering}/>
             <ExcludedTopicsOption excluded_topics={excluded_topics} excluded_repos_count={excluded_repos_count}/>
          </div>
@@ -281,7 +222,7 @@
       <!-- OPTIONS (for desktop / md screen size) -->
       <div class='w-1/4 hidden md:block'>
          <MedScreenStickyOptions>
-            <SortOption sort_option={sort_option} handleChange={change_sort_option}/>
+            <SortOption sort_option={sort_option}/>
             <NumberingOption numbering={numbering} handleChange={change_numbering}/>
             <ExcludedTopicsOption excluded_topics={excluded_topics} excluded_repos_count={excluded_repos_count}/>
             <AdUnit/>
@@ -292,31 +233,31 @@
          <nav class="hidden md:block text-sm font-medium text-center border-b border-gray-200 sticky top-0 z-10 bg-white">
             <ul class="flex flex-wrap -mb-px">
                <li class="mr-2">
-                  {#if current_tab == 'explore'}
+                  {#if current_tab.tab == 'explore'}
                      <a href="#" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Browse ({explore_tab_repos_count})</a>
                   {:else}
-                     <a href="#" class="border-transparent inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" onclick={() => current_tab = 'explore'}>Browse ({explore_tab_repos_count})</a>
+                     <a href="#" class="border-transparent inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" onclick={() => current_tab.tab = 'explore'}>Browse ({explore_tab_repos_count})</a>
                   {/if}
                </li>
                <li class="mr-2">
-                  {#if current_tab == 'blacklist'}
-                     <a href="#" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Hidden ({blacklist_tab_repos_count})</a>
+                  {#if current_tab.tab == 'blacklist'}
+                     <a href="#" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Hidden ({hidden_tab_repos_count})</a>
                   {:else}
-                     <a href="#" class="border-transparent inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" onclick={() => current_tab = 'blacklist'}>Hidden ({blacklist_tab_repos_count})</a>
+                     <a href="#" class="border-transparent inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" onclick={() => current_tab.tab = 'blacklist'}>Hidden ({hidden_tab_repos_count})</a>
                   {/if}
                </li>
             </ul>
          </nav>
          <div class='flex flex-col gap-6 py-5' data-nosnippet> <!-- repo list | https://www.google.com/search?q=what+is+data-nosnippet -->
-            {#if all_repos.length == 0} <!-- don't use await block since there's reactive variables that depend on all_repos | https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/tutorial/onmount -->
+            {#if repos.all.length == 0} <!-- don't use await block since there's reactive variables that depend on repos.all | https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/tutorial/onmount -->
                {#if !userAgent?.includes('Googlebot')}
                   <LoadingAnimation/>
                {/if}
-            {:else if all_repos.length == 1} <!-- fetchRepos() returns an array of one element if there's an error -->
+            {:else if repos.all.length == 1} <!-- fetchRepos() returns an array of one element if there's an error -->
                <p>Can't reach the backend. It maybe crashed or something. Please try again later.</p>
             {:else}
-               {#each repos as repo, index (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
-                  <Repo visible_chain_link_index={visible_chain_link_index} setVisibleChainLinkIndex={setVisibleChainLinkIndex} repo={repo} index={index} excluded_topics={excluded_topics} numbering={numbering} current_tab={current_tab} blacklistRepo={blacklistRepo} removeFromBlackList={removeFromBlackList} sendReport={sendReport} repo_to_highlight={repo_to_highlight}/>
+               {#each repos.actually_shown as repo, index (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
+                  <Repo visible_chain_link_index={visible_chain_link_index} setVisibleChainLinkIndex={setVisibleChainLinkIndex} repo={repo} index={index} excluded_topics={excluded_topics} numbering={numbering} current_tab={current_tab} hidden_repos={hidden_repos} sendReport={sendReport} repo_to_highlight={repo_to_highlight}/>
                {/each}
             {/if}
          </div>

@@ -14,9 +14,8 @@
       numbering,
       current_tab,
       repo_to_highlight,
+      hidden_repos,
 
-      blacklistRepo,
-      removeFromBlackList,
       sendReport,
    } = $props();
 
@@ -68,12 +67,12 @@
             {/if}
          </div>
          <div class='grow flex justify-end items-center'> <!-- browse/hide button -->
-            {#if current_tab == 'explore'}
-               <button onclick={() => {blacklistRepo(repo.id)/*; sendReport(`hide ${repo.full_name}`)*/}} class="bg-gray-100 hover:bg-gray-200 border text-gray-700 text-xs py-1 px-3 rounded-md"> <!-- https://stackoverflow.com/q/58262380/9157799 -->
+            {#if current_tab.tab == 'explore'}
+               <button onclick={() => {hidden_repos.hide_repo(repo.id)/*; sendReport(`hide ${repo.full_name}`)*/}} class="bg-gray-100 hover:bg-gray-200 border text-gray-700 text-xs py-1 px-3 rounded-md"> <!-- https://stackoverflow.com/q/58262380/9157799 -->
                   Hide
                </button>
-            {:else if current_tab == 'blacklist'}
-               <button onclick={() => {removeFromBlackList(repo.id)/*; sendReport(`remove ${repo.full_name}`)*/}} class="bg-gray-100 hover:bg-gray-200 border text-gray-700 text-xs py-1 px-3 rounded-md"> <!-- https://stackoverflow.com/q/58262380/9157799 -->
+            {:else if current_tab.tab == 'blacklist'}
+               <button onclick={() => {hidden_repos.unhide_repo(repo.id)/*; sendReport(`remove ${repo.full_name}`)*/}} class="bg-gray-100 hover:bg-gray-200 border text-gray-700 text-xs py-1 px-3 rounded-md"> <!-- https://stackoverflow.com/q/58262380/9157799 -->
                   Remove
                </button>
             {/if}

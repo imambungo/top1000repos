@@ -154,12 +154,10 @@
    let numbering = $state('rank')
 
    const change_sort_option = new_sort_option => {
-      //sendReport(`sort: ${sort_option}`) // don't use reactive statement since it will get fired twice on mount
       sort_option = new_sort_option
    }
 
    const change_numbering = new_numbering => {
-      //sendReport(`numbering: ${numbering}`) // don't use reactive statement since it will get fired twice on mount
       numbering = new_numbering
    }
 

@@ -11,10 +11,7 @@
 
    import { onMount, tick, untrack } from 'svelte'; // https://stackoverflow.com/a/74165772/9157799
 
-   import {
-      local_storage as ls,
-      session_storage as ss
-   } from '$lib/local_storage.js'
+   import { local_storage as ls } from '$lib/local_storage.js'
 
    import { page } from '$app/stores' // https://stackoverflow.com/a/68578884/9157799
 

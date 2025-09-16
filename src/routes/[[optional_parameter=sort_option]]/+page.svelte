@@ -33,21 +33,29 @@
       userAgent = navigator.userAgent // need to be assigned at onMount because window or navigator is not found at server side
       if (!userAgent.includes('Googlebot') && !userAgent.includes('bingbot') && !userAgent.includes('AhrefsBot')) {
          const time_of_first_visit = ls.getItem('time_of_first_visit') || new Date().toLocaleString('sv-SE', {timeZone: 'Asia/Jakarta'}).slice(0, 16) // https://stackoverflow.com/a/58633651/9157799
+
          let last_visit_date
          if (ls.getItem('last_visit_date'))
             last_visit_date = ls.getItem('last_visit_date')
          else
             last_visit_date = 'never'
+
          let visit_count
          if (ls.getItem('visit_count'))
             visit_count = ls.getItem('visit_count') + 1
          else
             visit_count = 1
+
+         let message = `${time_of_first_visit} ${visit_count}`
+         if (userAgent.toLowerCase().includes('mobi')) message += ' M'
+         if (document.referrer) message += ` ${document.referrer}` // document.referrer: https://stackoverflow.com/a/6856725/9157799
+         if (window.location.hash) message += ` ${window.location.hash}`
+
          const today = new Date().toLocaleString('sv-SE', {timeZone: 'Asia/Jakarta'}).slice(0, 10) // https://stackoverflow.com/a/58633651/9157799
          if (window.location.hash && last_visit_date != today)
-            await sendReport(`${time_of_first_visit} ${visit_count} ${document.referrer} ${window.location.hash}`) // document.referrer: https://stackoverflow.com/a/6856725/9157799
-         else if (last_visit_date != today && visit_count >= 5)
-            await sendReport(`${time_of_first_visit} ${visit_count} ${document.referrer}`) // document.referrer: https://stackoverflow.com/a/6856725/9157799
+            await sendReport(message)
+         else if (visit_count >= 5 && last_visit_date != today)
+            await sendReport(message)
          ls.setItem('time_of_first_visit', time_of_first_visit)
          ls.setItem('visit_count', visit_count)
          ls.setItem('last_visit_date', today)

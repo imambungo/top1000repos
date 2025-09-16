@@ -9,19 +9,17 @@
       visible_chain_link_index,
       setVisibleChainLinkIndex,
       repo,
+      repo_to_highlight,
       index,
       excluded_topics,
       numbering,
       current_tab,
-      repo_to_highlight,
       hidden_repos,
-
-      sendReport,
-   } = $props();
+   } = $props()
 
    let transition_animation_class = $state('')
    const runCodeWithoutReactiveBlockFootGun = () => {
-      if (repo.full_name == repo_to_highlight) {
+      if (repo.full_name == repo_to_highlight.url_hash) {
          transition_animation_class = 'bg-amber-100 duration-500'
          setTimeout(
             () => {
@@ -38,7 +36,7 @@
       }
    }
    $effect(() => {
-      let trigger = repo_to_highlight
+      let trigger = repo_to_highlight.url_hash
       runCodeWithoutReactiveBlockFootGun() // still a footgun: https://github.com/sveltejs/svelte/issues/9248#issuecomment-1998643597
    })
 </script>

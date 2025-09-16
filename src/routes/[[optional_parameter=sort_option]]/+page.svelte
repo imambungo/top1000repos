@@ -9,7 +9,7 @@
 
    import { balancer } from 'svelte-action-balancer' // https://stackoverflow.com/q/34875725/9157799
 
-   import { onMount, tick, untrack } from 'svelte'; // https://stackoverflow.com/a/74165772/9157799
+   import { onMount, untrack } from 'svelte' // https://stackoverflow.com/a/74165772/9157799
 
    import { local_storage as ls } from '$lib/local_storage.js'
 
@@ -18,25 +18,14 @@
    import { current_tab } from './current_tab.svelte.js'
    import { hidden_repos } from './hidden_repos.svelte.js'
    import { repos } from './repos.svelte.js'
+   import { repo_to_highlight } from './repo_to_highlight.svelte.js'
    import { sort_option } from './sort_option.svelte.js'
 
    onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
       if ($page.url.pathname.includes('pr')) sort_option.option = 'total_thumbs_up_of_top_5_closed_pr_since_1_year' // https://stackoverflow.com/a/68578884/9157799
       if ($page.url.pathname.includes('issues')) sort_option.option = 'total_thumbs_up_of_top_5_closed_issues_since_1_year'
 
-      initial_url_hash = window.location.hash.substring(1) // for delayed scroll. the browser will not scroll if the content is rendered late. | https://stackoverflow.com/a/6682514/9157799
-      if (initial_url_hash) {
-         need_initial_scroll = true
-         const repoIsHidden = () => {
-            let repo = repos.all.find((repo) => repo.full_name == initial_url_hash)
-            if (hidden_repos.ids.includes(repo.id))
-               return true
-            else
-               return false
-         }
-         if (repoIsHidden()) current_tab.tab = 'blacklist'
-      }
-
+      if (repo_to_highlight.url_hash && repo_to_highlight.is_hidden) current_tab.tab = 'blacklist'
       num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 80})
 
       userAgent = navigator.userAgent // need to be assigned at onMount because window or navigator is not found at server side
@@ -53,8 +42,8 @@
          else
             visit_count = 1
          const today = new Date().toLocaleString('sv-SE', {timeZone: 'Asia/Jakarta'}).slice(0, 10) // https://stackoverflow.com/a/58633651/9157799
-         if (initial_url_hash && last_visit_date != today)
-            await sendReport(`${time_of_first_visit} ${visit_count} ${document.referrer} #${initial_url_hash}`) // document.referrer: https://stackoverflow.com/a/6856725/9157799
+         if (window.location.hash && last_visit_date != today)
+            await sendReport(`${time_of_first_visit} ${visit_count} ${document.referrer} ${window.location.hash}`) // document.referrer: https://stackoverflow.com/a/6856725/9157799
          else if (last_visit_date != today && visit_count >= 5)
             await sendReport(`${time_of_first_visit} ${visit_count} ${document.referrer}`) // document.referrer: https://stackoverflow.com/a/6856725/9157799
          ls.setItem('time_of_first_visit', time_of_first_visit)
@@ -62,32 +51,6 @@
          ls.setItem('last_visit_date', today)
       }
    })
-
-   let initial_url_hash = ''
-   let repo_to_highlight = $state('')
-   let need_initial_scroll = false
-   const initialScrollAndHighlightIfNeeded = async () => {
-      if (need_initial_scroll) {
-         if (repos.find((repo) => repo.full_name == initial_url_hash)) {
-            await tick() // if the corresponding repo has rendered | https://svelte.dev/docs/svelte/lifecycle-hooks#tick
-            const scrollToHash = (url_hash) => { // https://stackoverflow.com/a/21447965/9157799
-               window.location.hash = ''
-               window.location.hash = url_hash // don't need to add '#' back
-            }
-            scrollToHash(initial_url_hash)
-            const disableScrolling = () => { // https://stackoverflow.com/a/26186979/9157799
-               let x = window.scrollX
-               let y = window.scrollY
-               window.onscroll = () => window.scrollTo(x, y)
-            }
-            disableScrolling()
-            const enableScrolling = () => window.onscroll = null // https://stackoverflow.com/q/4770025/9157799#comment117243053_26186979
-            setTimeout(enableScrolling, 1000)
-            need_initial_scroll = false
-            repo_to_highlight = initial_url_hash
-         }
-      }
-   }
 
    import { PUBLIC_BACKEND_URL } from '$env/static/public'; // https://kit.svelte.dev/docs/modules#$env-static-public
 
@@ -99,6 +62,34 @@
          keepalive: true // https://stackoverflow.com/a/76647328/9157799
       })
    }
+
+   $effect(() => {
+      const shown = repos.actually_shown.find((repo) => repo.full_name == repo_to_highlight.url_hash)
+      if (shown && untrack(() => !repo_to_highlight.already_highlighted)) {
+         untrack(() => { // https://svelte.dev/docs/svelte/svelte#untrack
+            repo_to_highlight.already_highlighted = true
+
+            const scroll = () => {
+               const scroll_to_hash = (url_hash) => { // https://stackoverflow.com/a/21447965/9157799
+                  window.location.hash = ''
+                  window.location.hash = url_hash // don't need to add '#' back
+               }
+               scroll_to_hash(repo_to_highlight.url_hash)
+
+               const disable_scroll = () => { // https://stackoverflow.com/a/26186979/9157799
+                  let x = window.scrollX
+                  let y = window.scrollY
+                  window.onscroll = () => window.scrollTo(x, y)
+               }
+               disable_scroll()
+
+               const enable_scroll = () => window.onscroll = null // https://stackoverflow.com/q/4770025/9157799#comment117243053_26186979
+               setTimeout(enable_scroll, 1000)
+            }
+            scroll()
+         })
+      }
+   })
 
    let option_is_open = $state(false) // for mobile view
    let numbering = $state('rank')
@@ -134,12 +125,7 @@
 
    let visible_chain_link_index = $state(-1)
    const setVisibleChainLinkIndex = (index) => visible_chain_link_index = index
-   $effect(() => { // for delayed scroll. the browser will not scroll if the content is rendered late.
-      let trigger = repos.actually_shown
-      untrack(() => { // https://github.com/sveltejs/svelte/issues/9248
-         initialScrollAndHighlightIfNeeded()
-      })
-   })
+
    let hidden_tab_repos_count = $derived(get_how_many_repos_in_id_list(repos.all, hidden_repos.ids)) // don't just use hidden_repos.ids.length because when a hidden repo is no longer in top 1000, it still get counted
    let explore_tab_repos_count = $derived(1000 - hidden_tab_repos_count)
    let excluded_repos_count = $derived(get_excluded_repos_count(repos.to_show, excluded_topics.topics))
@@ -254,7 +240,7 @@
                <p>Can't reach the backend. It maybe crashed or something. Please try again later.</p>
             {:else}
                {#each repos.actually_shown as repo, index (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
-                  <Repo visible_chain_link_index={visible_chain_link_index} setVisibleChainLinkIndex={setVisibleChainLinkIndex} repo={repo} index={index} excluded_topics={excluded_topics} numbering={numbering} current_tab={current_tab} hidden_repos={hidden_repos} sendReport={sendReport} repo_to_highlight={repo_to_highlight}/>
+                  <Repo visible_chain_link_index={visible_chain_link_index} setVisibleChainLinkIndex={setVisibleChainLinkIndex} repo={repo} index={index} excluded_topics={excluded_topics} numbering={numbering} current_tab={current_tab} hidden_repos={hidden_repos} repo_to_highlight={repo_to_highlight}/>
                {/each}
             {/if}
          </div>

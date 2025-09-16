@@ -1,11 +1,11 @@
 <script>
-   import MedScreenStickyOptions from './MedScreenStickyOptions.svelte'
-   import SortOption from './SortOption.svelte'
-   import NumberingOption from './NumberingOption.svelte'
-   import ExcludedTopicsOption from './ExcludedTopicsOption.svelte'
    import AdUnit from './AdUnit.svelte'
+   import ExcludedTopicsOption from './ExcludedTopicsOption.svelte'
    import LoadingAnimation from './LoadingAnimation.svelte'
+   import MedScreenStickyOptions from './MedScreenStickyOptions.svelte'
+   import NumberingOption from './NumberingOption.svelte'
    import Repo from './Repo.svelte'
+   import SortOption from './SortOption.svelte'
 
    import { balancer } from 'svelte-action-balancer' // https://stackoverflow.com/q/34875725/9157799
 
@@ -16,7 +16,9 @@
    import { page } from '$app/stores' // https://stackoverflow.com/a/68578884/9157799
 
    import { current_tab } from './current_tab.svelte.js'
+   import { excluded_topics } from './excluded_topics.svelte.js'
    import { hidden_repos } from './hidden_repos.svelte.js'
+   import { num_of_repos_to_render } from './num_of_repos_to_render.svelte.js'
    import { repos } from './repos.svelte.js'
    import { repo_to_highlight } from './repo_to_highlight.svelte.js'
    import { sort_option } from './sort_option.svelte.js'
@@ -98,10 +100,7 @@
       numbering = new_numbering
    }
 
-
-   import { num_of_repos_to_render } from './num_of_repos_to_render.svelte.js'
    num_of_repos_to_render.value = 50
-   
 
    const get_how_many_repos_in_id_list = (repos, repo_id_list) => {
       let count = 0
@@ -111,8 +110,6 @@
       })
       return count
    }
-
-   import { excluded_topics } from './excluded_topics.svelte'
 
    const get_excluded_repos_count = (repos, excluded_topics) => {
       let count = 0

@@ -22,10 +22,11 @@
    $effect(() => {
       if (repo.full_name == repo_to_highlight.url_hash) {
          transition_animation_class = 'bg-amber-100 duration-500'
-         setTimeout(
+         let timeoutID // https://developer.mozilla.org/en-US/docs/Web/API/Window/setTimeout#return_value
+         timeoutID = setTimeout(
             () => {
                transition_animation_class = 'duration-[5000ms]'
-               setTimeout(
+               timeoutID = setTimeout(
                   () => {
                      transition_animation_class = '' // prevent transition animation when selecting repo topics
                   },
@@ -34,6 +35,10 @@
             },
             1000
          )
+
+         return () => {
+            clearTimeout(timeoutID)
+         }
       }
    })
 </script>

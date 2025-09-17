@@ -24,6 +24,7 @@
    if (page.url.pathname.includes('pr')) sort_option.option = 'total_thumbs_up_of_top_5_closed_pr_since_1_year' // https://stackoverflow.com/a/68578884/9157799
    if (page.url.pathname.includes('issues')) sort_option.option = 'total_thumbs_up_of_top_5_closed_issues_since_1_year'
    if (repo_to_highlight.url_hash && repo_to_highlight.is_hidden) current_tab.tab = 'blacklist'
+   num_of_repos_to_render.value = 50
    num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 80})
 
    $effect(() => {
@@ -60,8 +61,6 @@
    const change_numbering = new_numbering => {
       numbering = new_numbering
    }
-
-   num_of_repos_to_render.value = 50
 
    const get_how_many_repos_in_id_list = (repos, repo_id_list) => {
       let count = 0

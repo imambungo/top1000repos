@@ -11,7 +11,7 @@
 
    import { onMount, untrack } from 'svelte' // https://stackoverflow.com/a/74165772/9157799
 
-   import { page } from '$app/stores' // https://stackoverflow.com/a/68578884/9157799
+   import { page } from '$app/state' // https://stackoverflow.com/a/68578884/9157799
 
    import { current_tab } from './current_tab.svelte.js'
    import { excluded_topics } from './excluded_topics.svelte.js'
@@ -21,9 +21,9 @@
    import { repo_to_highlight } from './repo_to_highlight.svelte.js'
    import { sort_option } from './sort_option.svelte.js'
 
-   onMount(async () => { // https://stackoverflow.com/a/74165772/9157799
-      if ($page.url.pathname.includes('pr')) sort_option.option = 'total_thumbs_up_of_top_5_closed_pr_since_1_year' // https://stackoverflow.com/a/68578884/9157799
-      if ($page.url.pathname.includes('issues')) sort_option.option = 'total_thumbs_up_of_top_5_closed_issues_since_1_year'
+   onMount(() => { // https://stackoverflow.com/a/74165772/9157799
+      if (page.url.pathname.includes('pr')) sort_option.option = 'total_thumbs_up_of_top_5_closed_pr_since_1_year' // https://stackoverflow.com/a/68578884/9157799
+      if (page.url.pathname.includes('issues')) sort_option.option = 'total_thumbs_up_of_top_5_closed_issues_since_1_year'
 
       if (repo_to_highlight.url_hash && repo_to_highlight.is_hidden) current_tab.tab = 'blacklist'
       num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 80})
@@ -93,10 +93,10 @@
 </script>
 
 <svelte:head>
-   {#if $page.url.pathname.includes('pr')}
+   {#if page.url.pathname.includes('pr')}
       <title>Top 1000 GitHub Repositories Sorted by Pull Requests</title>
       <link rel="canonical" href="https://top1000repos.com/sorted-by-pr">
-   {:else if $page.url.pathname.includes('issues')}
+   {:else if page.url.pathname.includes('issues')}
       <title>Top 1000 GitHub Repositories Sorted by Closed Issues</title>
       <link rel="canonical" href="https://top1000repos.com/sorted-by-issues">
    {:else}

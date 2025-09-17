@@ -18,9 +18,11 @@
       hidden_repos,
    } = $props()
 
+   import { untrack } from 'svelte'
+
    let transition_animation_class = $state('')
    $effect(() => {
-      if (repo.full_name == repo_to_highlight.url_hash) {
+      if (untrack(() => repo.full_name) == repo_to_highlight.url_hash) { // untrack: when a repo is hidden/unhidden, all "repo" are changed!
          transition_animation_class = 'bg-amber-100 duration-500'
          let timeoutID // https://developer.mozilla.org/en-US/docs/Web/API/Window/setTimeout#return_value
          timeoutID = setTimeout(

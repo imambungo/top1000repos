@@ -60,7 +60,7 @@
          <div class='min-w-0 whitespace-pre-wrap'> <!-- repo name & archived sign | https://tailwindcss.com/docs/whitespace#pre-wrap -->
             <!-- REPO FULL NAME / TITLE -->
             <a href="{repo.html_url}" target="_blank" class="text-blue-600 break-words">{repo.full_name}</a>
-            <!-- <a href="{repo.html_url}" on:mousedown={sendReport(repo.full_name)} target="_blank" class="text-blue-600 break-words">{repo.full_name}</a> -->   <!-- mousedown: https://stackoverflow.com/a/12365382/9157799 -->
+            <!-- <a href="{repo.html_url}" on:mousedown={send_report(repo.full_name)} target="_blank" class="text-blue-600 break-words">{repo.full_name}</a> -->   <!-- mousedown: https://stackoverflow.com/a/12365382/9157799 -->
             {#if repo.archived}
                <span> </span> <!-- utilizing whitespace-pre-wrap above. it preserve spaces only if they're not in the edges which is nice -->
                <span class='rounded-full border-solid px-2 py-1 text-xs text-yellow-600 border border-yellow-600 whitespace-nowrap'>Public archive</span>
@@ -68,11 +68,11 @@
          </div>
          <div class='grow flex justify-end items-center'> <!-- browse/hide button -->
             {#if current_tab.tab == 'explore'}
-               <button onclick={() => {hidden_repos.hide_repo(repo.id)/*; sendReport(`hide ${repo.full_name}`)*/}} class="bg-gray-100 hover:bg-gray-200 border text-gray-700 text-xs py-1 px-3 rounded-md"> <!-- https://stackoverflow.com/q/58262380/9157799 -->
+               <button onclick={() => {hidden_repos.hide_repo(repo.id)/*; send_report(`hide ${repo.full_name}`)*/}} class="bg-gray-100 hover:bg-gray-200 border text-gray-700 text-xs py-1 px-3 rounded-md"> <!-- https://stackoverflow.com/q/58262380/9157799 -->
                   Hide
                </button>
             {:else if current_tab.tab == 'blacklist'}
-               <button onclick={() => {hidden_repos.unhide_repo(repo.id)/*; sendReport(`remove ${repo.full_name}`)*/}} class="bg-gray-100 hover:bg-gray-200 border text-gray-700 text-xs py-1 px-3 rounded-md"> <!-- https://stackoverflow.com/q/58262380/9157799 -->
+               <button onclick={() => {hidden_repos.unhide_repo(repo.id)/*; send_report(`remove ${repo.full_name}`)*/}} class="bg-gray-100 hover:bg-gray-200 border text-gray-700 text-xs py-1 px-3 rounded-md"> <!-- https://stackoverflow.com/q/58262380/9157799 -->
                   Remove
                </button>
             {/if}

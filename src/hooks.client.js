@@ -6,10 +6,13 @@ import { hidden_repos } from "./routes/[[optional_parameter=sort_option]]/hidden
 import { repos } from "./routes/[[optional_parameter=sort_option]]/repos.svelte.js"
 import { repo_to_highlight } from "./routes/[[optional_parameter=sort_option]]/repo_to_highlight.svelte.js"
 
+import { send_report_if_recurring_user } from "./lib/analytics.js"
+
 export const init = async () => { // https://svelte.dev/docs/kit/hooks#Shared-hooks-init
    await emoji_image_urls.fetch_urls()
    excluded_topics.load_from_session_storage()
-   await hidden_repos.load_from_local_storage()
+   hidden_repos.load_from_local_storage()
    await repos.fetch()
-   await repo_to_highlight.init()
+   repo_to_highlight.init()
+   await send_report_if_recurring_user()
 }

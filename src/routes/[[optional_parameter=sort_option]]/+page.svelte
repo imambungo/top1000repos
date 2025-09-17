@@ -11,8 +11,6 @@
 
    import { onMount, untrack } from 'svelte' // https://stackoverflow.com/a/74165772/9157799
 
-   import { local_storage as ls } from '$lib/local_storage.js'
-
    import { page } from '$app/stores' // https://stackoverflow.com/a/68578884/9157799
 
    import { current_tab } from './current_tab.svelte.js'
@@ -29,49 +27,7 @@
 
       if (repo_to_highlight.url_hash && repo_to_highlight.is_hidden) current_tab.tab = 'blacklist'
       num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 80})
-
-      userAgent = navigator.userAgent // need to be assigned at onMount because window or navigator is not found at server side
-      if (!userAgent.includes('Googlebot') && !userAgent.includes('bingbot') && !userAgent.includes('AhrefsBot')) {
-         const time_of_first_visit = ls.getItem('time_of_first_visit') || new Date().toLocaleString('sv-SE', {timeZone: 'Asia/Jakarta'}).slice(0, 16) // https://stackoverflow.com/a/58633651/9157799
-
-         let last_visit_date
-         if (ls.getItem('last_visit_date'))
-            last_visit_date = ls.getItem('last_visit_date')
-         else
-            last_visit_date = 'never'
-
-         let visit_count
-         if (ls.getItem('visit_count'))
-            visit_count = ls.getItem('visit_count') + 1
-         else
-            visit_count = 1
-
-         let message = `${time_of_first_visit} ${visit_count}`
-         if (userAgent.toLowerCase().includes('mobi')) message += ' M'
-         if (document.referrer) message += ` ${document.referrer}` // document.referrer: https://stackoverflow.com/a/6856725/9157799
-         if (window.location.hash) message += ` ${window.location.hash}`
-
-         const today = new Date().toLocaleString('sv-SE', {timeZone: 'Asia/Jakarta'}).slice(0, 10) // https://stackoverflow.com/a/58633651/9157799
-         if (window.location.hash && last_visit_date != today)
-            await sendReport(message)
-         else if (visit_count >= 5 && last_visit_date != today)
-            await sendReport(message)
-         ls.setItem('time_of_first_visit', time_of_first_visit)
-         ls.setItem('visit_count', visit_count)
-         ls.setItem('last_visit_date', today)
-      }
    })
-
-   import { PUBLIC_BACKEND_URL } from '$env/static/public'; // https://kit.svelte.dev/docs/modules#$env-static-public
-
-   let userAgent = $state() // need to be assigned at onMount because window or navigator is not found at server side
-
-   const sendReport = async (message) => { // https://grugbrain.dev/#grug-on-logging
-      await fetch(`${PUBLIC_BACKEND_URL}/send-report?${new URLSearchParams({ message })}`, { // bingbot can't or won't do POST | URLSearchParams: https://stackoverflow.com/a/58437909/9157799
-         //body: JSON.stringify({ message }), // GET request can but can't have body: https://stackoverflow.com/a/69230317/9157799
-         keepalive: true // https://stackoverflow.com/a/76647328/9157799
-      })
-   }
 
    $effect(() => {
       const shown = repos.actually_shown.find((repo) => repo.full_name == repo_to_highlight.url_hash)
@@ -237,10 +193,8 @@
             </ul>
          </nav>
          <div class='flex flex-col gap-6 py-5' data-nosnippet> <!-- repo list | https://www.google.com/search?q=what+is+data-nosnippet -->
-            {#if repos.all.length == 0} <!-- don't use await block since there's reactive variables that depend on repos.all | https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/tutorial/onmount -->
-               {#if !userAgent?.includes('Googlebot')}
-                  <LoadingAnimation/>
-               {/if}
+            {#if repos.all.length == 0} <!-- don't use await block since there's derived state that depend on repos.all | https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/tutorial/onmount -->
+               <LoadingAnimation/>
             {:else if repos.all.length == 1} <!-- fetchRepos() returns an array of one element if there's an error -->
                <p>Can't reach the backend. It maybe crashed or something. Please try again later.</p>
             {:else}

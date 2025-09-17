@@ -156,7 +156,7 @@
          <p class='text-lg font-semibold text-slate-700'>Top 1000 Repos</p>
          <div class='flex gap-3 justify-center text-slate-600 decoration-slate-300 text-xs font-medium items-center mt-1'>
             <a class='underline' target='_blank' href='https://github.com/imambungo/top1000repos'>GitHub</a>
-            <a class='underline' target='_blank' href='https://twitter.com/top1000repos'>Twitter</a>
+            <!-- <a class='underline' target='_blank' href='https://twitter.com/top1000repos'>Twitter</a> -->
          </div>
       </div>
       <div class='my-4 flex flex-col items-center gap-3 w-full'> <!-- header 1 and header text -->

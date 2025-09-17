@@ -7,8 +7,8 @@ const create_sort_option = () => {
       get option() { return option },
       set option(v) {
          if (v != option) {
-            option = v
             num_of_repos_to_render.value = 50
+            option = v
             num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 80})
          }
       }

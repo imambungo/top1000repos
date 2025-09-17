@@ -7,8 +7,8 @@ const create_current_tab = () => {
       get tab() { return tab },
       set tab(v) {
          if (v != tab) {
-            tab = v
             num_of_repos_to_render.value = 50
+            tab = v
             num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 80})
          }
       }

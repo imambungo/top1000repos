@@ -5,7 +5,7 @@ const create_hidden_repos = () => {
 
    return {
       get ids() { return ids },
-      load_from_local_storage: () => ids = ls.getItem('repo_id_blacklist') || [], // to be run at init hook: https://svelte.dev/docs/kit/hooks#Shared-hooks-init
+      load_from_local_storage: () => ids = ls.getItem('repo_id_blacklist') || [], // to be run at client init hook: https://svelte.dev/docs/kit/hooks#Shared-hooks-init
       hide_repo: repo_id => {
          ids = [...ids, repo_id]
          ls.setItem('repo_id_blacklist', ids)

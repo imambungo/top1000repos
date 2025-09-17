@@ -7,7 +7,7 @@ const create_excluded_topics = () => {
 
    return {
       get topics() { return excluded_topics },
-      load_from_session_storage: () => excluded_topics = ss.getItem('excluded_topics') || [], // to be run at init hook: https://svelte.dev/docs/kit/hooks#Shared-hooks-init
+      load_from_session_storage: () => excluded_topics = ss.getItem('excluded_topics') || [], // to be run at client init hook: https://svelte.dev/docs/kit/hooks#Shared-hooks-init
       toggle: (event) => {
          const topic = event.target.innerText // https://stackoverflow.com/a/68455563/9157799
          if (!excluded_topics.includes(topic)) { // if topic not excluded yet, add to excluded_topics

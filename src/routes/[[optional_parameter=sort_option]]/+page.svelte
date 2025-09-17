@@ -9,7 +9,7 @@
 
    import { balancer } from 'svelte-action-balancer' // https://stackoverflow.com/q/34875725/9157799
 
-   import { onMount, untrack } from 'svelte' // https://stackoverflow.com/a/74165772/9157799
+   import { untrack } from 'svelte' // https://stackoverflow.com/a/74165772/9157799
 
    import { page } from '$app/state' // https://stackoverflow.com/a/68578884/9157799
 

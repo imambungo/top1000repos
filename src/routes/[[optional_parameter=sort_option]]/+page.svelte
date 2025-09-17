@@ -21,13 +21,10 @@
    import { repo_to_highlight } from './repo_to_highlight.svelte.js'
    import { sort_option } from './sort_option.svelte.js'
 
-   onMount(() => { // https://stackoverflow.com/a/74165772/9157799
-      if (page.url.pathname.includes('pr')) sort_option.option = 'total_thumbs_up_of_top_5_closed_pr_since_1_year' // https://stackoverflow.com/a/68578884/9157799
-      if (page.url.pathname.includes('issues')) sort_option.option = 'total_thumbs_up_of_top_5_closed_issues_since_1_year'
-
-      if (repo_to_highlight.url_hash && repo_to_highlight.is_hidden) current_tab.tab = 'blacklist'
-      num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 80})
-   })
+   if (page.url.pathname.includes('pr')) sort_option.option = 'total_thumbs_up_of_top_5_closed_pr_since_1_year' // https://stackoverflow.com/a/68578884/9157799
+   if (page.url.pathname.includes('issues')) sort_option.option = 'total_thumbs_up_of_top_5_closed_issues_since_1_year'
+   if (repo_to_highlight.url_hash && repo_to_highlight.is_hidden) current_tab.tab = 'blacklist'
+   num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 80})
 
    $effect(() => {
       const shown = repos.actually_shown.find((repo) => repo.full_name == repo_to_highlight.url_hash)

@@ -45,7 +45,7 @@
    })
 </script>
 
-<div id="{repo.full_name}" onmouseenter={()=>{visible_chain_link.index = index}} onmouseleave={()=>{visible_chain_link.index = -1}} ontouchstart={()=>{visible_chain_link.index = index}} class="scroll-my-20 flex {transition_animation_class} {repo.topics.some(topic => excluded_topics.topics.includes(topic)) && 'opacity-50'} -ml-3 md:-ml-2"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 | use negative margin left because the space before the number is too big | scroll-my: https://stackoverflow.com/a/60975588/9157799 -->
+<li id="{repo.full_name}" onmouseenter={()=>{visible_chain_link.index = index}} onmouseleave={()=>{visible_chain_link.index = -1}} ontouchstart={()=>{visible_chain_link.index = index}} class="scroll-my-20 flex {transition_animation_class} {repo.topics.some(topic => excluded_topics.topics.includes(topic)) && 'opacity-50'} -ml-3 md:-ml-2"> <!-- dim if topics is in excluded_topics | https://stackoverflow.com/q/16312528/9157799 | use negative margin left because the space before the number is too big | scroll-my: https://stackoverflow.com/a/60975588/9157799 -->
    <div class="text-sm pt-0.5 w-8 shrink-0 mr-2 text-gray-700 flex flex-col items-end md:ml-0"> <!-- number and link-to-scroll | shrink: https://stackoverflow.com/a/45741742/9157799 -->
       <Number numbering={numbering} rank={repo.rank} order={index+1}/>
       <div class='grow flex flex-col justify-end'>
@@ -96,4 +96,4 @@
          <LastCommitDate last_commit_date={repo.last_commit_date}/>
       </div>
    </div>
-</div>
+</li>

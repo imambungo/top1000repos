@@ -184,7 +184,7 @@
                </li>
             </ul>
          </nav>
-         <div class='flex flex-col gap-6 py-5' data-nosnippet> <!-- repo list | https://www.google.com/search?q=what+is+data-nosnippet -->
+         <ol class='flex flex-col gap-6 py-5' data-nosnippet> <!-- repo list | https://www.google.com/search?q=what+is+data-nosnippet -->
             {#if repos.all.length == 0} <!-- don't use await block since there's derived state that depend on repos.all | https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/tutorial/onmount -->
                <LoadingAnimation/>
             {:else if repos.all.length == 1} <!-- fetchRepos() returns an array of one element if there's an error -->
@@ -194,7 +194,7 @@
                   <Repo repo={repo} index={index} excluded_topics={excluded_topics} numbering={numbering} current_tab={current_tab} hidden_repos={hidden_repos} repo_to_highlight={repo_to_highlight}/>
                {/each}
             {/if}
-         </div>
+         </ol>
       </div>
    </main>
    <footer class='text-center p-6 text-xs'>

@@ -187,10 +187,10 @@
          <ol class='flex flex-col gap-6 py-5' data-nosnippet> <!-- repo list | https://www.google.com/search?q=what+is+data-nosnippet -->
             {#if repos.all.length == 0} <!-- don't use await block since there's derived state that depend on repos.all | https://stackoverflow.com/a/66080028/9157799 | https://svelte.dev/tutorial/onmount -->
                <LoadingAnimation/>
-            {:else if repos.all.length == 1} <!-- fetchRepos() returns an array of one element if there's an error -->
+            {:else if repos.all.length == 1} <!-- repos.fetch() returns an array of one element if there's an error -->
                <p>Can't reach the backend. It maybe crashed or something. Please try again later.</p>
             {:else}
-               {#each repos.actually_shown as repo, index (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
+               {#each repos.actually_shown as repo, index (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs/svelte/each -->
                   <Repo repo={repo} index={index} excluded_topics={excluded_topics} numbering={numbering} current_tab={current_tab} hidden_repos={hidden_repos} repo_to_highlight={repo_to_highlight}/>
                {/each}
             {/if}

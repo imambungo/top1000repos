@@ -1,5 +1,5 @@
 <script>
-   let { excluded_topics, excluded_repos_count } = $props();
+   let { excluded_topics, repos } = $props();
 </script>
 
 <div class='flex flex-col gap-1'>
@@ -12,7 +12,7 @@
       </div>
       <p class='ml-0.5 mt-0.5 text-gray-500 text-xs tracking-tight'>
          {#if excluded_topics.topics.length > 0}
-            {excluded_repos_count} {excluded_repos_count == 1 ? 'repo' : 'repos'} dimmed.
+            {repos.count.excluded} {repos.count.excluded == 1 ? 'repo' : 'repos'} dimmed.
          {:else}
             None. Select a repo topic to exclude it.
          {/if}

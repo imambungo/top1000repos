@@ -1,4 +1,5 @@
 import { current_tab } from './current_tab.svelte.js'
+import { excluded_topics } from './excluded_topics.svelte.js'
 import { hidden_repos } from './hidden_repos.svelte.js'
 import { num_of_repos_to_render } from './num_of_repos_to_render.svelte.js'
 import { sort_option } from './sort_option.svelte.js'
@@ -24,6 +25,24 @@ const create_repos = () => {
    })
    let actually_shown = $derived(to_show.slice(0, num_of_repos_to_render.value))
 
+   let hidden_tab_repos_count = $derived.by(() => { // don't just use hidden_repos.ids.length because when a hidden repo is no longer in top 1000, it still get counted
+      let count = 0
+      all.forEach(repo => {
+         if (hidden_repos.ids.includes(repo.id))
+            count++
+      })
+      return count
+   })
+   let explore_tab_repos_count = $derived(1000 - hidden_tab_repos_count)
+   let excluded_repos_count = $derived.by(() => {
+      let count = 0
+      to_show.forEach(repo => {
+         if (repo.topics.some(topic => excluded_topics.topics.includes(topic))) // if one of the repo topic is in excluded_topics | https://stackoverflow.com/q/16312528/9157799
+            count++
+      })
+      return count
+   })
+
    return {
       get all() { return all },
       fetch: async () => { // to be run at init hook: https://svelte.dev/docs/kit/hooks#Shared-hooks-init
@@ -42,7 +61,14 @@ const create_repos = () => {
          }
       },
       get to_show() { return to_show },
-      get actually_shown() { return actually_shown }
+      get actually_shown() { return actually_shown },
+      get count() {
+         return {
+            get hidden_tab() { return hidden_tab_repos_count },
+            get explore_tab() { return explore_tab_repos_count },
+            get excluded() { return excluded_repos_count }
+         }
+      }
    }
 }
 

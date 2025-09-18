@@ -60,28 +60,6 @@
    const change_numbering = new_numbering => {
       numbering = new_numbering
    }
-
-   const get_how_many_repos_in_id_list = (repos, repo_id_list) => {
-      let count = 0
-      repos.forEach(repo => {
-         if (repo_id_list.includes(repo.id))
-            count++
-      })
-      return count
-   }
-
-   const get_excluded_repos_count = (repos, excluded_topics) => {
-      let count = 0
-      repos.forEach(repo => {
-         if (repo.topics.some(topic => excluded_topics.includes(topic))) // if one of the repo topic is in excluded_topics | https://stackoverflow.com/q/16312528/9157799
-            count++
-      })
-      return count
-   }
-
-   let hidden_tab_repos_count = $derived(get_how_many_repos_in_id_list(repos.all, hidden_repos.ids)) // don't just use hidden_repos.ids.length because when a hidden repo is no longer in top 1000, it still get counted
-   let explore_tab_repos_count = $derived(1000 - hidden_tab_repos_count)
-   let excluded_repos_count = $derived(get_excluded_repos_count(repos.to_show, excluded_topics.topics))
 </script>
 
 <svelte:head>
@@ -122,16 +100,16 @@
          <ul class="pt-1 sm:pt-0 flex flex-wrap -mb-px">
             <li class="mr-2">
                {#if current_tab.tab == 'explore'}
-                  <a href="#top" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Browse ({explore_tab_repos_count})</a>
+                  <a href="#top" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Browse ({repos.count.explore_tab})</a>
                {:else}
-                  <a href="#top" class="inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" onclick={() => current_tab.tab = 'explore'}>Browse ({explore_tab_repos_count})</a>
+                  <a href="#top" class="inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" onclick={() => current_tab.tab = 'explore'}>Browse ({repos.count.explore_tab})</a>
                {/if}
             </li>
             <li class="mr-2">
                {#if current_tab.tab == 'blacklist'}
-                  <a href="#top" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Hidden ({hidden_tab_repos_count})</a>
+                  <a href="#top" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Hidden ({repos.count.hidden_tab})</a>
                {:else}
-                  <a href="#top" class="inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" onclick={() => current_tab.tab = 'blacklist'}>Hidden ({hidden_tab_repos_count})</a>
+                  <a href="#top" class="inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" onclick={() => current_tab.tab = 'blacklist'}>Hidden ({repos.count.hidden_tab})</a>
                {/if}
             </li>
          </ul>
@@ -150,7 +128,7 @@
          <div class='text-sm bg-gray-50 py-3 px-4 flex flex-col gap-4 rounded-b drop-shadow overflow-y-auto max-h-[70vh]'>
             <SortOption sort_option={sort_option}/>
             <NumberingOption numbering={numbering} handleChange={change_numbering}/>
-            <ExcludedTopicsOption excluded_topics={excluded_topics} excluded_repos_count={excluded_repos_count}/>
+            <ExcludedTopicsOption excluded_topics={excluded_topics} repos={repos}/>
          </div>
       {/if}
    </div>
@@ -160,7 +138,7 @@
          <MedScreenStickyOptions>
             <SortOption sort_option={sort_option}/>
             <NumberingOption numbering={numbering} handleChange={change_numbering}/>
-            <ExcludedTopicsOption excluded_topics={excluded_topics} excluded_repos_count={excluded_repos_count}/>
+            <ExcludedTopicsOption excluded_topics={excluded_topics} repos={repos}/>
             <AdUnit/>
          </MedScreenStickyOptions>
       </div>
@@ -170,16 +148,16 @@
             <ul class="flex flex-wrap -mb-px">
                <li class="mr-2">
                   {#if current_tab.tab == 'explore'}
-                     <a href="#top" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Browse ({explore_tab_repos_count})</a>
+                     <a href="#top" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Browse ({repos.count.explore_tab})</a>
                   {:else}
-                     <a href="#top" class="border-transparent inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" onclick={() => current_tab.tab = 'explore'}>Browse ({explore_tab_repos_count})</a>
+                     <a href="#top" class="border-transparent inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" onclick={() => current_tab.tab = 'explore'}>Browse ({repos.count.explore_tab})</a>
                   {/if}
                </li>
                <li class="mr-2">
                   {#if current_tab.tab == 'blacklist'}
-                     <a href="#top" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Hidden ({hidden_tab_repos_count})</a>
+                     <a href="#top" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Hidden ({repos.count.hidden_tab})</a>
                   {:else}
-                     <a href="#top" class="border-transparent inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" onclick={() => current_tab.tab = 'blacklist'}>Hidden ({hidden_tab_repos_count})</a>
+                     <a href="#top" class="border-transparent inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" onclick={() => current_tab.tab = 'blacklist'}>Hidden ({repos.count.hidden_tab})</a>
                   {/if}
                </li>
             </ul>

@@ -122,16 +122,16 @@
          <ul class="pt-1 sm:pt-0 flex flex-wrap -mb-px">
             <li class="mr-2">
                {#if current_tab.tab == 'explore'}
-                  <a href="#" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Browse ({explore_tab_repos_count})</a>
+                  <a href="#top" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Browse ({explore_tab_repos_count})</a>
                {:else}
-                  <a href="#" class="inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" onclick={() => current_tab.tab = 'explore'}>Browse ({explore_tab_repos_count})</a>
+                  <a href="#top" class="inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" onclick={() => current_tab.tab = 'explore'}>Browse ({explore_tab_repos_count})</a>
                {/if}
             </li>
             <li class="mr-2">
                {#if current_tab.tab == 'blacklist'}
-                  <a href="#" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Hidden ({hidden_tab_repos_count})</a>
+                  <a href="#top" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Hidden ({hidden_tab_repos_count})</a>
                {:else}
-                  <a href="#" class="inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" onclick={() => current_tab.tab = 'blacklist'}>Hidden ({hidden_tab_repos_count})</a>
+                  <a href="#top" class="inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" onclick={() => current_tab.tab = 'blacklist'}>Hidden ({hidden_tab_repos_count})</a>
                {/if}
             </li>
          </ul>
@@ -170,16 +170,16 @@
             <ul class="flex flex-wrap -mb-px">
                <li class="mr-2">
                   {#if current_tab.tab == 'explore'}
-                     <a href="#" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Browse ({explore_tab_repos_count})</a>
+                     <a href="#top" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Browse ({explore_tab_repos_count})</a>
                   {:else}
-                     <a href="#" class="border-transparent inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" onclick={() => current_tab.tab = 'explore'}>Browse ({explore_tab_repos_count})</a>
+                     <a href="#top" class="border-transparent inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" onclick={() => current_tab.tab = 'explore'}>Browse ({explore_tab_repos_count})</a>
                   {/if}
                </li>
                <li class="mr-2">
                   {#if current_tab.tab == 'blacklist'}
-                     <a href="#" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Hidden ({hidden_tab_repos_count})</a>
+                     <a href="#top" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Hidden ({hidden_tab_repos_count})</a>
                   {:else}
-                     <a href="#" class="border-transparent inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" onclick={() => current_tab.tab = 'blacklist'}>Hidden ({hidden_tab_repos_count})</a>
+                     <a href="#top" class="border-transparent inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" onclick={() => current_tab.tab = 'blacklist'}>Hidden ({hidden_tab_repos_count})</a>
                   {/if}
                </li>
             </ul>

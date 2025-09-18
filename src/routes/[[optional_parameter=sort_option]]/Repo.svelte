@@ -82,11 +82,11 @@
       </div>
       <Description description={repo.description}/> <!-- REPO DESCRIPTION -->
       {#if repo.topics.length > 0} <!-- topics | if clause to prevent parent's flex gap -->
-         <div class="flex flex-wrap gap-1">
+         <ul class="flex flex-wrap gap-1">
             {#each repo.topics as topic}
-               <div onclick={excluded_topics.toggle} class="cursor-pointer rounded-full bg-sky-100 px-2 py-1 text-xs text-blue-500 {excluded_topics.topics.includes(topic) && 'line-through'}">{topic}</div>
+               <li><button onclick={excluded_topics.toggle} class="cursor-pointer rounded-full bg-sky-100 px-2 py-1 text-xs text-blue-500 {excluded_topics.topics.includes(topic) && 'line-through'}">{topic}</button></li>
             {/each}
-         </div>
+         </ul>
       {/if}
       <div class='flex flex-wrap gap-x-4 text-xs text-gray-600'> <!-- last_commit_date & PRs thumbs up -->
          <StargazersCount stargazers_count={repo.stargazers_count}/>

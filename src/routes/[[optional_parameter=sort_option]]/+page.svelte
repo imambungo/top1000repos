@@ -10,7 +10,6 @@
    import { balancer } from 'svelte-action-balancer' // https://stackoverflow.com/q/34875725/9157799
 
    import { untrack } from 'svelte' // https://stackoverflow.com/a/74165772/9157799
-
    import { page } from '$app/state' // https://stackoverflow.com/a/68578884/9157799
 
    import { current_tab } from './current_tab.svelte.js'
@@ -79,9 +78,6 @@
       })
       return count
    }
-
-   let visible_chain_link_index = $state(-1)
-   const setVisibleChainLinkIndex = (index) => visible_chain_link_index = index
 
    let hidden_tab_repos_count = $derived(get_how_many_repos_in_id_list(repos.all, hidden_repos.ids)) // don't just use hidden_repos.ids.length because when a hidden repo is no longer in top 1000, it still get counted
    let explore_tab_repos_count = $derived(1000 - hidden_tab_repos_count)
@@ -195,7 +191,7 @@
                <p>Can't reach the backend. It maybe crashed or something. Please try again later.</p>
             {:else}
                {#each repos.actually_shown as repo, index (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs#template-syntax-each -->
-                  <Repo visible_chain_link_index={visible_chain_link_index} setVisibleChainLinkIndex={setVisibleChainLinkIndex} repo={repo} index={index} excluded_topics={excluded_topics} numbering={numbering} current_tab={current_tab} hidden_repos={hidden_repos} repo_to_highlight={repo_to_highlight}/>
+                  <Repo repo={repo} index={index} excluded_topics={excluded_topics} numbering={numbering} current_tab={current_tab} hidden_repos={hidden_repos} repo_to_highlight={repo_to_highlight}/>
                {/each}
             {/if}
          </div>

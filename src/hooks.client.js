@@ -9,10 +9,10 @@ import { repo_to_highlight } from "./routes/[[optional_parameter=sort_option]]/r
 import { send_report_if_recurring_user } from "./lib/analytics.js"
 
 export const init = async () => { // https://svelte.dev/docs/kit/hooks#Shared-hooks-init
-   await emoji_image_urls.fetch_urls()
+   emoji_image_urls.fetch_urls() // don't use await or <LoadingAnimation/> won't run
    excluded_topics.load_from_session_storage()
    hidden_repos.load_from_local_storage()
-   await repos.fetch()
+   repos.fetch() // don't use await or <LoadingAnimation/> won't run
    repo_to_highlight.init()
-   await send_report_if_recurring_user()
+   send_report_if_recurring_user() // don't use await or <LoadingAnimation/> won't run
 }

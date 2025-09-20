@@ -1,10 +1,10 @@
 <script>
    import { onMount } from 'svelte'; // https://svelte.dev/tutorial/bind-this
 
-   let loading_text = $state('Hang on.') // prerendered
+   let loading_text = $state('Hang on') // prerendered
 
    onMount(() => {  // https://svelte.dev/docs/svelte/lifecycle-hooks#onMount
-      let num_of_dots = 1
+      let num_of_dots = 0
       let change_num_of_dots = () => { // https://www.geeksforgeeks.org/how-to-create-frame-by-frame-animation-using-css-and-javascript/
          if (num_of_dots < 3)
             num_of_dots++

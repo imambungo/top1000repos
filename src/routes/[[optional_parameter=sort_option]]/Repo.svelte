@@ -1,10 +1,11 @@
 <script>
+   import Number from './Number.svelte'
+   import Description from './Description.svelte'
    import StargazersCount from './StargazersCount.svelte'
-   import LastCommitDate from './LastCommitDate.svelte'
    import Top5ClosedPRThumbsUp from './Top5ClosedPRThumbsUp.svelte'
    import Top5ClosedIssuesThumbsUp from './Top5ClosedIssuesThumbsUp.svelte'
-   import Description from './Description.svelte'
-   import Number from './Number.svelte'
+   import LastCommitDate from './LastCommitDate.svelte'
+   import Size from './Size.svelte'
 
    import { visible_chain_link } from './visible_chain_link.svelte.js'
 
@@ -94,6 +95,7 @@
          <Top5ClosedIssuesThumbsUp total_thumbs_up_of_top_5_closed_issues_since_1_year={repo.total_thumbs_up_of_top_5_closed_issues_since_1_year} html_url={repo.html_url} has_issues_tab={repo.has_issues}/>
          <!-- <Top5OpenIssueThumbsUp total_thumbs_up_of_top_5_open_issue_of_all_time={repo.total_thumbs_up_of_top_5_open_issue_of_all_time} html_url={repo.html_url} has_issues_tab={repo.has_issues}/> -->
          <LastCommitDate last_commit_date={repo.last_commit_date}/>
+         <Size code_size={repo.code_size} project_size={repo.project_size} repo_size={repo.repo_size}/>
       </div>
    </div>
 </li>

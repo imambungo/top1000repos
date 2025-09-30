@@ -81,7 +81,7 @@
          </div>
       </div>
       <Description description={repo.description}/> <!-- REPO DESCRIPTION -->
-      {#if repo.topics.length > 0} <!-- topics | if clause to prevent parent's flex gap -->
+      {#if repo.topics.length > 0} <!-- TOPICS | if clause to prevent parent's flex gap -->
          <ul class="flex flex-wrap gap-1">
             {#each repo.topics as topic}
                <li><button onclick={excluded_topics.toggle} class="cursor-pointer rounded-full bg-sky-100 px-2 py-1 text-xs text-blue-500 {excluded_topics.topics.includes(topic) && 'line-through'}">{topic}</button></li>

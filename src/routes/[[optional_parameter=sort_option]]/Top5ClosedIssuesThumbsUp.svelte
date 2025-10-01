@@ -5,7 +5,7 @@
 </script>
 
 {#if has_issues_tab}
-	<div class='whitespace-nowrap'>
+	<div>
 		<a href={top_5_closed_issues_url} target='_blank' title='total 👍 of the top 5 closed issues of the last 12 months'>
 			<span class='decoration-gray-300 underline'>Top 5 closed issues</span>
 			(1 year) thumbs up:

@@ -55,7 +55,7 @@
 	}
 </script>
 
-<div class='whitespace-nowrap cursor-help' title={tooltip()}>
+<div class='cursor-help' title={tooltip()}>
 	<span>Last commit:</span>
 	<span class={color()}> <!-- use span because it's an inline element, so we don't need to wrap things in a flex div -->
 		{agoFormat()}

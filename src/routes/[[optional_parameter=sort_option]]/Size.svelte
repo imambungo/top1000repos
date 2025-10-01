@@ -73,7 +73,7 @@
    }
 </script>
 
-<span class="flex">
+<span class="flex whitespace-pre-wrap"> <!-- whitespace-pre-wrap: https://www.mattstobbs.com/flexbox-removing-trailing-whitespace/ -->
    <span title='Detected as non-generated code by GitHub' class='cursor-help'>Code</span>
    <span class='text-gray-400'>/</span>
    <span title='Size of the project at the latest commit of the default branch' class='cursor-help'>project</span>

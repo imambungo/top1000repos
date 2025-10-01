@@ -73,9 +73,16 @@
    }
 </script>
 
-<div>
-   <span title='Detected as non-generated code by GitHub' class='cursor-help'>Code</span>/<span title='Size of the project at the latest commit of the default branch' class='cursor-help'>project</span>/<span title='Whole repo (compressed git objects)' class='cursor-help'>repo</span> size:
-   <a href='https://ux.stackexchange.com/a/153971/164746' target='_blank' class='tracking-tight' title='{readable_bytes(code_size)}'>{readable_size(code_size)}</a> /
-   <a href='https://ux.stackexchange.com/a/153971/164746' target='_blank' class='tracking-tight' title='{readable_bytes(project_size)}'>{readable_size(project_size)}</a> /
+<span class="flex">
+   <span title='Detected as non-generated code by GitHub' class='cursor-help'>Code</span>
+   <span class='text-gray-400'>/</span>
+   <span title='Size of the project at the latest commit of the default branch' class='cursor-help'>project</span>
+   <span class='text-gray-400'>/</span>
+   <span title='Whole repo (compressed git objects)' class='cursor-help'>repo</span>
+   size:
+   <a href='https://ux.stackexchange.com/a/153971/164746' target='_blank' class='tracking-tight' title='{readable_bytes(code_size)}'>{readable_size(code_size)}</a>
+   <span class='text-gray-400 mx-0.5'>/</span>
+   <a href='https://ux.stackexchange.com/a/153971/164746' target='_blank' class='tracking-tight' title='{readable_bytes(project_size)}'>{readable_size(project_size)}</a>
+   <span class='text-gray-400 mx-0.5'>/</span>
    <a href='https://ux.stackexchange.com/a/153971/164746' target='_blank' class='tracking-tight' title='{readable_bytes(repo_size)}'>{readable_size(repo_size)}</a>
-</div>
+</span>

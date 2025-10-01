@@ -20,8 +20,11 @@
    import { repo_to_highlight } from './repo_to_highlight.svelte.js'
    import { sort_option } from './sort_option.svelte.js'
 
-   if (page.url.pathname.includes('pr')) sort_option.option = 'total_thumbs_up_of_top_5_closed_pr_since_1_year' // https://stackoverflow.com/a/68578884/9157799
-   if (page.url.pathname.includes('issues')) sort_option.option = 'total_thumbs_up_of_top_5_closed_issues_since_1_year'
+   if (page.url.pathname == '/sorted-by-pr') sort_option.option = 'total_thumbs_up_of_top_5_closed_pr_since_1_year' // https://stackoverflow.com/a/68578884/9157799
+   if (page.url.pathname == '/sorted-by-issues') sort_option.option = 'total_thumbs_up_of_top_5_closed_issues_since_1_year'
+   if (page.url.pathname == '/sorted-by-code-size') sort_option.option = 'code_size'
+   if (page.url.pathname == '/sorted-by-project-size') sort_option.option = 'project_size'
+   if (page.url.pathname == '/sorted-by-repo-size') sort_option.option = 'repo_size'
    if (repo_to_highlight.url_hash && repo_to_highlight.is_hidden) current_tab.tab = 'blacklist'
    num_of_repos_to_render.value = 50
    num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 80})
@@ -63,12 +66,21 @@
 </script>
 
 <svelte:head>
-   {#if page.url.pathname.includes('pr')}
+   {#if page.url.pathname == '/sorted-by-pr'}
       <title>Top 1000 GitHub Repositories Sorted by Pull Requests</title>
       <link rel="canonical" href="https://top1000repos.com/sorted-by-pr">
-   {:else if page.url.pathname.includes('issues')}
+   {:else if page.url.pathname == '/sorted-by-issues'}
       <title>Top 1000 GitHub Repositories Sorted by Closed Issues</title>
       <link rel="canonical" href="https://top1000repos.com/sorted-by-issues">
+   {:else if page.url.pathname == '/sorted-by-code-size'}
+      <title>Top 1000 GitHub Repositories Sorted by Code Size</title>
+      <link rel="canonical" href="https://top1000repos.com/sorted-by-code-size">
+   {:else if page.url.pathname == '/sorted-by-project-size'}
+      <title>Top 1000 GitHub Repositories Sorted by Project Size</title>
+      <link rel="canonical" href="https://top1000repos.com/sorted-by-project-size">
+   {:else if page.url.pathname == '/sorted-by-repo-size'}
+      <title>Top 1000 GitHub Repositories Sorted by Repo Size</title>
+      <link rel="canonical" href="https://top1000repos.com/sorted-by-repo-size">
    {:else}
       <title>Top 1000 GitHub repositories, updated daily, all on one page.</title>
       <link rel="canonical" href="https://top1000repos.com">

@@ -22,13 +22,13 @@
             👍
          </span>
       </SortOptionButton>
-      <SortOptionButton {sort_option} href='' button_option='code_size'>
+      <SortOptionButton {sort_option} href='/sorted-by-code-size' button_option='code_size'>
          Code Size
       </SortOptionButton>
-      <SortOptionButton {sort_option} href='' button_option='project_size'>
+      <SortOptionButton {sort_option} href='/sorted-by-project-size' button_option='project_size'>
          Project Size
       </SortOptionButton>
-      <SortOptionButton {sort_option} href='' button_option='repo_size'>
+      <SortOptionButton {sort_option} href='/sorted-by-repo-size' button_option='repo_size'>
          Repo Size
       </SortOptionButton>
    </div>

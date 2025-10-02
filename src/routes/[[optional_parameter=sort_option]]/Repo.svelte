@@ -50,7 +50,7 @@
    <div class="text-sm pt-0.5 w-8 shrink-0 mr-2 text-gray-700 flex flex-col items-end md:ml-0"> <!-- number and link-to-scroll | shrink: https://stackoverflow.com/a/45741742/9157799 -->
       <Number numbering={numbering} rank={repo.rank} order={index+1}/>
       <div class='grow flex flex-col justify-end'>
-         <a onclick={() => repo_to_highlight.url_hash = repo.full_name} data-sveltekit-replacestate class='mb-1 {visible_chain_link.index == index ? 'opacity-100' : 'opacity-0'} hover:opacity-100' href="#{repo.full_name}"> <!-- chain link | https://stackoverflow.com/a/2835151/9157799 | https://github.com/tailwindlabs/tailwindcss/issues/12130 -->
+         <a onclick={() => repo_to_highlight.url_hash = repo.full_name} data-sveltekit-replacestate class='mb-1 {visible_chain_link.index == index ? 'opacity-100' : 'opacity-0'}' href="#{repo.full_name}"> <!-- chain link | https://stackoverflow.com/a/2835151/9157799 | https://github.com/tailwindlabs/tailwindcss/issues/12130 -->
             <svg class="w-[1.15rem] stroke-gray-700" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> <!-- https://tailwindcss.com/docs/stroke -->
                <path d="M13.5442 10.4558C11.8385 8.75022 9.07316 8.75022 7.36753 10.4558L4.27922 13.5442C2.57359 15.2498 2.57359 18.0152 4.27922 19.7208C5.98485 21.4264 8.75021 21.4264 10.4558 19.7208L12 18.1766" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                <path d="M10.4558 13.5442C12.1614 15.2498 14.9268 15.2498 16.6324 13.5442L19.7207 10.4558C21.4264 8.75021 21.4264 5.98485 19.7207 4.27922C18.0151 2.57359 15.2497 2.57359 13.5441 4.27922L12 5.82338" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>

@@ -76,7 +76,7 @@
                   Hide
                </button>
             {:else if current_tab.tab == 'blacklist'}
-               <button onclick={() => {hidden_repos.unhide_repo(repo.id)/*; send_report(`remove ${repo.full_name}`)*/}} class="bg-gray-100 hover:bg-gray-200 border text-gray-700 text-xs py-1 px-3 rounded-md"> <!-- https://stackoverflow.com/q/58262380/9157799 -->
+               <button onclick={() => {hidden_repos.unhide_repo(repo.id)/*; send_report(`remove ${repo.full_name}`)*/}} class="bg-gray-100 hover:bg-gray-200 border text-red-700 text-xs py-1 px-3 rounded-md"> <!-- https://stackoverflow.com/q/58262380/9157799 -->
                   Remove
                </button>
             {/if}

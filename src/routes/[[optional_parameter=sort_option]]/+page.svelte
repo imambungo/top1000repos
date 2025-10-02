@@ -31,7 +31,7 @@
 
    $effect(() => {
       // console.log('watch +page effect')
-      if (repo_to_highlight.already_rendered && untrack(() => !repo_to_highlight.already_highlighted)) {
+      if (repo_to_highlight.is_rendered && untrack(() => !repo_to_highlight.already_highlighted)) {
          untrack(() => { // https://svelte.dev/docs/svelte/svelte#untrack
             repo_to_highlight.already_highlighted = true
 

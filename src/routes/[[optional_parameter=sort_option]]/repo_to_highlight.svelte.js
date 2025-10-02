@@ -4,7 +4,7 @@ import { repos } from "./repos.svelte.js"
 
 const create_repo_to_highlight = () => { // for delayed scroll. the browser will not scroll if the content is rendered late.
    let url_hash = $state('')
-   let already_highlighted = $state(false)
+   let already_highlighted = $state(false) // false only for the first url_hash because only the first url_hash need to wait for the content to be rendered.
 
    return {
       get url_hash() { return url_hash },

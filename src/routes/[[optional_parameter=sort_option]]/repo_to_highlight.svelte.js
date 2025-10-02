@@ -1,4 +1,3 @@
-import { current_tab } from "./current_tab.svelte.js"
 import { hidden_repos } from "./hidden_repos.svelte.js"
 import { repos } from "./repos.svelte.js"
 

@@ -30,8 +30,8 @@
    num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 80})
 
    $effect(() => {
-      const shown = repos.actually_shown.find((repo) => repo.full_name == repo_to_highlight.url_hash)
-      if (shown && untrack(() => !repo_to_highlight.already_highlighted)) {
+      // console.log('watch +page effect')
+      if (repo_to_highlight.already_rendered && untrack(() => !repo_to_highlight.already_highlighted)) {
          untrack(() => { // https://svelte.dev/docs/svelte/svelte#untrack
             repo_to_highlight.already_highlighted = true
 

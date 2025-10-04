@@ -15,7 +15,7 @@
 
    import { current_tab } from './current_tab.svelte.js'
    import { excluded_topics } from './excluded_topics.svelte.js'
-   import { hidden_repos } from './marked_repos.svelte.js'
+   import { bookmarked_repos, hidden_repos } from './marked_repos.svelte.js'
    import { num_of_repos_to_render } from './num_of_repos_to_render.svelte.js'
    import { repos } from './repos.svelte.js'
    import { repo_to_highlight } from './repo_to_highlight.svelte.js'
@@ -27,6 +27,7 @@
    if (page.url.pathname == '/sorted-by-project-size') sort_option.option = 'project_size'
    if (page.url.pathname == '/sorted-by-repo-size') sort_option.option = 'repo_size'
    if (repo_to_highlight.url_hash && repo_to_highlight.is_hidden) current_tab.tab = 'blacklist'
+   if (repo_to_highlight.url_hash && repo_to_highlight.is_bookmarked) current_tab.tab = 'bookmark'
    num_of_repos_to_render.value = 50
    num_of_repos_to_render.increase_gradually({by: 10, until: 1000, every_milliseconds: 80})
 
@@ -156,7 +157,7 @@
                <p>Can't reach the backend. It maybe crashed or something. Please try again later.</p>
             {:else}
                {#each repos.actually_shown as repo, index (repo.id)} <!-- the key (repo.id) is to fix the performance | https://svelte.dev/docs/svelte/each -->
-                  <Repo repo={repo} index={index} excluded_topics={excluded_topics} numbering={numbering} current_tab={current_tab} hidden_repos={hidden_repos} repo_to_highlight={repo_to_highlight}/>
+                  <Repo repo={repo} index={index} excluded_topics={excluded_topics} numbering={numbering} current_tab={current_tab}  {bookmarked_repos} {hidden_repos} repo_to_highlight={repo_to_highlight}/>
                {/each}
             {/if}
          </ol>

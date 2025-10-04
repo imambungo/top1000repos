@@ -6,6 +6,7 @@
    import NumberingOption from './NumberingOption.svelte'
    import Repo from './Repo.svelte'
    import SortOption from './SortOption.svelte'
+   import TabButtons from './TabButtons.svelte'
 
    import { balancer } from 'svelte-action-balancer' // https://stackoverflow.com/q/34875725/9157799
 
@@ -110,20 +111,7 @@
       <!-- TAB BUTTON for mobile screen | https://flowbite.com/docs/components/tabs/#tabs-with-underline -->
       <nav class="text-xs sm:text-sm font-medium text-center border-b border-gray-200 sticky top-0 z-10 bg-white flex flex-wrap pr-4 sm:pr-5 pl-2 sm:pl-3">
          <ul class="pt-1 sm:pt-0 flex flex-wrap -mb-px">
-            <li class="mr-2">
-               {#if current_tab.tab == 'explore'}
-                  <a href="#top" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Browse ({repos.count.explore_tab})</a>
-               {:else}
-                  <a href="#top" class="inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" onclick={() => current_tab.tab = 'explore'}>Browse ({repos.count.explore_tab})</a>
-               {/if}
-            </li>
-            <li class="mr-2">
-               {#if current_tab.tab == 'blacklist'}
-                  <a href="#top" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Hidden ({repos.count.hidden_tab})</a>
-               {:else}
-                  <a href="#top" class="inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" onclick={() => current_tab.tab = 'blacklist'}>Hidden ({repos.count.hidden_tab})</a>
-               {/if}
-            </li>
+            <TabButtons {current_tab} {repos} />
          </ul>
          <div class='md:hidden grow flex justify-end items-center'>
             <button class='h-7 w-7 relative text-gray-600' onclick={() => option_is_open = !option_is_open}> <!-- https://stackoverflow.com/a/38327984/9157799 -->
@@ -158,20 +146,7 @@
          <!-- TAB BUTTON for md screen | https://flowbite.com/docs/components/tabs/#tabs-with-underline -->
          <nav class="hidden md:block text-sm font-medium text-center border-b border-gray-200 sticky top-0 z-10 bg-white">
             <ul class="flex flex-wrap -mb-px">
-               <li class="mr-2">
-                  {#if current_tab.tab == 'explore'}
-                     <a href="#top" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Browse ({repos.count.explore_tab})</a>
-                  {:else}
-                     <a href="#top" class="inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" onclick={() => current_tab.tab = 'explore'}>Browse ({repos.count.explore_tab})</a>
-                  {/if}
-               </li>
-               <li class="mr-2">
-                  {#if current_tab.tab == 'blacklist'}
-                     <a href="#top" class="inline-block p-4 border-b-2 text-gray-700 border-blue-500" aria-current="page">Hidden ({repos.count.hidden_tab})</a>
-                  {:else}
-                     <a href="#top" class="inline-block p-4 border-b-2 text-gray-500 hover:text-gray-600 hover:border-gray-300" onclick={() => current_tab.tab = 'blacklist'}>Hidden ({repos.count.hidden_tab})</a>
-                  {/if}
-               </li>
+               <TabButtons {current_tab} {repos} />
             </ul>
          </nav>
          <ol class='flex flex-col gap-6 py-5' data-nosnippet> <!-- repo list | https://www.google.com/search?q=what+is+data-nosnippet -->

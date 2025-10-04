@@ -20,7 +20,7 @@
    })
 </script>
 
-<svelte:window bind:scrollY bind:innerHeight={viewport_height}/> <!-- https://svelte.dev/tutorial/svelte-window-bindings -->
+<svelte:window bind:scrollY bind:innerHeight={viewport_height}/> <!-- https://svelte.dev/docs/svelte/svelte-window -->
 
 <div class="text-sm sticky top-0 py-4 flex flex-col gap-4 overflow-y-auto" style="max-height: {max_height}px" bind:this={element}> <!-- Tailwind doesn’t include any sort of client-side runtime, so class names need to be statically extractable at build-time, and can’t depend on any sort of arbitrary dynamic values that change on the client. Use inline styles for these situations.: https://v2.tailwindcss.com/docs/just-in-time-mode | be careful with calc(): https://stackoverflow.com/q/34419813/9157799 | https://svelte.dev/tutorial/svelte/bind-this -->
    {@render children?.()} <!-- https://svelte.dev/docs/svelte/@render#Optional-snippets -->

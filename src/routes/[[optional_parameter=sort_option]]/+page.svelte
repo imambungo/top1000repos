@@ -146,7 +146,7 @@
       <div class='md:w-3/4'> <!-- browse/hidden navbar & repo list -->
          <!-- TAB BUTTON for md screen | https://flowbite.com/docs/components/tabs/#tabs-with-underline -->
          <nav class="hidden md:block text-sm font-medium text-center border-b border-gray-200 sticky top-0 z-10 bg-white">
-            <ul class="flex flex-wrap -mb-px">
+            <ul class="flex -mb-px">
                <TabButtons {current_tab} {repos} />
             </ul>
          </nav>

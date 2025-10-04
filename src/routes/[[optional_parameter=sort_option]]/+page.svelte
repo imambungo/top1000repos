@@ -110,8 +110,8 @@
    </header>
    <div class='sticky top-0 z-10 md:hidden'> <!-- navbar and options FOR MOBILE VIEW | sticky need defined position e.g. top-0 -->
       <!-- TAB BUTTON for mobile screen | https://flowbite.com/docs/components/tabs/#tabs-with-underline -->
-      <nav class="text-xs sm:text-sm font-medium text-center border-b border-gray-200 sticky top-0 z-10 bg-white flex flex-wrap pr-4 sm:pr-5 pl-2 sm:pl-3">
-         <ul class="pt-1 sm:pt-0 flex flex-wrap -mb-px">
+      <nav class="text-xs sm:text-sm font-medium text-center border-b border-gray-200 sticky top-0 z-10 bg-white flex pr-4 sm:pr-5 pl-2 sm:pl-3">
+         <ul class="pt-1 sm:pt-0 flex whitespace-nowrap overflow-auto -mb-px">
             <TabButtons {current_tab} {repos} />
          </ul>
          <div class='md:hidden grow flex justify-end items-center'>

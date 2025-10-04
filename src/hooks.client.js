@@ -2,7 +2,7 @@
 
 import { emoji_image_urls } from "./routes/[[optional_parameter=sort_option]]/emoji_image_urls.svelte.js"
 import { excluded_topics } from "./routes/[[optional_parameter=sort_option]]/excluded_topics.svelte.js"
-import { hidden_repos } from "./routes/[[optional_parameter=sort_option]]/hidden_repos.svelte.js"
+import { hidden_repos } from "./routes/[[optional_parameter=sort_option]]/marked_repos.svelte.js"
 import { repos } from "./routes/[[optional_parameter=sort_option]]/repos.svelte.js"
 import { repo_to_highlight } from "./routes/[[optional_parameter=sort_option]]/repo_to_highlight.svelte.js"
 

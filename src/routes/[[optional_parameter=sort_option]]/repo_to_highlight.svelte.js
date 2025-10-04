@@ -1,4 +1,4 @@
-import { hidden_repos } from "./hidden_repos.svelte.js"
+import { hidden_repos } from "./marked_repos.svelte.js"
 import { repos } from "./repos.svelte.js"
 
 const create_repo_to_highlight = () => { // for delayed scroll. the browser will not scroll if the content is rendered late.

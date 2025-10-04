@@ -14,7 +14,7 @@
 
    import { current_tab } from './current_tab.svelte.js'
    import { excluded_topics } from './excluded_topics.svelte.js'
-   import { hidden_repos } from './hidden_repos.svelte.js'
+   import { hidden_repos } from './marked_repos.svelte.js'
    import { num_of_repos_to_render } from './num_of_repos_to_render.svelte.js'
    import { repos } from './repos.svelte.js'
    import { repo_to_highlight } from './repo_to_highlight.svelte.js'

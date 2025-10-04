@@ -1,10 +1,10 @@
 import { current_tab } from './current_tab.svelte.js'
 import { excluded_topics } from './excluded_topics.svelte.js'
-import { hidden_repos } from './hidden_repos.svelte.js'
+import { bookmarked_repos, hidden_repos } from './marked_repos.svelte.js'
 import { num_of_repos_to_render } from './num_of_repos_to_render.svelte.js'
 import { sort_option } from './sort_option.svelte.js'
 
-import { filter_blacklisted_repos_based_on_current_tab } from './repos_filter_functions.js'
+import { filter_repos_based_on_current_tab } from './repos_filter_functions.js'
 import { sort_repos_based_on_sort_option } from './repos_sort_functions.js'
 
 import { PUBLIC_BACKEND_URL } from '$env/static/public' // https://svelte.dev/docs/kit/$env-static-public
@@ -16,7 +16,7 @@ const create_repos = () => {
          let repos_to_show = JSON.parse(JSON.stringify(all))
          repos_to_show = sort_repos_based_on_sort_option(repos_to_show, sort_option.option)
          repos_to_show = repos_to_show.map((repo, index) => ({...repo, rank: index+1}))
-         repos_to_show = filter_blacklisted_repos_based_on_current_tab(repos_to_show, hidden_repos.ids, current_tab.tab)
+         repos_to_show = filter_repos_based_on_current_tab(repos_to_show, bookmarked_repos.ids, hidden_repos.ids, current_tab.tab)
          //repos_to_show = repos_to_show.slice(0, 100)  // for debugging performance problem
          return repos_to_show
       } else {
@@ -33,7 +33,15 @@ const create_repos = () => {
       })
       return count
    })
-   let explore_tab_repos_count = $derived(1000 - hidden_tab_repos_count)
+   let bookmark_tab_repos_count = $derived.by(() => {
+      let count = 0
+      all.forEach(repo => {
+         if (bookmarked_repos.ids.includes(repo.id))
+            count++
+      })
+      return count
+   })
+   let explore_tab_repos_count = $derived(1000 - bookmark_tab_repos_count - hidden_tab_repos_count)
    let excluded_repos_count = $derived.by(() => {
       let count = 0
       to_show.forEach(repo => {
@@ -64,8 +72,9 @@ const create_repos = () => {
       get actually_shown() { return actually_shown },
       get count() {
          return {
-            get hidden_tab() { return hidden_tab_repos_count },
             get explore_tab() { return explore_tab_repos_count },
+            get bookmark_tab() { return bookmark_tab_repos_count },
+            get hidden_tab() { return hidden_tab_repos_count },
             get excluded() { return excluded_repos_count }
          }
       }

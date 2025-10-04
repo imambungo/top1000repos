@@ -16,6 +16,7 @@
       excluded_topics,
       numbering,
       current_tab,
+      bookmarked_repos,
       hidden_repos,
    } = $props()
 
@@ -70,13 +71,20 @@
                <span class='rounded-full border-solid px-2 py-1 text-xs text-yellow-600 border border-yellow-600 whitespace-nowrap'>Public archive</span>
             {/if}
          </div>
-         <div class='grow flex justify-end items-center'> <!-- browse/hide button -->
+         <div class='grow flex justify-end items-center gap-1'> <!-- bookmark/hide/remove button -->
             {#if current_tab.tab == 'explore'}
-               <button onclick={() => {hidden_repos.hide_repo(repo.id)/*; send_report(`hide ${repo.full_name}`)*/}} class="bg-gray-100 hover:bg-gray-200 border text-gray-700 text-xs py-1 px-3 rounded-md"> <!-- https://stackoverflow.com/q/58262380/9157799 -->
-                  Hide
+               <button onclick={() => {bookmarked_repos.add(repo.id)}} class="bg-gray-100 hover:bg-gray-200 border text-xs py-1 px-3 rounded-md">
+                  🔖
+               </button>
+               <button onclick={() => {hidden_repos.add(repo.id)}} class="bg-gray-100 hover:bg-gray-200 border text-xs py-1 px-3 rounded-md">
+                  🙈
+               </button>
+            {:else if current_tab.tab == 'bookmark'}
+               <button onclick={() => {bookmarked_repos.remove(repo.id)}} class="bg-gray-100 hover:bg-gray-200 border text-gray-700 text-xs py-1 px-3 rounded-md">
+                  Remove
                </button>
             {:else if current_tab.tab == 'blacklist'}
-               <button onclick={() => {hidden_repos.unhide_repo(repo.id)/*; send_report(`remove ${repo.full_name}`)*/}} class="bg-gray-100 hover:bg-gray-200 border text-red-700 text-xs py-1 px-3 rounded-md"> <!-- https://stackoverflow.com/q/58262380/9157799 -->
+               <button onclick={() => {hidden_repos.remove(repo.id)}} class="bg-gray-100 hover:bg-gray-200 border text-gray-700 text-xs py-1 px-3 rounded-md">
                   Remove
                </button>
             {/if}

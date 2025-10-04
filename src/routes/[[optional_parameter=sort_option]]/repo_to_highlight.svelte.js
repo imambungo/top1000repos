@@ -1,4 +1,4 @@
-import { hidden_repos } from "./hidden_repos.svelte.js"
+import { bookmarked_repos, hidden_repos } from "./marked_repos.svelte.js"
 import { repos } from "./repos.svelte.js"
 
 const create_repo_to_highlight = () => { // for delayed scroll. the browser will not scroll if the content is rendered late.
@@ -19,8 +19,15 @@ const create_repo_to_highlight = () => { // for delayed scroll. the browser will
          }
       },
       get exist() { return exist },
+      get is_bookmarked() {
+         if (!exist) return false // fix bug when repo is not found, below `repo.id` will cause error. is_bookmarked is only used to determine whether to switch tab or not, so it's okay to return false.
+         if (bookmarked_repos.ids.includes(repo.id))
+            return true
+         else
+            return false
+      },
       get is_hidden() {
-         if (!exist) return false // fix bug when repo is not found, below `repo.id` will cause error. is_hidden is only used to determine whether to switch tab or not.
+         if (!exist) return false
          if (hidden_repos.ids.includes(repo.id))
             return true
          else

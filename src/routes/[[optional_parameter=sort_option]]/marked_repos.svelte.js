@@ -17,5 +17,5 @@ const create_marked_repos = (mark) => {
    }
 }
 
-export const hidden_repos = create_marked_repos('repo_id_blacklist') // create a singleton by running the function inside this file | https://nodejs.org/docs/latest/api/modules.html#caching
-export const bookmarked_repos = create_marked_repos('bookmarked_repos_ids')
+export const bookmarked_repos = create_marked_repos('bookmarked_repos_ids') // create a singleton by running the function inside this file | https://nodejs.org/docs/latest/api/modules.html#caching
+export const hidden_repos = create_marked_repos('repo_id_blacklist')

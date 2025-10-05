@@ -21,6 +21,7 @@ const create_repo_to_highlight = () => { // for delayed scroll. the browser will
       get exist() { return exist },
       get is_bookmarked() {
          if (!exist) return false // fix bug when repo is not found, below `repo.id` will cause error. is_bookmarked is only used to determine whether to switch tab or not, so it's okay to return false.
+         const repo = repos.all.find((repo) => repo.full_name == url_hash)
          if (bookmarked_repos.ids.includes(repo.id))
             return true
          else
@@ -28,6 +29,7 @@ const create_repo_to_highlight = () => { // for delayed scroll. the browser will
       },
       get is_hidden() {
          if (!exist) return false
+         const repo = repos.all.find((repo) => repo.full_name == url_hash)
          if (hidden_repos.ids.includes(repo.id))
             return true
          else

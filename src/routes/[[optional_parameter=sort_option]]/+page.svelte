@@ -21,6 +21,9 @@
    import { repo_to_highlight } from './repo_to_highlight.svelte.js'
    import { sort_option } from './sort_option.svelte.js'
 
+   console.log(repo_to_highlight.url_hash)
+   console.log(`bookmarked: ${repo_to_highlight.is_bookmarked}`)
+   console.log(`hidden: ${repo_to_highlight.is_hidden}`)
    if (repo_to_highlight.url_hash && repo_to_highlight.is_hidden) current_tab.tab = 'blacklist'
    if (repo_to_highlight.url_hash && repo_to_highlight.is_bookmarked) current_tab.tab = 'bookmark'
    num_of_repos_to_render.value = 50

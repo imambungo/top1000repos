@@ -21,11 +21,6 @@
    import { repo_to_highlight } from './repo_to_highlight.svelte.js'
    import { sort_option } from './sort_option.svelte.js'
 
-   if (page.url.pathname == '/sorted-by-pr') sort_option.option = 'total_thumbs_up_of_top_5_closed_pr_since_1_year' // https://stackoverflow.com/a/68578884/9157799
-   if (page.url.pathname == '/sorted-by-issues') sort_option.option = 'total_thumbs_up_of_top_5_closed_issues_since_1_year'
-   if (page.url.pathname == '/sorted-by-code-size') sort_option.option = 'code_size'
-   if (page.url.pathname == '/sorted-by-project-size') sort_option.option = 'project_size'
-   if (page.url.pathname == '/sorted-by-repo-size') sort_option.option = 'repo_size'
    if (repo_to_highlight.url_hash && repo_to_highlight.is_hidden) current_tab.tab = 'blacklist'
    if (repo_to_highlight.url_hash && repo_to_highlight.is_bookmarked) current_tab.tab = 'bookmark'
    num_of_repos_to_render.value = 50

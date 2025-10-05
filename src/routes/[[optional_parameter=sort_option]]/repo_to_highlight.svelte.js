@@ -1,8 +1,8 @@
 import { bookmarked_repos, hidden_repos } from "./marked_repos.svelte.js"
 import { repos } from "./repos.svelte.js"
 
-import { page } from '$app/state' // https://svelte.dev/docs/kit/$app-state#page
 import { browser } from '$app/environment' // https://svelte.dev/docs/kit/$app-environment
+import { page } from '$app/state' // https://svelte.dev/docs/kit/$app-state#page
 
 const create_repo_to_highlight = () => { // for delayed scroll. the browser will not scroll if the content is rendered late.
    let url_hash = $derived.by(() => {

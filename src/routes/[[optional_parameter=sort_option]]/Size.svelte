@@ -2,7 +2,7 @@
    let { code_size, project_size, repo_size } = $props()
 
    const readable_size = bytes => {
-      if (bytes === null || bytes === undefined) return 'later'
+      if (bytes === null || bytes === undefined) return 'later' // null when it's new repo that just got into the top 1000
 
       const base = 1000
       const one_kb = base ** 1
